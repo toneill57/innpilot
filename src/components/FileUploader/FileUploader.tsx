@@ -92,7 +92,7 @@ export function FileUploader() {
         fileSize: file.size,
         fileName: file.name
       })
-    } catch (error) {
+    } catch {
       setValidationResult({
         isValid: false,
         errors: ['Error al leer el archivo'],

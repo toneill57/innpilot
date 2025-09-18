@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
 
 export const runtime = 'edge'
@@ -8,7 +8,7 @@ export async function GET() {
     const startTime = Date.now()
 
     // Test Supabase connection
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('document_embeddings')
       .select('id')
       .limit(1)

@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileUploader } from "@/components/FileUploader/FileUploader"
 import { ChatAssistant } from "@/components/ChatAssistant/ChatAssistant"
 import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users } from "lucide-react"
