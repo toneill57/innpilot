@@ -169,3 +169,4 @@ Para problemas técnicos o dudas sobre SIRE, utiliza el chat assistant integrado
 ---
 
 **InnPilot** - Simplificando la gestión SIRE para hoteles colombianos 🇨🇴
+# Deploy trigger
