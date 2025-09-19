@@ -2,8 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateEmbedding } from '@/lib/openai'
 import { searchDocuments } from '@/lib/supabase'
 import { generateChatResponse } from '@/lib/claude'
+import { kv } from '@vercel/kv'
+import crypto from 'crypto'
 
 export const runtime = 'edge'
+
+// Hash function for cache keys
+function hashQuestion(question: string): string {
+  return crypto.createHash('md5').update(question.toLowerCase().trim()).digest('hex')
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,6 +21,19 @@ export async function POST(request: NextRequest) {
         { error: 'Question is required and must be a string' },
         { status: 400 }
       )
+    }
+
+    // Check cache first
+    const cacheKey = `chat:${hashQuestion(question)}`
+    try {
+      const cached = await kv.get(cacheKey)
+      if (cached) {
+        console.log('Cache hit for question:', question.substring(0, 50))
+        return NextResponse.json(cached)
+      }
+    } catch (cacheError) {
+      console.warn('Cache read error:', cacheError)
+      // Continue without cache
     }
 
     let context = ''
@@ -45,11 +65,22 @@ export async function POST(request: NextRequest) {
     // Generar respuesta con Claude
     const response = await generateChatResponse(question, context)
 
-    return NextResponse.json({
+    const result = {
       response,
       context_used: context.length > 0,
       question
-    })
+    }
+
+    // Save to cache (1 hour TTL)
+    try {
+      await kv.set(cacheKey, result, { ex: 3600 })
+      console.log('Cached response for question:', question.substring(0, 50))
+    } catch (cacheError) {
+      console.warn('Cache write error:', cacheError)
+      // Continue without caching
+    }
+
+    return NextResponse.json(result)
 
   } catch (error) {
     console.error('Error in chat API:', error)
