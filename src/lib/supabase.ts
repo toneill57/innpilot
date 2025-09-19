@@ -15,15 +15,15 @@ export interface DocumentEmbedding {
 
 export async function searchDocuments(
   queryEmbedding: number[],
-  matchThreshold: number = 0.7,
-  matchCount: number = 2
+  matchThreshold: number = 0.8,
+  matchCount: number = 1
 ): Promise<DocumentEmbedding[]> {
   // Fallback: get all documents and do similarity search manually
   // This is not optimal but will work for now
   const { data, error } = await supabase
     .from('document_embeddings')
     .select('*')
-    .limit(50) // Limit to avoid large queries
+    .limit(20) // Optimized limit for faster queries
 
   if (error) {
     console.error('Error searching documents:', error)
