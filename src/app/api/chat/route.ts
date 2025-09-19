@@ -3,16 +3,23 @@ import { generateEmbedding } from '@/lib/openai'
 import { searchDocuments } from '@/lib/supabase'
 import { generateChatResponse } from '@/lib/claude'
 // import { kv } from '@vercel/kv'  // Disabled until KV is available
-import crypto from 'crypto'
+// import crypto from 'crypto' // Not available in Edge Runtime
 
 export const runtime = 'edge'
 
 // Simple in-memory cache (resets on deployment)
 const memoryCache = new Map<string, { data: any, expires: number }>()
 
-// Hash function for cache keys
+// Simple hash function for cache keys (Edge Runtime compatible)
 function hashQuestion(question: string): string {
-  return crypto.createHash('md5').update(question.toLowerCase().trim()).digest('hex')
+  const str = question.toLowerCase().trim()
+  let hash = 0
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(36)
 }
 
 // Memory cache helpers
