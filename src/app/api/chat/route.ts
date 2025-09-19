@@ -2,14 +2,36 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateEmbedding } from '@/lib/openai'
 import { searchDocuments } from '@/lib/supabase'
 import { generateChatResponse } from '@/lib/claude'
-import { kv } from '@vercel/kv'
+// import { kv } from '@vercel/kv'  // Disabled until KV is available
 import crypto from 'crypto'
 
 export const runtime = 'edge'
 
+// Simple in-memory cache (resets on deployment)
+const memoryCache = new Map<string, { data: any, expires: number }>()
+
 // Hash function for cache keys
 function hashQuestion(question: string): string {
   return crypto.createHash('md5').update(question.toLowerCase().trim()).digest('hex')
+}
+
+// Memory cache helpers
+function getCached(key: string) {
+  const cached = memoryCache.get(key)
+  if (cached && cached.expires > Date.now()) {
+    return cached.data
+  }
+  if (cached) {
+    memoryCache.delete(key) // Clean expired
+  }
+  return null
+}
+
+function setCached(key: string, data: any, ttlSeconds: number = 3600) {
+  memoryCache.set(key, {
+    data,
+    expires: Date.now() + (ttlSeconds * 1000)
+  })
 }
 
 export async function POST(request: NextRequest) {
@@ -25,15 +47,10 @@ export async function POST(request: NextRequest) {
 
     // Check cache first
     const cacheKey = `chat:${hashQuestion(question)}`
-    try {
-      const cached = await kv.get(cacheKey)
-      if (cached) {
-        console.log('Cache hit for question:', question.substring(0, 50))
-        return NextResponse.json(cached)
-      }
-    } catch (cacheError) {
-      console.warn('Cache read error:', cacheError)
-      // Continue without cache
+    const cached = getCached(cacheKey)
+    if (cached) {
+      console.log('Memory cache hit for question:', question.substring(0, 50))
+      return NextResponse.json(cached)
     }
 
     let context = ''
@@ -71,14 +88,9 @@ export async function POST(request: NextRequest) {
       question
     }
 
-    // Save to cache (1 hour TTL)
-    try {
-      await kv.set(cacheKey, result, { ex: 3600 })
-      console.log('Cached response for question:', question.substring(0, 50))
-    } catch (cacheError) {
-      console.warn('Cache write error:', cacheError)
-      // Continue without caching
-    }
+    // Save to memory cache (1 hour TTL)
+    setCached(cacheKey, result, 3600)
+    console.log('Saved to memory cache for question:', question.substring(0, 50))
 
     return NextResponse.json(result)
 
