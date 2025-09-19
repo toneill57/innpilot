@@ -23,7 +23,6 @@ export async function searchDocuments(
   const { data, error } = await supabase
     .from('document_embeddings')
     .select('*')
-    .eq('document_type', 'sire_docs')
     .limit(50) // Limit to avoid large queries
 
   if (error) {
