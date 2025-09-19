@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { generateEmbedding } from '@/lib/openai'
 import { searchDocuments } from '@/lib/supabase'
 import { generateChatResponse } from '@/lib/claude'
-// import { kv } from '@vercel/kv'  // Disabled until KV is available
-// import crypto from 'crypto' // Not available in Edge Runtime
+// Note: Vercel KV not implemented - using memory cache only
 
 export const runtime = 'edge'
 
-// Simple in-memory cache (resets on deployment)
+// Legacy in-memory cache (fallback for Edge Runtime)
 const memoryCache = new Map<string, { data: unknown, expires: number }>()
 
 // Semantic question groups for intelligent caching
@@ -72,7 +71,7 @@ function getSemanticCacheKey(question: string): string {
   return `exact:${hashQuestion(question)}`
 }
 
-// Memory cache helpers
+// Memory cache helpers (Edge Runtime compatible)
 function getCached(key: string) {
   const cached = memoryCache.get(key)
   if (cached && cached.expires > Date.now()) {
@@ -116,7 +115,24 @@ export async function POST(request: NextRequest) {
     if (cached) {
       const responseTime = Date.now() - startTime
       console.log(`[${timestamp}] ✅ Semantic cache hit - Response time: ${responseTime}ms`)
-      return NextResponse.json(cached)
+
+      // Add performance metrics to cached response
+      const cachedWithMetrics = {
+        ...cached,
+        performance: {
+          ...((cached as any).performance || {}),
+          total_time_ms: responseTime,
+          cache_hit: true,
+          environment: process.env.NODE_ENV || 'unknown',
+          timestamp: timestamp,
+          cache_stats: process.env.NODE_ENV !== 'production' ? {
+            memory_cache_size: memoryCache.size,
+            cache_type: 'memory_only'
+          } : undefined
+        }
+      }
+
+      return NextResponse.json(cachedWithMetrics)
     }
 
     let context = ''
@@ -179,24 +195,37 @@ export async function POST(request: NextRequest) {
       console.log(`[${timestamp}] ✅ Response generated - Time: ${claudeTime}ms`)
     }
 
+    const totalTime = Date.now() - startTime
+
     const result = {
       response,
       context_used: context.length > 0,
-      question
+      question,
+      // Enhanced performance metrics
+      performance: {
+        total_time_ms: totalTime,
+        cache_hit: false, // This is a new response, not cached
+        environment: process.env.NODE_ENV || 'unknown',
+        timestamp: timestamp,
+        // Cache statistics
+        cache_stats: process.env.NODE_ENV !== 'production' ? {
+          memory_cache_size: memoryCache.size,
+          cache_type: 'memory_only'
+        } : undefined
+      }
     }
 
     // Save to semantic cache (1 hour TTL)
     setCached(cacheKey, result, 3600)
 
-    const totalTime = Date.now() - startTime
     console.log(`[${timestamp}] ✅ Request completed successfully - Total time: ${totalTime}ms`)
     console.log(`[${timestamp}] 💾 Saved to semantic cache`)
 
     return NextResponse.json(result)
 
   } catch (error) {
-    const totalTime = Date.now() - startTime
-    console.error(`[${timestamp}] ❌ Fatal error in chat API (${totalTime}ms):`, error)
+    const errorTime = Date.now() - startTime
+    console.error(`[${timestamp}] ❌ Fatal error in chat API (${errorTime}ms):`, error)
 
     // Provide more specific error messages based on error type
     let errorMessage = 'Error interno del servidor'
@@ -217,7 +246,7 @@ export async function POST(request: NextRequest) {
         error: errorMessage,
         details: errorDetails,
         timestamp: new Date().toISOString(),
-        response_time: totalTime
+        response_time: errorTime
       },
       { status: 500 }
     )

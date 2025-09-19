@@ -23,6 +23,8 @@ export async function searchDocuments(
   matchCount: number = 4
 ): Promise<DocumentEmbedding[]> {
   try {
+    console.log('🧪 Testing pgvector function with embedding length:', queryEmbedding.length)
+
     // Try native vector search function first (optimized)
     const { data: nativeData, error: nativeError } = await supabase
       .rpc('match_documents', {
@@ -31,21 +33,24 @@ export async function searchDocuments(
         match_count: matchCount
       })
 
+    console.log('🔍 pgvector call result - Error:', !!nativeError, 'Data:', !!nativeData, 'Data length:', nativeData?.length)
+
     if (!nativeError && nativeData) {
-      console.log('Using native vector search function')
-      return nativeData.map((doc: { id: string; content: string; embedding?: number[]; metadata?: unknown; source_file?: string; document_type?: string; chunk_index?: number; total_chunks?: number; created_at?: string }) => ({
+      console.log('✅ Using native vector search function - Found results:', nativeData.length)
+      return nativeData.map((doc: { id: string; content: string; embedding?: number[]; source_file?: string; document_type?: string; chunk_index?: number; total_chunks?: number; created_at?: string; similarity?: number }) => ({
         ...doc,
         embedding: [], // Don't return embedding to save bandwidth
         source_file: doc.source_file || '',
         document_type: doc.document_type || '',
         chunk_index: doc.chunk_index || 0,
         total_chunks: doc.total_chunks || 1,
-        metadata: doc.metadata || {},
+        metadata: {}, // Default empty metadata since function doesn't return it
         created_at: doc.created_at || new Date().toISOString()
       }))
     }
 
-    console.log('Native function not available, falling back to manual search')
+    console.log('❌ Native function not available, falling back to manual search')
+    console.log('📋 Error details:', JSON.stringify(nativeError, null, 2))
   } catch (e) {
     console.log('Native function error, falling back to manual search:', e)
   }

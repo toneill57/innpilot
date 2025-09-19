@@ -16,7 +16,10 @@
     "pre-deploy": "npm run validate-env && npm run lint && npm run build",
     "deploy": "npm run pre-deploy && vercel --prod",
     "populate-embeddings": "node scripts/populate-embeddings.js",
-    "clear-database": "node scripts/clear-database.js"
+    "clear-database": "node scripts/clear-database.js",
+    "test-performance": "node scripts/test-performance.js",
+    "benchmark-detailed": "node scripts/detailed-benchmark.js",
+    "setup-pgvector": "node scripts/setup-vector-function.js"
   },
   "type": "module",
   "dependencies": {

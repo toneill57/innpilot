@@ -21,6 +21,10 @@ npm run build        # Build for production with Turbopack
 npm start           # Start production server
 npm run lint        # Run ESLint
 
+# Performance & Optimization
+npm run test-performance  # Compare localhost vs production performance
+npm run setup-pgvector   # Setup pgvector function (after manual SQL)
+
 # API Integration (Recommended Method)
 ## Use JavaScript/fetch for all integrations:
 
@@ -60,14 +64,17 @@ curl -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" 
 - `GET /api/health` - Health check with service status
 
 ### Vector Search Implementation
-- **Current**: Manual cosine similarity calculation in JavaScript
-- **Performance**: Functional but not optimized for large datasets
-- **Future**: Native pgvector `match_documents()` function (pending implementation)
+- **Current**: Manual cosine similarity calculation in JavaScript (~3s response time both environments)
+- **Optimized**: pgvector `match_documents()` function available in `/sql/match_documents_function.sql`
+- **Performance Gap**: Localhost 25% slower than production (3.3s vs 2.7s) - both need pgvector
+- **Critical**: Implement pgvector for 85% performance improvement (see `PGVECTOR_IMPLEMENTATION.md`)
 
 ### Data Flow
 1. User question → OpenAI embeddings → Supabase vector search
 2. Retrieved context + question → Claude response
-3. Memory cache for repeats (~300-400ms), new queries ~3-4s
+3. **Enhanced Cache**: Semantic grouping + memory cache
+   - Cache hits: ~15ms (localhost) vs ~130ms (production)
+   - Fresh requests: ~3.3s (localhost) vs ~2.7s (production) - **NEEDS pgvector**
 
 ## Environment Variables
 
