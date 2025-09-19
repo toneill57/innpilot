@@ -21,9 +21,29 @@ npm run build        # Build for production with Turbopack
 npm start           # Start production server
 npm run lint        # Run ESLint
 
-# Testing APIs locally
+# API Integration (Recommended Method)
+## Use JavaScript/fetch for all integrations:
+
+// Production API calls
+const healthCheck = await fetch('https://innpilot.vercel.app/api/health')
+  .then(res => res.json());
+
+const chatResponse = await fetch('https://innpilot.vercel.app/api/chat', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    question: "¿Cuáles son los 7 pasos oficiales para reportar información al SIRE?"
+  })
+}).then(res => res.json());
+
+## cURL Examples (debugging/testing only)
+# Production
+curl https://innpilot.vercel.app/api/health
+curl -X POST https://innpilot.vercel.app/api/chat -H "Content-Type: application/json" -d '{"question":"¿Cuáles son los 7 pasos oficiales para reportar información al SIRE?"}'
+
+# Local development
 curl http://localhost:3000/api/health
-curl -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" -d '{"question":"¿Qué es el SIRE?"}'
+curl -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" -d '{"question":"¿Cuáles son las 13 especificaciones de campos obligatorios?"}'
 ```
 
 ## Architecture
@@ -35,15 +55,19 @@ curl -X POST http://localhost:3000/api/chat -H "Content-Type: application/json" 
 - **UI Components**: Custom shadcn/ui components (Button, Card, Input)
 
 ### API Routes (Edge Runtime)
-- `GET/POST /api/chat` - Chat assistant with context retrieval
+- `GET/POST /api/chat` - Chat assistant with context retrieval + memory cache
 - `POST /api/validate` - File validation for SIRE format
 - `GET /api/health` - Health check with service status
 
+### Vector Search Implementation
+- **Current**: Manual cosine similarity calculation in JavaScript
+- **Performance**: Functional but not optimized for large datasets
+- **Future**: Native pgvector `match_documents()` function (pending implementation)
+
 ### Data Flow
-1. User asks SIRE question → Generate OpenAI embeddings
-2. Search Supabase for relevant context → match_documents()
-3. Send context + question to Claude → Generate response
-4. Target: <600ms response time from Colombia
+1. User question → OpenAI embeddings → Supabase vector search
+2. Retrieved context + question → Claude response
+3. Memory cache for repeats (~300-400ms), new queries ~3-4s
 
 ## Environment Variables
 
@@ -53,8 +77,8 @@ SUPABASE_URL=https://ooaumjzaztmutltifhoq.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 OPENAI_API_KEY=sk-proj-ipB48deRibaLRwMy8QwErL3hw_woS8iQ...
 ANTHROPIC_API_KEY=sk-ant-api03-MvQDTIR4rVe1srvytlNAc3M6sg02g9W...
-CLAUDE_MODEL=claude-3-haiku-20240307
-CLAUDE_MAX_TOKENS=250
+CLAUDE_MODEL=claude-3-5-haiku-20241022
+CLAUDE_MAX_TOKENS=800
 ```
 
 ## SIRE Validation Rules
@@ -67,25 +91,17 @@ The platform validates Colombian hotel guest registry files:
 
 ## Database Schema (Supabase)
 
-```sql
--- Main embeddings table (already exists)
-document_embeddings (
-  id uuid PRIMARY KEY,
-  content text,
-  embedding vector(3072),
-  metadata jsonb,
-  created_at timestamp
-)
+`document_embeddings` table with vector(3072) embeddings. Currently using manual cosine similarity (pgvector native function pending).
 
--- Search function (already implemented)
-match_documents(query_embedding, similarity_threshold, match_count)
-```
+## Document Chunking Strategy
 
-## Deploy Configuration
+Uses LangChain RecursiveCharacterTextSplitter with 1000 char chunks, 100 char overlap.
+Configuration in `src/lib/chunking.ts`. Results: 9 chunks (68% reduction from 28).
 
-- **Platform**: Vercel
-- **Region**: US East (iad1) for optimal Colombia latency
-- **Runtime**: Edge functions for API routes
-- **Framework**: Auto-detected Next.js
 
-Deploy: `vercel --prod` or GitHub auto-deploy
+## Deploy & Production URLs
+
+- **Platform**: Vercel US East (iad1)
+- **Production**: https://innpilot.vercel.app
+- **API Endpoints**: `/api/health`, `/api/chat`, `/api/validate`
+- **Deploy**: `vercel --prod` or GitHub auto-deploy

@@ -37,7 +37,7 @@ SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 OPENAI_API_KEY=sk-proj-...
 ANTHROPIC_API_KEY=sk-ant-api03-...
 CLAUDE_MODEL=claude-3-haiku-20240307
-CLAUDE_MAX_TOKENS=250
+CLAUDE_MAX_TOKENS=800
 ```
 
 ### 3. Ejecutar en desarrollo
@@ -46,7 +46,9 @@ CLAUDE_MAX_TOKENS=250
 npm run dev
 ```
 
-La aplicación estará disponible en `http://localhost:3000`
+La aplicación está disponible en:
+- **Producción**: https://innpilot.vercel.app
+- **Desarrollo local**: http://localhost:3000
 
 ## 📁 Estructura del Proyecto
 
@@ -71,53 +73,97 @@ src/
     └── utils.ts                 # Utilidades y validaciones
 ```
 
-## 🔍 API Endpoints
+## 🔗 API Integration
 
-### Chat Assistant
-```bash
-POST /api/chat
-{
-  "question": "¿Qué es el SIRE?",
-  "use_context": true,
-  "max_context_chunks": 3
+### Chat Assistant API
+```javascript
+// Consultar el asistente SIRE
+const response = await fetch('https://innpilot.vercel.app/api/chat', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    question: "¿Cuáles son los documentos válidos para SIRE?",
+    use_context: true,
+    max_context_chunks: 4
+  })
+});
+
+const data = await response.json();
+console.log(data.response);
+```
+
+### File Validation API
+```javascript
+// Validar archivo SIRE
+const formData = new FormData();
+formData.append('file', fileInput.files[0]);
+
+const response = await fetch('https://innpilot.vercel.app/api/validate', {
+  method: 'POST',
+  body: formData
+});
+
+const validation = await response.json();
+if (validation.isValid) {
+  console.log('Archivo válido:', validation.lineCount, 'registros');
+} else {
+  console.log('Errores encontrados:', validation.errors);
 }
 ```
 
-### Validación de Archivos
-```bash
-POST /api/validate
-Content-Type: multipart/form-data
-file: <archivo.txt>
+### System Health Check
+```javascript
+// Verificar estado del sistema
+const health = await fetch('https://innpilot.vercel.app/api/health')
+  .then(res => res.json());
+
+console.log('Sistema:', health.status); // "healthy"
+console.log('Servicios:', health.services);
 ```
 
-### Health Check
-```bash
-GET /api/health
-```
+## 📋 Proceso y Validaciones SIRE
 
-## 📋 Validaciones SIRE
+### 7 Pasos Oficiales para Reportar al SIRE
+
+**Según documento oficial del gobierno colombiano:**
+
+1. **Tener como base** el formato ejemplo del archivo SIRE
+2. **Anotar la información** tomándola del pasaporte tal como aparece en el documento
+3. **Escribir los datos correctamente** en cada casilla siguiendo orden estricto sin eliminar columnas
+4. **Aplicar tipo de información correcto** en cada casilla según especificaciones de campo
+5. **Limpiar el formato** eliminando enunciados/títulos, dejando solo datos del reporte
+6. **Guardar como TXT** escogiendo formato texto delimitado por tabulaciones
+7. **Validar archivo final** - solo el archivo TXT es leído por el sistema SIRE
+
+### Especificaciones de Validación
 
 El sistema valida archivos con estas especificaciones:
 
 - **Formato**: Archivo .txt con campos separados por TAB
 - **Campos**: Exactamente 13 campos obligatorios por registro
-- **Tipos de documento válidos**: 3, 5, 46, 10
+- **Tipos de documento válidos**: 3 (Pasaporte), 5 (Cédula extranjería), 46 (Carné diplomático), 10 (Documento extranjero)
 - **Tamaño máximo**: 10MB
+- **Formatos de fecha**: día/mes/año (solo números)
+- **Tipos de movimiento**: E (Entrada) o S (Salida)
 
 ### Campos Obligatorios (13 total)
-1. Tipo de documento
-2. Número de documento
-3. Primer nombre
-4. Segundo nombre
-5. Primer apellido
-6. Segundo apellido
-7. Fecha de nacimiento
-8. País de nacimiento
-9. Sexo
-10. Ciudad de hospedaje
-11. Fecha ingreso al país
-12. Fecha salida del país
-13. Observaciones
+**Según documento oficial SIRE:**
+
+1. **Código del hotel** - Código asignado por sistema SCH (solo números)
+2. **Código de ciudad** - Código de la ciudad del establecimiento (solo números)
+3. **Tipo de documento** - Pasaporte (3), Cédula extranjería (5), Carné diplomático (46), Documento extranjero (10)
+4. **Número de identificación** - Número del documento (alfanumérico)
+5. **Código nacionalidad** - Código de nacionalidad (solo números)
+6. **Primer apellido** - Primer apellido del extranjero (solo letras)
+7. **Segundo apellido** - Segundo apellido, puede quedar en blanco (solo letras)
+8. **Nombre del extranjero** - Nombre(s) del extranjero (solo letras)
+9. **Tipo de movimiento** - Entrada (E) o Salida (S)
+10. **Fecha del movimiento** - Fecha de entrada/salida (día/mes/año, solo números)
+11. **Lugar de procedencia** - Lugar de origen (solo números)
+12. **Lugar de destino** - Lugar de destino (solo números)
+13. **Fecha de nacimiento** - Fecha de nacimiento (día/mes/año, solo números)
 
 ## 🚀 Deploy
 
@@ -157,14 +203,25 @@ match_documents(query_embedding, similarity_threshold, match_count)
 
 ## 🎯 Performance
 
-- **Target Response Time**: <600ms desde Colombia
+- **Current Response Time**: ~490ms desde Colombia (producción)
+- **Cache Response Time**: ~21ms-328ms (respuestas repetidas)
 - **Cache Strategy**: Respuestas frecuentes del chat assistant
 - **Edge Runtime**: API routes optimizadas
 - **Region**: US East (iad1) para menor latencia
 
 ## 📞 Soporte
 
-Para problemas técnicos o dudas sobre SIRE, utiliza el chat assistant integrado en la plataforma.
+Para usar InnPilot y resolver dudas sobre SIRE:
+
+### 🌐 Interfaz Web Principal
+- **Chat Assistant**: https://innpilot.vercel.app
+- **Validación de Archivos**: Disponible en la interfaz web
+- **Documentación Técnica**: `/docs/` (para desarrolladores)
+
+### 💻 Para Desarrolladores
+- **API Documentation**: Ejemplos de integración arriba
+- **System Health**: Monitore el estado del sistema
+- **Development Setup**: Ver sección de configuración
 
 ---
 

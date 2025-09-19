@@ -18,7 +18,17 @@ ${context}
 
 Pregunta del usuario: ${question}
 
-Responde de manera útil, precisa y concisa sobre gestión SIRE, validaciones, y procedimientos hoteleros. Si no tienes información suficiente en el contexto, indica que necesitas más detalles específicos.`
+INSTRUCCIONES DE FORMATO:
+- Responde de manera útil, precisa y concisa sobre gestión SIRE, validaciones, y procedimientos hoteleros
+- Usa formato Markdown para mejorar la legibilidad:
+  * **Negritas** para términos importantes
+  * Listas numeradas para procedimientos paso a paso
+  * Listas con viñetas para elementos o características
+  * \`código\` para códigos específicos (ej: tipo documento "3", campos, etc.)
+- Estructura la información de forma clara y organizada
+- Si no tienes información suficiente en el contexto, indica que necesitas más detalles específicos
+
+Responde en español y con formato Markdown apropiado.`
 
   const message = await anthropic.messages.create({
     model,
