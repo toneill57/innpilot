@@ -15,44 +15,13 @@ interface Message {
   isMarkdown?: boolean
 }
 
-interface SuggestionCategory {
-  title: string
-  questions: string[]
-}
 
-const QUESTION_SUGGESTIONS: SuggestionCategory[] = [
-  {
-    title: "📄 Documentos",
-    questions: [
-      "¿Qué tipos de documentos válidos acepta el SIRE?",
-      "¿Cuál es la diferencia entre cédula de extranjería y pasaporte?",
-      "¿Qué hago si un huésped tiene visa de turista?"
-    ]
-  },
-  {
-    title: "📋 Procedimientos",
-    questions: [
-      "¿Cuáles son los 7 pasos oficiales para reportar información al SIRE?",
-      "¿Cómo se genera y envía el archivo TXT?",
-      "¿Cuál es el proceso de validación de archivos?"
-    ]
-  },
-  {
-    title: "✅ Validaciones",
-    questions: [
-      "¿Cuáles son las 13 especificaciones de campos obligatorios?",
-      "¿Qué errores comunes ocurren en la validación?",
-      "¿Cómo corregir errores de formato en fechas?"
-    ]
-  },
-  {
-    title: "🏨 Hoteles",
-    questions: [
-      "¿Qué información específica deben reportar los hoteles?",
-      "¿Cómo manejar huéspedes con documentos extranjeros?",
-      "¿Cuándo y con qué frecuencia se debe reportar?"
-    ]
-  }
+// Solo 4 preguntas clave para no ocupar mucho espacio
+const KEY_QUESTIONS = [
+  "¿Qué tipos de documentos válidos acepta el SIRE?",
+  "¿Cuáles son los 7 pasos oficiales para reportar información al SIRE?",
+  "¿Cuáles son las 13 especificaciones de campos obligatorios?",
+  "¿Qué información específica deben reportar los hoteles?"
 ]
 
 export function ChatAssistant() {
@@ -66,7 +35,7 @@ export function ChatAssistant() {
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [showSuggestions, setShowSuggestions] = useState(true)
+  const [showSuggestions, setShowSuggestions] = useState(false)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -310,36 +279,29 @@ export function ChatAssistant() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Question Suggestions */}
+      {/* Question Suggestions - Solo 4 preguntas clave */}
       {showSuggestions && (
-        <div className="p-4 bg-white border-t">
-          <p className="text-sm font-medium text-gray-700 mb-3">Preguntas frecuentes:</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {QUESTION_SUGGESTIONS.map((category, categoryIndex) => (
-              <div key={categoryIndex} className="space-y-2">
-                <p className="text-xs font-medium text-gray-600">{category.title}</p>
-                <div className="space-y-1">
-                  {category.questions.map((question, questionIndex) => (
-                    <Button
-                      key={questionIndex}
-                      variant="ghost"
-                      size="sm"
-                      className="h-auto p-2 text-left justify-start whitespace-normal text-xs hover:bg-gray-100"
-                      onClick={() => handleSuggestionClick(question)}
-                    >
-                      {question}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+        <div className="p-3 bg-white border-t">
+          <p className="text-sm font-medium text-gray-700 mb-2">Preguntas frecuentes:</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            {KEY_QUESTIONS.map((question, index) => (
+              <Button
+                key={index}
+                variant="ghost"
+                size="sm"
+                className="h-auto p-2 text-left justify-start whitespace-normal text-xs hover:bg-gray-100"
+                onClick={() => handleSuggestionClick(question)}
+              >
+                {question}
+              </Button>
             ))}
           </div>
-          <div className="mt-3 pt-3 border-t">
+          <div className="mt-2">
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={() => setShowSuggestions(false)}
-              className="w-full"
+              className="w-full text-xs"
             >
               Ocultar sugerencias
             </Button>
