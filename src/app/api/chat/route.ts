@@ -97,12 +97,60 @@ export async function POST(request: NextRequest) {
   try {
     console.log(`[${timestamp}] Chat API request started`)
 
-    const { question, use_context = true, max_context_chunks = 4 } = await request.json()
+    // Parse and validate request body
+    let requestBody
+    try {
+      requestBody = await request.json()
+    } catch {
+      console.log(`[${timestamp}] Invalid request: malformed JSON`)
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      )
+    }
+
+    const { question, use_context = true, max_context_chunks = 4 } = requestBody
+
+    // Validate max_context_chunks
+    if (typeof max_context_chunks !== 'number' || max_context_chunks < 1 || max_context_chunks > 10) {
+      console.log(`[${timestamp}] Invalid request: invalid max_context_chunks (${max_context_chunks})`)
+      return NextResponse.json(
+        {
+          error: 'Invalid max_context_chunks',
+          message: 'Must be a number between 1 and 10'
+        },
+        { status: 400 }
+      )
+    }
 
     if (!question || typeof question !== 'string') {
       console.log(`[${timestamp}] Invalid request: missing or invalid question`)
       return NextResponse.json(
         { error: 'Question is required and must be a string' },
+        { status: 400 }
+      )
+    }
+
+    // Input validation
+    if (question.length > 500) {
+      console.log(`[${timestamp}] Invalid request: question too long (${question.length} characters)`)
+      return NextResponse.json(
+        {
+          error: 'Question too long',
+          message: 'Maximum 500 characters allowed',
+          current_length: question.length
+        },
+        { status: 400 }
+      )
+    }
+
+    if (question.trim().length < 3) {
+      console.log(`[${timestamp}] Invalid request: question too short`)
+      return NextResponse.json(
+        {
+          error: 'Question too short',
+          message: 'Minimum 3 characters required'
+        },
         { status: 400 }
       )
     }
@@ -120,7 +168,7 @@ export async function POST(request: NextRequest) {
       const cachedWithMetrics = {
         ...cached,
         performance: {
-          ...((cached as any).performance || {}),
+          ...((cached as { performance?: Record<string, unknown> }).performance || {}),
           total_time_ms: responseTime,
           cache_hit: true,
           environment: process.env.NODE_ENV || 'unknown',
@@ -154,7 +202,7 @@ export async function POST(request: NextRequest) {
         // Buscar documentos relevantes (threshold más bajo para mejor recall)
         const documents = await searchDocuments(
           queryEmbedding,
-          0.3, // threshold reducido para mejor búsqueda
+          0.1, // threshold muy bajo para máximo recall con RLS
           max_context_chunks
         )
         const searchTime = Date.now() - searchStart
@@ -187,11 +235,11 @@ export async function POST(request: NextRequest) {
       }
     } else {
       console.log(`[${timestamp}] 🤖 Generating response without context...`)
-      const claudeStart = Date.now()
+      const claudeStartNoContext = Date.now()
 
       // No context needed - generate response immediately
       response = await generateChatResponse(question, '')
-      const claudeTime = Date.now() - claudeStart
+      const claudeTime = Date.now() - claudeStartNoContext
       console.log(`[${timestamp}] ✅ Response generated - Time: ${claudeTime}ms`)
     }
 

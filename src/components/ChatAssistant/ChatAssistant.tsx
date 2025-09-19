@@ -206,15 +206,16 @@ export function ChatAssistant() {
                   <div className="text-sm prose prose-sm max-w-none">
                     <ReactMarkdown
                       components={{
-                        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
-                        ul: ({ children }) => <ul className="list-disc list-inside mb-2">{children}</ul>,
-                        ol: ({ children }) => <ol className="list-decimal list-inside mb-2">{children}</ol>,
-                        li: ({ children }) => <li className="mb-1">{children}</li>,
-                        strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
-                        code: ({ children }) => <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">{children}</code>,
-                        h1: ({ children }) => <h1 className="font-bold text-base mb-2">{children}</h1>,
-                        h2: ({ children }) => <h2 className="font-semibold text-sm mb-2">{children}</h2>,
-                        h3: ({ children }) => <h3 className="font-medium text-sm mb-1">{children}</h3>,
+                        p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc list-inside mb-3 space-y-1">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal list-inside mb-3 space-y-1">{children}</ol>,
+                        li: ({ children }) => <li className="mb-1 leading-relaxed">{children}</li>,
+                        strong: ({ children }) => <strong className="font-semibold text-blue-700">{children}</strong>,
+                        code: ({ children }) => <code className="bg-blue-50 text-blue-800 px-2 py-1 rounded text-xs font-mono">{children}</code>,
+                        h1: ({ children }) => <h1 className="font-bold text-base mb-3 text-gray-800 border-b border-gray-200 pb-1">{children}</h1>,
+                        h2: ({ children }) => <h2 className="font-semibold text-sm mb-2 text-gray-700">{children}</h2>,
+                        h3: ({ children }) => <h3 className="font-medium text-sm mb-2 text-gray-600">{children}</h3>,
+                        blockquote: ({ children }) => <blockquote className="border-l-4 border-blue-200 pl-3 ml-2 italic text-gray-600 my-2">{children}</blockquote>,
                       }}
                     >
                       {message.content}
@@ -269,7 +270,10 @@ export function ChatAssistant() {
               <CardContent className="p-3">
                 <div className="flex items-center space-x-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  <span className="text-sm text-gray-500">Escribiendo...</span>
+                  <span className="text-sm text-gray-500">Procesando pregunta...</span>
+                </div>
+                <div className="mt-2 text-xs text-gray-400">
+                  Buscando información relevante en documentos SIRE
                 </div>
               </CardContent>
             </Card>

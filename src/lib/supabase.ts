@@ -13,105 +13,122 @@ export interface DocumentEmbedding {
   document_type: string
   chunk_index: number
   total_chunks: number
-  metadata?: Record<string, unknown>
+  // Metadata fields from documentation template frontmatter
+  title?: string
+  description?: string
+  category?: string
+  status?: string
+  version?: string
+  last_updated?: string
+  tags?: string[]
+  keywords?: string[]
+  language?: string
+  embedding_model?: string
+  metadata?: Record<string, unknown> // Generic metadata field
   created_at: string
 }
 
 export async function searchDocuments(
   queryEmbedding: number[],
-  matchThreshold: number = 0.8,
+  matchThreshold: number = 0.3,
   matchCount: number = 4
 ): Promise<DocumentEmbedding[]> {
-  try {
-    console.log('🧪 Testing pgvector function with embedding length:', queryEmbedding.length)
+  console.log('🧪 Testing pgvector function with embedding length:', queryEmbedding.length)
 
-    // Try native vector search function first (optimized)
-    const { data: nativeData, error: nativeError } = await supabase
-      .rpc('match_documents', {
-        query_embedding: queryEmbedding,
-        match_threshold: matchThreshold,
-        match_count: matchCount
-      })
-
-    console.log('🔍 pgvector call result - Error:', !!nativeError, 'Data:', !!nativeData, 'Data length:', nativeData?.length)
-
-    if (!nativeError && nativeData) {
-      console.log('✅ Using native vector search function - Found results:', nativeData.length)
-      return nativeData.map((doc: { id: string; content: string; embedding?: number[]; source_file?: string; document_type?: string; chunk_index?: number; total_chunks?: number; created_at?: string; similarity?: number }) => ({
-        ...doc,
-        embedding: [], // Don't return embedding to save bandwidth
-        source_file: doc.source_file || '',
-        document_type: doc.document_type || '',
-        chunk_index: doc.chunk_index || 0,
-        total_chunks: doc.total_chunks || 1,
-        metadata: {}, // Default empty metadata since function doesn't return it
-        created_at: doc.created_at || new Date().toISOString()
-      }))
-    }
-
-    console.log('❌ Native function not available, falling back to manual search')
-    console.log('📋 Error details:', JSON.stringify(nativeError, null, 2))
-  } catch (e) {
-    console.log('Native function error, falling back to manual search:', e)
+  // Validate inputs
+  if (!queryEmbedding || queryEmbedding.length === 0) {
+    throw new Error('Query embedding is empty or invalid')
   }
 
-  // Fallback: get all documents and do similarity search manually
-  // This is not optimal but will work for now
-  const { data, error } = await supabase
-    .from('document_embeddings')
-    .select('*')
-    .limit(50) // Increased limit for better chunked document coverage
-
-  if (error) {
-    console.error('Error searching documents:', error)
-    throw error
+  if (queryEmbedding.length !== 3072) {
+    console.warn(`⚠️ Unexpected embedding dimension: ${queryEmbedding.length} (expected 3072)`)
   }
 
-  if (!data || data.length === 0) {
-    return []
-  }
+  // Try native pgvector function with retry logic
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      // Add timeout to the request (30 seconds)
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 30000)
 
-  // Calculate cosine similarity manually (simple approximation)
-  const similarities = data.map(doc => {
-    if (!doc.embedding) return { ...doc, similarity: 0 }
+      const { data, error } = await supabase
+        .rpc('match_documents', {
+          query_embedding: queryEmbedding,
+          match_threshold: matchThreshold,
+          match_count: matchCount
+        })
+        .abortSignal(controller.signal)
 
-    // Parse embedding if it's stored as string
-    let docEmbedding = doc.embedding
-    if (typeof docEmbedding === 'string') {
-      try {
-        docEmbedding = JSON.parse(docEmbedding)
-      } catch (e) {
-        console.error('Error parsing embedding:', e)
-        return { ...doc, similarity: 0 }
+      clearTimeout(timeoutId)
+
+      console.log(`🔍 pgvector call result - Error: ${!!error} Data: ${!!data} Data length: ${data?.length || 0}`)
+
+      if (error) {
+        // Handle specific error types
+        if (error.code === 'PGRST202') {
+          console.warn(`⚠️ Attempt ${attempt}/3: pgvector function not in schema cache, retrying...`)
+          if (attempt < 3) {
+            await new Promise(resolve => setTimeout(resolve, 150 * Math.pow(2, attempt - 1))) // Exponential backoff
+            continue
+          }
+        } else if (error.code === 'PGRST001') {
+          console.error('❌ Database connection failed')
+        } else if (error.code === 'PGRST116') {
+          console.error('❌ Supabase function timeout')
+        }
+
+        console.error('❌ pgvector search failed:', error)
+        throw new Error(`Vector search failed: ${error.message}. Code: ${error.code || 'unknown'}`)
       }
+
+      if (!data) {
+        console.log('⚠️ No results from pgvector search')
+        return []
+      }
+
+      console.log(`✅ Using native vector search function - Found results: ${data.length}`)
+
+      // Validate and map results to DocumentEmbedding interface
+      const validatedResults = data
+        .filter((doc: unknown) => doc && typeof doc === 'object' && 'id' in doc && 'content' in doc)
+        .map((doc: {
+          id: string;
+          content: string;
+          source_file: string;
+          document_type: string;
+          chunk_index: number;
+          total_chunks: number;
+          created_at: string;
+          similarity: number;
+        }) => ({
+          ...doc,
+          embedding: [], // Don't return embeddings to save bandwidth
+          metadata: { similarity: doc.similarity } // Include similarity in metadata
+        }))
+
+      return validatedResults
+
+    } catch (err) {
+      console.error(`❌ Attempt ${attempt}/3 failed:`, err)
+
+      // Don't retry on non-retryable errors
+      if (err instanceof Error) {
+        if (err.name === 'AbortError') {
+          console.error('❌ Request timeout')
+        } else if (err.message.includes('NetworkError')) {
+          console.error('❌ Network connectivity issue')
+        }
+      }
+
+      if (attempt === 3) {
+        throw new Error(`pgvector search failed after ${attempt} attempts: ${err instanceof Error ? err.message : 'Unknown error'}`)
+      }
+
+      // Progressive backoff: 150ms, 300ms, 600ms
+      await new Promise(resolve => setTimeout(resolve, 150 * Math.pow(2, attempt - 1)))
     }
+  }
 
-    if (!Array.isArray(docEmbedding)) {
-      console.error('Embedding is not an array:', typeof docEmbedding)
-      return { ...doc, similarity: 0 }
-    }
-
-    let dotProduct = 0
-    let queryMagnitude = 0
-    let docMagnitude = 0
-
-    for (let i = 0; i < Math.min(queryEmbedding.length, docEmbedding.length); i++) {
-      dotProduct += queryEmbedding[i] * docEmbedding[i]
-      queryMagnitude += queryEmbedding[i] * queryEmbedding[i]
-      docMagnitude += docEmbedding[i] * docEmbedding[i]
-    }
-
-    queryMagnitude = Math.sqrt(queryMagnitude)
-    docMagnitude = Math.sqrt(docMagnitude)
-
-    const similarity = dotProduct / (queryMagnitude * docMagnitude)
-
-    return { ...doc, similarity }
-  })
-
-  // Filter by threshold and sort by similarity
-  return similarities
-    .filter(doc => doc.similarity >= matchThreshold)
-    .sort((a, b) => b.similarity - a.similarity)
-    .slice(0, matchCount)
+  // This should never be reached, but TypeScript requires it
+  return []
 }
