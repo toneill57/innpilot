@@ -161,11 +161,12 @@ export function FileUploader() {
                   className="hidden"
                   id="file-upload"
                 />
-                <label htmlFor="file-upload">
-                  <Button asChild>
-                    <span>Seleccionar Archivo</span>
-                  </Button>
-                </label>
+                <Button
+                  onClick={() => document.getElementById('file-upload')?.click()}
+                  type="button"
+                >
+                  Seleccionar Archivo
+                </Button>
                 <Button variant="outline" onClick={downloadTemplate}>
                   <Download className="h-4 w-4 mr-2" />
                   Plantilla
