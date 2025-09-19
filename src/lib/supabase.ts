@@ -33,7 +33,7 @@ export async function searchDocuments(
 
     if (!nativeError && nativeData) {
       console.log('Using native vector search function')
-      return nativeData.map((doc: { id: string; content: string; embedding?: number[]; metadata?: unknown; source_file?: string; document_type?: string; chunk_index?: number; total_chunks?: number }) => ({
+      return nativeData.map((doc: { id: string; content: string; embedding?: number[]; metadata?: unknown; source_file?: string; document_type?: string; chunk_index?: number; total_chunks?: number; created_at?: string }) => ({
         ...doc,
         embedding: [], // Don't return embedding to save bandwidth
         source_file: doc.source_file || '',
