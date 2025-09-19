@@ -20,9 +20,9 @@ export async function GET() {
           status: process.env.ANTHROPIC_API_KEY ? 'configured' : 'not_configured'
         },
         supabase: {
-          status: 'testing',
+          status: 'testing' as 'testing' | 'healthy' | 'error',
           responseTime: '0ms',
-          error: null
+          error: null as string | null
         }
       },
       environment: {
