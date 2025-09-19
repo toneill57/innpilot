@@ -8,7 +8,7 @@ import { generateChatResponse } from '@/lib/claude'
 export const runtime = 'edge'
 
 // Simple in-memory cache (resets on deployment)
-const memoryCache = new Map<string, { data: any, expires: number }>()
+const memoryCache = new Map<string, { data: unknown, expires: number }>()
 
 // Simple hash function for cache keys (Edge Runtime compatible)
 function hashQuestion(question: string): string {
@@ -34,7 +34,7 @@ function getCached(key: string) {
   return null
 }
 
-function setCached(key: string, data: any, ttlSeconds: number = 3600) {
+function setCached(key: string, data: unknown, ttlSeconds: number = 3600) {
   memoryCache.set(key, {
     data,
     expires: Date.now() + (ttlSeconds * 1000)
