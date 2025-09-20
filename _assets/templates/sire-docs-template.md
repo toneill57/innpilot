@@ -1,29 +1,16 @@
 ---
 title: "[DOCUMENT_TITLE]"
 description: "[Brief description of purpose and key information covered]"
-document_type: technical # OPTIONS: sire_docs|technical|regulatory|operational|template|muva|iot|ticketing
-category: technical # OPTIONS: technical|regulatory|operational
-
-# Metadata adicional
-section_title: "[Section or Chapter Title]" # Para navegación dentro del documento
-language: es # REQUIRED: es|en|pt (Spanish by default)
-
-# Tags y búsqueda (múltiples valores permitidos)
+document_type: technical
+category: technical
+section_title: "[Section or Chapter Title]"
+language: es
 tags: [primary_domain, document_type, key_concept]
-keywords: [key_term_1, key_term_2, key_term_3] # Stored as PostgreSQL array
-
-# Control de versiones
-status: production-ready # OPTIONS: active|draft|production-ready
+keywords: [key_term_1, key_term_2, key_term_3]
+status: production-ready
 version: "1.0"
-updated_at: "2025-09-19T18:35:00Z" # ISO format with timezone (UTC recommended)
-created_at: "2025-09-19T18:35:00Z" # ISO format with timezone (UTC recommended)
-
-# NOTES FOR DEVELOPERS:
-# - page_number: Only needed for PDF documents (omit for markdown files)
-# - token_count: Calculated automatically by system (omit from frontmatter)
-# - embedding_model: Set automatically to "text-embedding-3-large"
-# - Use underscore format for document_type: "sire_docs" not "sire-docs"
-# - Timestamps should use ISO format with timezone for consistency
+updated_at: "2025-09-19T18:35:00Z"
+created_at: "2025-09-19T18:35:00Z"
 ---
 
 # [DOCUMENT_TITLE]

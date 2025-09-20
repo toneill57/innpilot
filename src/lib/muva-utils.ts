@@ -226,6 +226,40 @@ export function getPriceRanges(): { value: PriceRange; label: string }[] {
 }
 
 /**
+ * Search by metadata when vectorial search doesn't return results
+ */
+export async function searchByMetadata(query: string, matchCount = 4): Promise<MuvaEmbedding[]> {
+  try {
+    console.log(`[MUVA] Searching by metadata for: "${query}"`)
+
+    const lowerQuery = query.toLowerCase()
+
+    // Build flexible search query for title, description, content, and tags
+    const { data, error } = await supabase
+      .from('muva_embeddings')
+      .select('*')
+      .or(`title.ilike.%${lowerQuery}%,description.ilike.%${lowerQuery}%,content.ilike.%${lowerQuery}%,tags.cs.{${lowerQuery}}`)
+      .limit(matchCount)
+
+    if (error) {
+      console.error('[MUVA] Metadata search error:', error)
+      throw new Error(`Metadata search failed: ${error.message}`)
+    }
+
+    if (!data || data.length === 0) {
+      console.log('[MUVA] No metadata results found')
+      return []
+    }
+
+    console.log(`[MUVA] Found ${data.length} metadata results`)
+    return data.map(formatMuvaResult)
+  } catch (error) {
+    console.error('[MUVA] Metadata search error:', error)
+    throw error
+  }
+}
+
+/**
  * Check if question is MUVA-related
  */
 export function isMuvaQuestion(question: string): boolean {
@@ -241,7 +275,10 @@ export function isMuvaQuestion(question: string): boolean {
     'transporte', 'llegar', 'mover', 'taxi', 'bus',
     'san andres', 'providencia', 'colombia', 'caribe',
     'recomendar', 'recomendacion', 'sugerir', 'mejor',
-    'donde', 'que hacer', 'que visitar', 'plan'
+    'donde', 'que hacer', 'que visitar', 'plan',
+    // Agregamos palabras específicas para casos problemáticos
+    'smoothie', 'smoothies', 'pancake', 'pancakes', 'pet friendly',
+    'mascotas', 'pets', 'animales', 'pet', 'friendly'
   ]
 
   const lowerQuestion = question.toLowerCase()

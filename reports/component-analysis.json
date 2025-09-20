@@ -1,0 +1,1292 @@
+{
+  "timestamp": "2025-09-20T14:56:53.143Z",
+  "summary": {
+    "totalComponents": 7
+  },
+  "components": {
+    "/Users/oneill/Sites/apps/InnPilot/src/components/ChatAssistant/ChatAssistant.tsx": {
+      "name": "ChatAssistant",
+      "path": "src/components/ChatAssistant/ChatAssistant.tsx",
+      "size": {
+        "bytes": 12957,
+        "lines": 361
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "ChatAssistant",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "components": [],
+        "hooks": [
+          "useState",
+          "useEffect"
+        ],
+        "interfaces": [
+          "Message"
+        ],
+        "types": [],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [
+          "react",
+          "react-markdown"
+        ],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/button",
+          "@/components/ui/input",
+          "@/components/ui/card"
+        ],
+        "total": 6
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "flex-col",
+            "h-96",
+            "max-w-4xl",
+            "mx-auto",
+            "justify-between",
+            "items-center",
+            "p-3",
+            "bg-white",
+            "border-b",
+            "rounded-t-lg",
+            "font-medium",
+            "text-gray-800",
+            "space-x-2",
+            "w-4",
+            "h-4",
+            "mr-1",
+            "flex-1",
+            "overflow-y-auto",
+            "p-4",
+            "space-y-4",
+            "bg-gray-50",
+            "flex-shrink-0",
+            "w-8",
+            "h-8",
+            "bg-blue-500",
+            "rounded-full",
+            "justify-center",
+            "text-white",
+            "text-sm",
+            "prose-sm",
+            "max-w-none",
+            "mb-2",
+            "-0",
+            "leading-relaxed",
+            "list-disc",
+            "list-inside",
+            "mb-3",
+            "space-y-1",
+            "list-decimal",
+            "mb-1",
+            "font-semibold",
+            "text-blue-700",
+            "bg-blue-50",
+            "text-blue-800",
+            "px-2",
+            "py-1",
+            "text-xs",
+            "font-mono",
+            "font-bold",
+            "text-base",
+            "border-gray-200",
+            "pb-1",
+            "text-gray-700",
+            "text-gray-600",
+            "border-l-4",
+            "border-blue-200",
+            "pl-3",
+            "ml-2",
+            "my-2",
+            "whitespace-pre-wrap",
+            "mt-2",
+            "opacity-0",
+            "group-hover:opacity",
+            "-100",
+            "transition-opacity",
+            "h-6",
+            "w-6",
+            "p-0",
+            "text-green-600",
+            "w-3",
+            "h-3",
+            "bg-gray-400",
+            "items-start",
+            "space-x-3",
+            "justify-start",
+            "animate-spin",
+            "text-gray-500",
+            "text-gray-400",
+            "border-t",
+            "grid-cols-1",
+            "md:grid",
+            "-cols-2",
+            "gap-2",
+            "h-auto",
+            "p-2",
+            "text-left",
+            "whitespace-normal",
+            "-gray-100",
+            "w-full",
+            "rounded-b-lg"
+          ],
+          "responsive": true,
+          "animations": true,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 0,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation",
+          "semantic-elements"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 0,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 95,
+        "optimizations": [],
+        "concerns": [
+          "inline-functions"
+        ],
+        "metrics": {
+          "inlineObjects": 4,
+          "inlineFunctions": 10,
+          "optimizationCount": 0
+        }
+      },
+      "patterns": {
+        "design": [
+          "card-pattern",
+          "button-pattern",
+          "form-pattern"
+        ],
+        "react": [
+          "state-management",
+          "side-effects",
+          "composition"
+        ],
+        "custom": []
+      },
+      "quality": {
+        "score": 100,
+        "factors": [
+          {
+            "name": "typescript",
+            "impact": 10
+          },
+          {
+            "name": "documentation",
+            "impact": 5
+          },
+          {
+            "name": "file-length",
+            "impact": -10
+          }
+        ],
+        "complexity": 9,
+        "lines": 361
+      },
+      "domain": "SIRE"
+    },
+    "/Users/oneill/Sites/apps/InnPilot/src/components/Dashboard/Dashboard.tsx": {
+      "name": "Dashboard",
+      "path": "src/components/Dashboard/Dashboard.tsx",
+      "size": {
+        "bytes": 8007,
+        "lines": 193
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "Dashboard",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "components": [],
+        "hooks": [],
+        "interfaces": [],
+        "types": [],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [
+          "react"
+        ],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/card",
+          "@/components/FileUploader/FileUploader",
+          "@/components/ChatAssistant/ChatAssistant",
+          "@/components/MuvaAssistant/MuvaAssistant"
+        ],
+        "total": 6
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "min-h-screen",
+            "bg-gray-50",
+            "bg-white",
+            "border-b",
+            "border-gray-200",
+            "max-w-7xl",
+            "mx-auto",
+            "px-4",
+            "sm:px",
+            "-6",
+            "lg:px",
+            "-8",
+            "justify-between",
+            "items-center",
+            "py-6",
+            "h-8",
+            "w-8",
+            "text-blue-600",
+            "mr-3",
+            "text-2xl",
+            "font-bold",
+            "text-gray-900",
+            "text-sm",
+            "text-gray-500",
+            "space-x-4",
+            "text-right",
+            "font-medium",
+            "text-xs",
+            "py-8",
+            "grid-cols-1",
+            "md:grid",
+            "-cols-4",
+            "gap-6",
+            "mb-8",
+            "flex-row",
+            "space-y-0",
+            "pb-2",
+            "h-4",
+            "w-4",
+            "text-muted-foreground",
+            "space-x-8",
+            "mr-2",
+            "rounded-lg",
+            "p-6",
+            "mb-4",
+            "text-lg",
+            "text-center",
+            "py-12",
+            "h-12",
+            "w-12",
+            "text-gray-400",
+            "mt-2",
+            "mt-1"
+          ],
+          "responsive": true,
+          "animations": false,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 45,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 3,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 95,
+        "optimizations": [],
+        "concerns": [
+          "inline-functions"
+        ],
+        "metrics": {
+          "inlineObjects": 0,
+          "inlineFunctions": 4,
+          "optimizationCount": 0
+        }
+      },
+      "patterns": {
+        "design": [
+          "card-pattern",
+          "button-pattern",
+          "form-pattern"
+        ],
+        "react": [
+          "state-management"
+        ],
+        "custom": []
+      },
+      "quality": {
+        "score": 100,
+        "factors": [
+          {
+            "name": "documentation",
+            "impact": 5
+          },
+          {
+            "name": "low-complexity",
+            "impact": 5
+          }
+        ],
+        "complexity": 0,
+        "lines": 193
+      },
+      "domain": "SIRE"
+    },
+    "/Users/oneill/Sites/apps/InnPilot/src/components/FileUploader/FileUploader.tsx": {
+      "name": "FileUploader",
+      "path": "src/components/FileUploader/FileUploader.tsx",
+      "size": {
+        "bytes": 10396,
+        "lines": 301
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "FileUploader",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "components": [],
+        "hooks": [
+          "useState",
+          "useCallback"
+        ],
+        "interfaces": [
+          "ValidationResult"
+        ],
+        "types": [],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [
+          "react"
+        ],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/button",
+          "@/components/ui/card",
+          "@/lib/utils"
+        ],
+        "total": 5
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "space-y-6",
+            "items-center",
+            "gap-2",
+            "h-5",
+            "w-5",
+            "mx-auto",
+            "h-12",
+            "w-12",
+            "text-gray-400",
+            "mb-4",
+            "space-y-2",
+            "text-lg",
+            "font-medium",
+            "text-gray-900",
+            "text-sm",
+            "text-gray-500",
+            "justify-center",
+            "gap-4",
+            "mt-4",
+            "h-4",
+            "w-4",
+            "mr-2",
+            "p-6",
+            "space-x-2",
+            "animate-spin",
+            "rounded-full",
+            "border-b-2",
+            "border-blue-600",
+            "text-green-600",
+            "text-red-600",
+            "space-y-4",
+            "grid-cols-2",
+            "md:grid",
+            "-cols-4",
+            "bg-green-50",
+            "border-green-200",
+            "rounded-lg",
+            "p-4",
+            "text-green-800",
+            "text-green-700",
+            "mt-1",
+            "bg-red-50",
+            "border-red-200",
+            "items-start",
+            "mt-0",
+            "flex-shrink-0",
+            "text-red-800",
+            "text-red-700",
+            "space-y-1",
+            "bg-blue-50",
+            "border-blue-200",
+            "text-blue-800",
+            "mb-2",
+            "text-blue-700",
+            "space-y-3",
+            "mb-1",
+            "text-gray-600"
+          ],
+          "responsive": true,
+          "animations": true,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 0,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation",
+          "semantic-elements"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 0,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 100,
+        "optimizations": [
+          "hooks-optimization"
+        ],
+        "concerns": [],
+        "metrics": {
+          "inlineObjects": 4,
+          "inlineFunctions": 2,
+          "optimizationCount": 1
+        }
+      },
+      "patterns": {
+        "design": [
+          "card-pattern",
+          "button-pattern",
+          "form-pattern"
+        ],
+        "react": [
+          "state-management"
+        ],
+        "custom": []
+      },
+      "quality": {
+        "score": 100,
+        "factors": [
+          {
+            "name": "typescript",
+            "impact": 10
+          },
+          {
+            "name": "documentation",
+            "impact": 5
+          },
+          {
+            "name": "file-length",
+            "impact": -10
+          }
+        ],
+        "complexity": 7,
+        "lines": 301
+      },
+      "domain": "SIRE"
+    },
+    "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/ImageGrid.tsx": {
+      "name": "ImageGrid",
+      "path": "src/components/MuvaAssistant/ImageGrid.tsx",
+      "size": {
+        "bytes": 5114,
+        "lines": 145
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "ImageGrid",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "components": [],
+        "hooks": [],
+        "interfaces": [
+          "ImageGridProps"
+        ],
+        "types": [],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [
+          "react"
+        ],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/button"
+        ],
+        "total": 3
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "mb-3",
+            "w-full",
+            "rounded-lg",
+            "max-h-64",
+            "object-cover",
+            "cursor-pointer",
+            "-95",
+            "transition-opacity",
+            "text-xs",
+            "text-gray-600",
+            "mt-1",
+            "grid-cols-2",
+            "gap-2",
+            "h-32",
+            "inset-0",
+            "bg-black",
+            "bg-opacity-50",
+            "items-center",
+            "justify-center",
+            "text-white",
+            "font-semibold",
+            "bg-opacity-75",
+            "z-50",
+            "p-4",
+            "max-w-4xl",
+            "max-h-full",
+            "top-12",
+            "right-0",
+            "-white",
+            "-opacity-20",
+            "w-5",
+            "h-5",
+            "left-2",
+            "top-1",
+            "translate-y-1",
+            "w-6",
+            "h-6",
+            "right-2",
+            "max-w-full",
+            "object-contain",
+            "bottom-0",
+            "left-0",
+            "rounded-b-lg",
+            "text-sm",
+            "top-4",
+            "left-4",
+            "px-3",
+            "py-1",
+            "rounded-full"
+          ],
+          "responsive": false,
+          "animations": true,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 0,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation",
+          "semantic-elements"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 0,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 95,
+        "optimizations": [],
+        "concerns": [
+          "inline-functions"
+        ],
+        "metrics": {
+          "inlineObjects": 1,
+          "inlineFunctions": 6,
+          "optimizationCount": 0
+        }
+      },
+      "patterns": {
+        "design": [
+          "modal-pattern",
+          "button-pattern",
+          "form-pattern"
+        ],
+        "react": [
+          "state-management"
+        ],
+        "custom": []
+      },
+      "quality": {
+        "score": 100,
+        "factors": [
+          {
+            "name": "typescript",
+            "impact": 10
+          },
+          {
+            "name": "documentation",
+            "impact": 5
+          },
+          {
+            "name": "low-complexity",
+            "impact": 5
+          }
+        ],
+        "complexity": 2,
+        "lines": 145
+      },
+      "domain": "MUVA"
+    },
+    "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/ListingCard.tsx": {
+      "name": "ListingCard",
+      "path": "src/components/MuvaAssistant/ListingCard.tsx",
+      "size": {
+        "bytes": 6934,
+        "lines": 198
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "ListingCard",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "components": [],
+        "hooks": [],
+        "interfaces": [
+          "ListingCardProps"
+        ],
+        "types": [],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/badge"
+        ],
+        "total": 2
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "rounded-lg",
+            "border-gray-200",
+            "p-4",
+            "mb-3",
+            "-lg",
+            "transition-all",
+            "duration-200",
+            "bg-white",
+            "items-start",
+            "gap-3",
+            "flex-shrink-0",
+            "w-20",
+            "h-20",
+            "object-cover",
+            "shadow-sm",
+            "flex-1",
+            "min-w-0",
+            "justify-between",
+            "gap-2",
+            "mb-2",
+            "items-center",
+            "text-2xl",
+            "font-semibold",
+            "text-lg",
+            "text-gray-900",
+            "gap-1",
+            "w-4",
+            "h-4",
+            "fill-yellow-400",
+            "text-yellow-400",
+            "text-sm",
+            "font-medium",
+            "text-gray-700",
+            "text-gray-600",
+            "line-clamp-2",
+            "space-y-2",
+            "flex-wrap",
+            "w-3",
+            "h-3",
+            "text-blue-600",
+            "-blue-800",
+            "transition-colors",
+            "mt-2",
+            "text-xs",
+            "bg-gray-100",
+            "-gray-200",
+            "pt-2",
+            "border-t",
+            "border-gray-100",
+            "text-gray-500"
+          ],
+          "responsive": false,
+          "animations": true,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "shadows",
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 0,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation",
+          "semantic-elements"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 0,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 100,
+        "optimizations": [],
+        "concerns": [],
+        "metrics": {
+          "inlineObjects": 2,
+          "inlineFunctions": 0,
+          "optimizationCount": 0
+        }
+      },
+      "patterns": {
+        "design": [
+          "card-pattern"
+        ],
+        "react": [],
+        "custom": []
+      },
+      "quality": {
+        "score": 100,
+        "factors": [
+          {
+            "name": "typescript",
+            "impact": 10
+          },
+          {
+            "name": "documentation",
+            "impact": 5
+          },
+          {
+            "name": "low-complexity",
+            "impact": 5
+          }
+        ],
+        "complexity": 2,
+        "lines": 198
+      },
+      "domain": "MUVA"
+    },
+    "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/MuvaAssistant.tsx": {
+      "name": "MuvaAssistant",
+      "path": "src/components/MuvaAssistant/MuvaAssistant.tsx",
+      "size": {
+        "bytes": 26674,
+        "lines": 717
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "MuvaAssistant",
+            "type": "function",
+            "isDefault": true
+          }
+        ],
+        "components": [],
+        "hooks": [
+          "useState",
+          "useEffect"
+        ],
+        "interfaces": [
+          "for",
+          "Message",
+          "MuvaFilters"
+        ],
+        "types": [
+          "MuvaCategory",
+          "PriceRange"
+        ],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [
+          "react",
+          "react-markdown"
+        ],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/button",
+          "@/components/ui/card",
+          "@/components/ui/input",
+          "@/components/ui/badge",
+          "@/components/ui/select",
+          "@/lib/muva-utils",
+          "./ResponseRating"
+        ],
+        "total": 10
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "flex-col",
+            "h-full",
+            "max-w-4xl",
+            "mx-auto",
+            "items-center",
+            "justify-between",
+            "mb-6",
+            "gap-3",
+            "w-10",
+            "h-10",
+            "rounded-full",
+            "bg-gradient-to-r",
+            "from-blue-500",
+            "to-green-500",
+            "justify-center",
+            "w-5",
+            "h-5",
+            "text-white",
+            "text-2xl",
+            "font-bold",
+            "tropical-gradient-text",
+            "text-sm",
+            "text-gray-600",
+            "gap-2",
+            "w-4",
+            "h-4",
+            "ml-1",
+            "px-1",
+            "py-0",
+            "text-xs",
+            "mb-4",
+            "pb-3",
+            "text-lg",
+            "space-y-4",
+            "grid-cols-1",
+            "md:grid",
+            "-cols-2",
+            "lg:grid",
+            "-cols-4",
+            "gap-4",
+            "space-y-2",
+            "font-medium",
+            "flex-1",
+            "overflow-y-auto",
+            "p-4",
+            "top-2",
+            "right-0",
+            "gap-1",
+            "opacity-0",
+            "group-hover:opacity",
+            "-100",
+            "transition-opacity",
+            "h-6",
+            "w-6",
+            "p-0",
+            "bg-white",
+            "shadow-sm",
+            "-gray-50",
+            "text-green-600",
+            "w-3",
+            "h-3",
+            "animate-spin",
+            "prose-sm",
+            "max-w-none",
+            "text-xl",
+            "mb-3",
+            "from-blue-600",
+            "to-green-600",
+            "bg-clip-text",
+            "text-transparent",
+            "font-semibold",
+            "mb-2",
+            "text-blue-700",
+            "border-b",
+            "border-blue-200",
+            "pb-1",
+            "text-base",
+            "text-green-700",
+            "-0",
+            "leading-relaxed",
+            "text-gray-700",
+            "list-none",
+            "items-start",
+            "text-green-500",
+            "mt-1",
+            "flex-shrink-0",
+            "text-blue-600",
+            "border-l-4",
+            "border-green-400",
+            "bg-green-50",
+            "pl-4",
+            "py-2",
+            "my-3",
+            "rounded-r",
+            "mr-2",
+            "bg-blue-50",
+            "px-2",
+            "py-1",
+            "font-mono",
+            "mt-2",
+            "pt-2",
+            "border-t",
+            "border-gray-200",
+            "text-gray-500",
+            "flex-wrap",
+            "justify-start",
+            "message-enter-assistant",
+            "from-blue-50",
+            "to-green-50",
+            "rounded-lg",
+            "p-3",
+            "muva-loading",
+            "text-blue-500",
+            "px-4",
+            "pb-4",
+            "h-8",
+            "tourism-card",
+            "-blue-300",
+            "-blue-600",
+            "transition-all"
+          ],
+          "responsive": true,
+          "animations": true,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "gradients",
+          "shadows",
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 0,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation",
+          "semantic-elements"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 0,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 85,
+        "optimizations": [],
+        "concerns": [
+          "excessive-inline-objects",
+          "inline-functions"
+        ],
+        "metrics": {
+          "inlineObjects": 8,
+          "inlineFunctions": 13,
+          "optimizationCount": 0
+        }
+      },
+      "patterns": {
+        "design": [
+          "card-pattern",
+          "button-pattern",
+          "form-pattern"
+        ],
+        "react": [
+          "state-management",
+          "side-effects",
+          "composition"
+        ],
+        "custom": []
+      },
+      "quality": {
+        "score": 90,
+        "factors": [
+          {
+            "name": "typescript",
+            "impact": 10
+          },
+          {
+            "name": "documentation",
+            "impact": 5
+          },
+          {
+            "name": "file-length",
+            "impact": -10
+          },
+          {
+            "name": "high-complexity",
+            "impact": -15
+          }
+        ],
+        "complexity": 21,
+        "lines": 717
+      },
+      "domain": "MUVA"
+    },
+    "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/ResponseRating.tsx": {
+      "name": "ResponseRating",
+      "path": "src/components/MuvaAssistant/ResponseRating.tsx",
+      "size": {
+        "bytes": 6400,
+        "lines": 207
+      },
+      "structure": {
+        "exports": [
+          {
+            "name": "ResponseRating",
+            "type": "function",
+            "isDefault": false
+          }
+        ],
+        "components": [],
+        "hooks": [
+          "useState"
+        ],
+        "interfaces": [
+          "Message",
+          "ResponseRatingProps"
+        ],
+        "types": [],
+        "constants": []
+      },
+      "dependencies": {
+        "react": [
+          "react"
+        ],
+        "external": [
+          "lucide-react"
+        ],
+        "internal": [
+          "@/components/ui/button",
+          "@/components/ui/textarea"
+        ],
+        "total": 4
+      },
+      "styling": {
+        "tailwind": {
+          "classes": [
+            "items-center",
+            "gap-2",
+            "mt-2",
+            "text-xs",
+            "text-green-600",
+            "w-3",
+            "h-3",
+            "space-y-2",
+            "text-gray-500",
+            "gap-1",
+            "fill-current",
+            "p-3",
+            "bg-gray-50",
+            "rounded-lg",
+            "w-4",
+            "h-4",
+            "text-gray-600",
+            "text-sm",
+            "font-medium",
+            "text-gray-700",
+            "min-h",
+            "resize-none",
+            "justify-between",
+            "h-7",
+            "mr-1",
+            "p-2",
+            "bg-blue-50",
+            "justify-end",
+            "h-6"
+          ],
+          "responsive": false,
+          "animations": true,
+          "customProperties": false
+        },
+        "css": {
+          "modules": false,
+          "inline": false,
+          "customClasses": []
+        },
+        "patterns": [
+          "rounded-corners"
+        ]
+      },
+      "accessibility": {
+        "score": 15,
+        "features": [],
+        "missing": [
+          "aria-labels",
+          "keyboard-navigation"
+        ],
+        "ariaLabels": 0,
+        "semanticElements": 1,
+        "keyboardSupport": false
+      },
+      "performance": {
+        "score": 100,
+        "optimizations": [],
+        "concerns": [],
+        "metrics": {
+          "inlineObjects": 5,
+          "inlineFunctions": 3,
+          "optimizationCount": 0
+        }
+      },
+      "patterns": {
+        "design": [
+          "button-pattern",
+          "form-pattern"
+        ],
+        "react": [
+          "state-management"
+        ],
+        "custom": []
+      },
+      "quality": {
+        "score": 100,
+        "factors": [
+          {
+            "name": "typescript",
+            "impact": 10
+          },
+          {
+            "name": "documentation",
+            "impact": 5
+          }
+        ],
+        "complexity": 14,
+        "lines": 207
+      },
+      "domain": "MUVA"
+    }
+  },
+  "patterns": {
+    "domains": {
+      "SIRE": 3,
+      "MUVA": 4,
+      "SHARED": 0
+    },
+    "complexity": {
+      "low": 0,
+      "medium": 4,
+      "high": 3
+    },
+    "accessibility": {
+      "good": 0,
+      "fair": 1,
+      "poor": 6
+    },
+    "performance": {
+      "optimized": 6,
+      "standard": 1,
+      "needs_work": 0
+    },
+    "common_patterns": {
+      "card-pattern": 5,
+      "button-pattern": 6,
+      "form-pattern": 6,
+      "modal-pattern": 1
+    }
+  },
+  "quality": {
+    "overall_quality": 98.57142857142857,
+    "accessibility_avg": 8.571428571428571,
+    "performance_avg": 95.71428571428571,
+    "maintainability": 85.71428571428571,
+    "consistency": 80,
+    "typescript_coverage": 85.71428571428571
+  },
+  "recommendations": [
+    {
+      "type": "accessibility",
+      "priority": "high",
+      "title": "Mejorar accesibilidad en componentes",
+      "description": "7 componentes necesitan mejoras de accesibilidad",
+      "components": [
+        "ChatAssistant",
+        "Dashboard",
+        "FileUploader",
+        "ImageGrid",
+        "ListingCard",
+        "MuvaAssistant",
+        "ResponseRating"
+      ],
+      "actions": [
+        "Añadir aria-labels",
+        "Implementar navegación por teclado",
+        "Usar elementos semánticos"
+      ]
+    }
+  ]
+}

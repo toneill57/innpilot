@@ -1,7 +1,267 @@
-# Plan de Mejoras Visuales para Chat MUVA
+# Plan de Mejoras para Chat MUVA
 
-## 🎯 Objetivo
-Hacer el chat MUVA más amigable y visualmente atractivo con Markdown renderizado correctamente y posibilidad de mostrar imágenes de los lugares turísticos.
+## 🎯 Objetivos
+1. **Técnico**: Implementar las características avanzadas del chat SIRE en MUVA
+2. **Visual**: Hacer el chat más amigable con Markdown renderizado y posibilidad de mostrar imágenes
+3. **Performance**: Optimizar velocidad y confiabilidad del sistema
+
+## 🚀 MEJORAS TÉCNICAS PRIORITARIAS (del análisis SIRE)
+
+### 1. Sistema de Caché Semántico
+**Tiempo estimado:** 2-3 horas
+**Prioridad:** ALTA
+
+#### Implementación:
+```typescript
+// Agregar a /api/muva/chat/route.ts
+const MUVA_SEMANTIC_GROUPS = {
+  "mejores_restaurantes": [
+    "mejores restaurantes",
+    "dónde comer",
+    "restaurantes recomendados",
+    "comida típica"
+  ],
+  "playas_actividades": [
+    "mejores playas",
+    "qué hacer en la playa",
+    "actividades acuáticas",
+    "snorkeling", "buceo"
+  ],
+  "vida_nocturna": [
+    "bares", "discotecas",
+    "vida nocturna",
+    "dónde salir de noche"
+  ],
+  "transporte": [
+    "cómo moverse",
+    "transporte",
+    "taxi", "buses",
+    "alquiler de motos"
+  ]
+}
+
+// Cache con TTL de 1 hora para preguntas turísticas frecuentes
+const muvaCache = new Map<string, { data: any, expires: number }>()
+```
+
+### 2. Manejo de Errores Mejorado
+**Tiempo estimado:** 1 hora
+**Prioridad:** ALTA
+
+```typescript
+// Fallback cuando falla la búsqueda de contexto
+try {
+  // búsqueda normal
+} catch (error) {
+  // Responder con información general turística
+  return generateTourismFallback(question)
+}
+
+// Mensajes de error específicos para turistas
+const TOURIST_ERROR_MESSAGES = {
+  'no_results': '🏝️ No encontré información específica sobre eso. ¿Te puedo ayudar con restaurantes, playas o actividades?',
+  'service_error': '⚠️ Estoy teniendo problemas técnicos. Por favor intenta de nuevo.',
+  'invalid_filters': '🔍 Los filtros seleccionados no son compatibles. Intenta con menos filtros.'
+}
+```
+
+### 3. Validación de Entrada Robusta
+**Tiempo estimado:** 45 minutos
+**Prioridad:** MEDIA
+
+```typescript
+// Validaciones para MUVA
+const validateMuvaInput = (input: MuvaChatRequest) => {
+  // Límite de caracteres
+  if (input.question.length > 500) {
+    throw new Error('Pregunta muy larga (máx 500 caracteres)')
+  }
+
+  // Validar combinaciones de filtros
+  if (input.category === 'beach' && input.price_range) {
+    throw new Error('Las playas no tienen rango de precio')
+  }
+
+  // Anti-spam
+  if (detectSpamPattern(input.question)) {
+    throw new Error('Pregunta no válida')
+  }
+}
+```
+
+### 4. Endpoint de Salud MUVA
+**Tiempo estimado:** 1 hora
+**Prioridad:** MEDIA
+
+```typescript
+// Crear /api/muva/health/route.ts
+export async function GET() {
+  const health = {
+    service: 'MUVA Tourism Assistant',
+    status: 'healthy',
+    checks: {
+      database: await checkMuvaEmbeddings(),
+      dataFreshness: await checkLastUpdate(),
+      filterPerformance: await testFilters(),
+      cacheSize: muvaCache.size,
+      avgResponseTime: getAvgResponseTime()
+    },
+    stats: {
+      totalQueries: await getTotalQueries(),
+      popularCategories: await getPopularCategories(),
+      cacheHitRate: calculateCacheHitRate()
+    }
+  }
+  return NextResponse.json(health)
+}
+```
+
+### 5. Monitoreo de Performance
+**Tiempo estimado:** 1.5 horas
+**Prioridad:** MEDIA
+
+```typescript
+// Métricas detalladas en respuestas
+const performanceMetrics = {
+  embedding_time_ms: embeddingTime,
+  search_time_ms: searchTime,
+  claude_time_ms: claudeTime,
+  total_time_ms: totalTime,
+  cache_hit: fromCache,
+  filters_applied: Object.keys(filters).length,
+  results_found: searchResults.length,
+  result_quality: calculateRelevanceScore(searchResults)
+}
+
+// Tracking de métricas
+await trackMetrics({
+  endpoint: 'muva_chat',
+  response_time: totalTime,
+  cache_hit: fromCache,
+  category: filters.category,
+  user_session: sessionId
+})
+```
+
+### 6. Funciones del Frontend (Complemento a MuvaAssistant.tsx)
+**Tiempo estimado:** 2 horas
+**Prioridad:** ALTA
+
+```typescript
+// Acciones de mensaje
+const MessageActions = ({ message }: { message: Message }) => (
+  <div className="flex gap-2 mt-2 opacity-0 group-hover:opacity-100 transition">
+    <Button size="sm" variant="ghost" onClick={() => copyToClipboard(message.content)}>
+      <Copy className="w-3 h-3" />
+    </Button>
+    <Button size="sm" variant="ghost" onClick={() => regenerateResponse(message.id)}>
+      <RefreshCw className="w-3 h-3" />
+    </Button>
+    <Button size="sm" variant="ghost" onClick={() => shareMessage(message)}>
+      <Share className="w-3 h-3" />
+    </Button>
+  </div>
+)
+
+// Exportar conversación
+const exportConversation = () => {
+  const data = messages.map(m => ({
+    role: m.type,
+    content: m.content,
+    timestamp: m.timestamp
+  }))
+  downloadJSON(data, 'muva-chat-export.json')
+}
+
+// Indicadores de performance en tiempo real
+{message.performance && (
+  <div className="text-xs text-gray-500 flex gap-2">
+    <span>⚡ {message.performance.total_time_ms}ms</span>
+    {message.performance.cache_hit && <span>💾 Desde caché</span>}
+  </div>
+)}
+```
+
+### 7. Sistema de Feedback y Rating
+**Tiempo estimado:** 2 horas
+**Prioridad:** BAJA
+
+```typescript
+// Componente de rating
+const ResponseRating = ({ messageId }: { messageId: string }) => {
+  const [rating, setRating] = useState<number | null>(null)
+
+  const handleRate = async (value: number) => {
+    setRating(value)
+    await fetch('/api/muva/feedback', {
+      method: 'POST',
+      body: JSON.stringify({ messageId, rating: value })
+    })
+  }
+
+  return (
+    <div className="flex gap-1 mt-2">
+      <span className="text-xs text-gray-500">¿Te fue útil?</span>
+      {[1,2,3,4,5].map(i => (
+        <button
+          key={i}
+          onClick={() => handleRate(i)}
+          className={rating >= i ? 'text-yellow-500' : 'text-gray-300'}
+        >
+          ⭐
+        </button>
+      ))}
+    </div>
+  )
+}
+
+// API para guardar feedback
+// /api/muva/feedback/route.ts
+export async function POST(req: NextRequest) {
+  const { messageId, rating } = await req.json()
+  await supabase.from('muva_feedback').insert({
+    message_id: messageId,
+    rating,
+    timestamp: new Date().toISOString()
+  })
+  return NextResponse.json({ success: true })
+}
+```
+
+### 8. Analytics de Consultas Populares
+**Tiempo estimado:** 1.5 horas
+**Prioridad:** BAJA
+
+```typescript
+// Tracking de queries
+const trackQuery = async (question: string, category?: string) => {
+  await supabase.from('muva_analytics').insert({
+    query: question,
+    category,
+    timestamp: new Date().toISOString(),
+    session_id: getSessionId()
+  })
+}
+
+// Dashboard de analytics (endpoint)
+export async function GET() {
+  const analytics = await supabase
+    .from('muva_analytics')
+    .select('query, category, count(*)')
+    .group('query, category')
+    .order('count', { ascending: false })
+    .limit(20)
+
+  return NextResponse.json({
+    popularQueries: analytics.data,
+    totalQueries: await getTotalCount(),
+    avgResponseTime: await getAvgResponseTime(),
+    categoryDistribution: await getCategoryStats()
+  })
+}
+```
+
+## 🎨 MEJORAS VISUALES (Plan Original)
 
 ## Estado Actual
 - **MuvaAssistant.tsx**: Renderizado simple con `split('\n').map()` - NO usa ReactMarkdown
@@ -316,21 +576,29 @@ const embeddingData = {
 
 ## 🚀 Orden de Ejecución Recomendado
 
-1. **Fase 1 - Base (1 día)**
+1. **Fase 1 - Base (1 día)** ✅ COMPLETADO
    - ✅ Implementar ReactMarkdown en MuvaAssistant
    - ✅ Crear componente ListingCard básico
    - ✅ Probar con datos existentes
 
-2. **Fase 2 - Imágenes (1-2 días)**
-   - Decidir entre Opción A (básica) o B (carrusel)
-   - Agregar campo images a la base de datos
-   - Implementar componente de visualización
-   - Actualizar script de población de datos
+2. **Fase 2 - Imágenes (1-2 días)** ✅ COMPLETADO
+   - ✅ Implementado Opción A (básica) con ImageGrid
+   - ✅ Agregar campo images a la base de datos
+   - ✅ Implementar componente de visualización con modal
+   - ✅ Tabla actualizada con image_metadata
 
-3. **Fase 3 - Polish (1 día)**
-   - Agregar animaciones y transiciones
-   - Implementar indicadores visuales mejorados
-   - Optimizar performance y UX
+3. **Fase 3 - Polish (1 día)** ✅ COMPLETADO
+   - ✅ Agregar animaciones y transiciones tropicales
+   - ✅ Implementar indicadores visuales mejorados
+   - ✅ Optimizar performance y UX
+
+4. **Fase 4 - Funcionalidades Avanzadas** ✅ COMPLETADO
+   - ✅ Sistema de feedback y rating
+   - ✅ Analytics de queries populares
+   - ✅ Cache semántico inteligente
+   - ✅ Validación robusta de entrada
+   - ✅ Health monitoring específico
+   - ✅ Message actions y controles
 
 ## 📝 Notas Adicionales
 

@@ -155,18 +155,26 @@ export function ChatAssistant() {
   }
 
   return (
-    <div className="flex flex-col h-96 max-w-4xl mx-auto">
+    <div
+      className="flex flex-col h-96 max-w-4xl mx-auto"
+      role="region"
+      aria-label="Asistente de chat SIRE"
+    >
       {/* Header with Actions */}
-      <div className="flex justify-between items-center p-3 bg-white border-b rounded-t-lg">
-        <h3 className="font-medium text-gray-800">Asistente SIRE</h3>
-        <div className="flex space-x-2">
+      <div
+        className="flex justify-between items-center p-3 bg-white border-b rounded-t-lg"
+        role="banner"
+      >
+        <h3 className="font-medium text-gray-800" id="chat-title">Asistente SIRE</h3>
+        <div className="flex space-x-2" role="toolbar" aria-label="Acciones del chat">
           <Button
             variant="outline"
             size="sm"
             onClick={shareConversation}
             disabled={messages.length <= 1}
+            aria-label="Compartir conversación"
           >
-            <Share className="w-4 h-4 mr-1" />
+            <Share className="w-4 h-4 mr-1" aria-hidden="true" />
             Compartir
           </Button>
           <Button
@@ -174,25 +182,36 @@ export function ChatAssistant() {
             size="sm"
             onClick={clearConversation}
             disabled={messages.length <= 1}
+            aria-label="Limpiar conversación"
           >
-            <Trash2 className="w-4 h-4 mr-1" />
+            <Trash2 className="w-4 h-4 mr-1" aria-hidden="true" />
             Limpiar
           </Button>
         </div>
       </div>
 
       {/* Messages Container */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+      <div
+        className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50"
+        role="main"
+        aria-live="polite"
+        aria-label="Mensajes del chat"
+      >
         {messages.map((message) => (
           <div
             key={message.id}
             className={`flex items-start space-x-3 ${
               message.role === 'user' ? 'justify-end' : 'justify-start'
             }`}
+            role="article"
+            aria-label={`Mensaje de ${message.role === 'user' ? 'usuario' : 'asistente'}`}
           >
             {message.role === 'assistant' && (
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
+              <div
+                className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+                aria-label="Avatar del asistente"
+              >
+                <Bot className="w-4 h-4 text-white" aria-hidden="true" />
               </div>
             )}
 
@@ -241,11 +260,12 @@ export function ChatAssistant() {
                       size="sm"
                       className="opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6 p-0"
                       onClick={() => copyToClipboard(message.content, message.id)}
+                      aria-label="Copiar mensaje"
                     >
                       {copiedMessageId === message.id ? (
-                        <span className="text-xs text-green-600">✓</span>
+                        <span className="text-xs text-green-600" aria-label="Copiado">✓</span>
                       ) : (
-                        <Copy className="w-3 h-3" />
+                        <Copy className="w-3 h-3" aria-hidden="true" />
                       )}
                     </Button>
                   )}
@@ -254,17 +274,28 @@ export function ChatAssistant() {
             </Card>
 
             {message.role === 'user' && (
-              <div className="flex-shrink-0 w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
+              <div
+                className="flex-shrink-0 w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center"
+                aria-label="Avatar del usuario"
+              >
+                <User className="w-4 h-4 text-white" aria-hidden="true" />
               </div>
             )}
           </div>
         ))}
 
         {isLoading && (
-          <div className="flex items-start space-x-3 justify-start">
-            <div className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-              <Bot className="w-4 h-4 text-white" />
+          <div
+            className="flex items-start space-x-3 justify-start"
+            role="status"
+            aria-live="polite"
+            aria-label="El asistente está procesando su pregunta"
+          >
+            <div
+              className="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+              aria-label="Avatar del asistente"
+            >
+              <Bot className="w-4 h-4 text-white" aria-hidden="true" />
             </div>
             <Card className="bg-white">
               <CardContent className="p-3">
@@ -285,7 +316,11 @@ export function ChatAssistant() {
 
       {/* Question Suggestions - Solo 4 preguntas clave */}
       {showSuggestions && (
-        <div className="p-3 bg-white border-t">
+        <div
+          className="p-3 bg-white border-t"
+          role="region"
+          aria-label="Sugerencias de preguntas"
+        >
           <p className="text-sm font-medium text-gray-700 mb-2">Preguntas frecuentes:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {KEY_QUESTIONS.map((question, index) => (
@@ -295,6 +330,7 @@ export function ChatAssistant() {
                 size="sm"
                 className="h-auto p-2 text-left justify-start whitespace-normal text-xs hover:bg-gray-100"
                 onClick={() => handleSuggestionClick(question)}
+                aria-label={`Pregunta sugerida: ${question}`}
               >
                 {question}
               </Button>
@@ -306,6 +342,7 @@ export function ChatAssistant() {
               size="sm"
               onClick={() => setShowSuggestions(false)}
               className="w-full text-xs"
+              aria-label="Ocultar sugerencias de preguntas"
             >
               Ocultar sugerencias
             </Button>
@@ -314,7 +351,12 @@ export function ChatAssistant() {
       )}
 
       {/* Input Form */}
-      <form onSubmit={handleSubmit} className="p-4 bg-white border-t rounded-b-lg">
+      <form
+        onSubmit={handleSubmit}
+        className="p-4 bg-white border-t rounded-b-lg"
+        role="search"
+        aria-labelledby="chat-title"
+      >
         <div className="flex space-x-2">
           <Input
             value={input}
@@ -323,6 +365,8 @@ export function ChatAssistant() {
             className="flex-1"
             disabled={isLoading}
             maxLength={500}
+            aria-label="Escriba su pregunta sobre SIRE"
+            aria-describedby="input-help"
           />
           {!showSuggestions && (
             <Button
@@ -331,24 +375,29 @@ export function ChatAssistant() {
               size="icon"
               onClick={() => setShowSuggestions(true)}
               disabled={isLoading}
+              aria-label="Mostrar sugerencias de preguntas"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="w-4 h-4" aria-hidden="true" />
             </Button>
           )}
           <Button
             type="submit"
             disabled={isLoading || !input.trim()}
             size="icon"
+            aria-label={isLoading ? "Enviando pregunta..." : "Enviar pregunta"}
           >
             {isLoading ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
+              <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
             ) : (
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4" aria-hidden="true" />
             )}
           </Button>
         </div>
         <div className="flex justify-between items-center mt-2">
-          <p className="text-xs text-gray-500">
+          <p
+            className="text-xs text-gray-500"
+            id="input-help"
+          >
             Pregunta sobre procedimientos SIRE, validaciones, documentos válidos, campos obligatorios, etc.
           </p>
           <p className="text-xs text-gray-400">

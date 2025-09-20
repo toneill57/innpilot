@@ -21,7 +21,14 @@
     "benchmark-detailed": "node scripts/detailed-benchmark.js",
     "setup-pgvector": "node scripts/setup-vector-function.js",
     "deploy-agent": "node scripts/deploy-agent.js",
-    "deploy-agent:verbose": "node scripts/deploy-agent.js --verbose"
+    "deploy-agent:verbose": "node scripts/deploy-agent.js --verbose",
+    "ux-agent": "node scripts/ux-agent.js",
+    "ux-agent:verbose": "node scripts/ux-agent.js --verbose",
+    "ux-agent:analyze": "node scripts/ux-agent.js --task=analyze --test",
+    "ux-agent:muva": "node scripts/ux-agent.js --task=enhance-muva-tropical",
+    "ux-agent:sire": "node scripts/ux-agent.js --task=optimize-sire-professional",
+    "ux-agent:responsive": "node scripts/ux-agent.js --task=improve-responsive --test",
+    "ux-agent:accessibility": "node scripts/ux-agent.js --task=fix-accessibility --test"
   },
   "type": "module",
   "dependencies": {

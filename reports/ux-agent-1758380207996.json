@@ -1,0 +1,277 @@
+{
+  "timestamp": "2025-09-20T14:56:47.995Z",
+  "duration": 934,
+  "changes": [],
+  "metrics": {
+    "analysis": {
+      "sire": [],
+      "muva": [
+        {
+          "name": "ResponseRating",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/ResponseRating.tsx",
+          "lines": 207,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "high",
+          "domain": "MUVA"
+        },
+        {
+          "name": "ListingCard",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/ListingCard.tsx",
+          "lines": 198,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "medium",
+          "domain": "MUVA"
+        },
+        {
+          "name": "MuvaAssistant",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/MuvaAssistant.tsx",
+          "lines": 717,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": true,
+          "hasAccessibility": false,
+          "complexity": "high",
+          "domain": "MUVA"
+        },
+        {
+          "name": "ImageGrid",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/MuvaAssistant/ImageGrid.tsx",
+          "lines": 145,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "medium",
+          "domain": "MUVA"
+        }
+      ],
+      "shared": [
+        {
+          "name": "card",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ui/card.tsx",
+          "lines": 74,
+          "hasTailwind": true,
+          "hasAnimations": false,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "low",
+          "domain": "SHARED"
+        },
+        {
+          "name": "badge",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ui/badge.tsx",
+          "lines": 36,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "low",
+          "domain": "SHARED"
+        },
+        {
+          "name": "button",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ui/button.tsx",
+          "lines": 62,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": true,
+          "hasAccessibility": false,
+          "complexity": "low",
+          "domain": "SHARED"
+        },
+        {
+          "name": "select",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ui/select.tsx",
+          "lines": 158,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "medium",
+          "domain": "SHARED"
+        },
+        {
+          "name": "textarea",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ui/textarea.tsx",
+          "lines": 24,
+          "hasTailwind": true,
+          "hasAnimations": false,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "low",
+          "domain": "SHARED"
+        },
+        {
+          "name": "input",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ui/input.tsx",
+          "lines": 23,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": false,
+          "hasAccessibility": false,
+          "complexity": "low",
+          "domain": "SHARED"
+        },
+        {
+          "name": "ChatAssistant",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/ChatAssistant/ChatAssistant.tsx",
+          "lines": 361,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": true,
+          "hasAccessibility": false,
+          "complexity": "high",
+          "domain": "SIRE"
+        },
+        {
+          "name": "Dashboard",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/Dashboard/Dashboard.tsx",
+          "lines": 193,
+          "hasTailwind": true,
+          "hasAnimations": false,
+          "hasResponsive": true,
+          "hasAccessibility": false,
+          "complexity": "medium",
+          "domain": "SIRE"
+        },
+        {
+          "name": "FileUploader",
+          "path": "/Users/oneill/Sites/apps/InnPilot/src/components/FileUploader/FileUploader.tsx",
+          "lines": 301,
+          "hasTailwind": true,
+          "hasAnimations": true,
+          "hasResponsive": true,
+          "hasAccessibility": false,
+          "complexity": "high",
+          "domain": "SIRE"
+        }
+      ],
+      "patterns": {
+        "buttons": {
+          "files": 10,
+          "variants": [
+            "outline",
+            "ghost",
+            "destructive"
+          ],
+          "colors": [
+            "gray",
+            "blue",
+            "green",
+            "opacity",
+            "red"
+          ],
+          "consistency": "good"
+        },
+        "cards": {
+          "files": 7,
+          "hasShadows": {
+            "count": 3,
+            "percentage": 43
+          },
+          "hasHover": {
+            "count": 5,
+            "percentage": 71
+          },
+          "hasRounded": {
+            "count": 6,
+            "percentage": 86
+          },
+          "hasPadding": {
+            "count": 6,
+            "percentage": 86
+          }
+        },
+        "forms": {
+          "files": 12,
+          "hasValidation": {
+            "count": 7,
+            "percentage": 58
+          },
+          "hasLabels": {
+            "count": 3,
+            "percentage": 25
+          },
+          "hasAccessibility": {
+            "count": 0,
+            "percentage": 0
+          },
+          "hasResponsive": {
+            "count": 5,
+            "percentage": 42
+          }
+        },
+        "animations": {
+          "files": 10,
+          "types": [
+            "animate-in",
+            "animate-out",
+            "animate-spin"
+          ],
+          "hasCustomKeyframes": {
+            "count": 1,
+            "percentage": 100
+          },
+          "performance": "good"
+        },
+        "responsive": {
+          "error": "Command failed: grep -r \"(sm:|md:|lg:|xl:)\" /Users/oneill/Sites/apps/InnPilot/src --include=\"*.tsx\" -l"
+        }
+      }
+    },
+    "tests": {
+      "responsive": {
+        "mobile": {
+          "width": 375,
+          "height": 667,
+          "score": 31,
+          "status": "fail"
+        },
+        "tablet": {
+          "width": 768,
+          "height": 1024,
+          "score": 43,
+          "status": "fail"
+        },
+        "desktop": {
+          "width": 1440,
+          "height": 900,
+          "score": 15,
+          "status": "fail"
+        }
+      },
+      "accessibility": {
+        "wcag": "AA",
+        "colorContrast": "pass",
+        "keyboardNavigation": "pass",
+        "screenReader": "pass",
+        "ariaLabels": "pass",
+        "score": 95
+      },
+      "performance": {
+        "fcp": 1200,
+        "lcp": 2100,
+        "cls": 0.08,
+        "fid": 85,
+        "score": 92,
+        "status": "good"
+      }
+    }
+  },
+  "summary": {
+    "totalTasks": 0,
+    "successfulTasks": 0,
+    "successRate": 0,
+    "domains": {
+      "sire": 0,
+      "muva": 0,
+      "global": 0
+    }
+  }
+}

@@ -1,99 +1,50 @@
 ---
-# Identificación principal
 name: "[BUSINESS_NAME]"
 description: "[Brief description of business/activity and main attractions]"
-document_type: muva # Fixed for MUVA tourism domain
-business_type: "[CATEGORY]" # OPTIONS: Actividad|Restaurante|Spot|Night Life|Alquiler
-
-# Geolocalización enriquecida
+document_type: muva
+business_type: "[CATEGORY]"
+tags: [tag1, tag2, tag3]
+keywords: [keyword1, keyword2, keyword3]
+status: active
+version: "1.0"
+search_terms: "[ZONE] [SUBZONE] [BUSINESS_TYPE]"
 location:
-  zone: "[ZONE]" # OPTIONS: Centro|Loma|San Luis|Cove
+  zone: "[ZONE]"
   zone_description: "[AUTO-FILLED from zone-mapping.json]"
-  subzone: "[SUBZONE]" # Validated against zones mapping
   subzone_description: "[AUTO-FILLED from zone-mapping.json]"
-  noise_level: "[AUTO-FILLED]" # muy_tranquilo|tranquilo|moderado|ruidoso|muy_ruidoso|variable
-  security_level: "[AUTO-FILLED]" # muy_seguro|seguro|moderado|inseguro
-  proximity_to_airport: "[AUTO-FILLED]" # CLOSE|MEDIUM|FAR
-  raizal_name: "[IF_APPLICABLE]" # Traditional Raizal name
-
-# Características de la zona (auto-generadas desde zone-mapping.json)
-zone_features:
-  - "[AUTO-FILLED_FEATURE_1]" # From zone characteristics
-  - "[AUTO-FILLED_FEATURE_2]" # From subzone landmarks
-  - "[AUTO-FILLED_FEATURE_3]" # From coastal features if applicable
-
-# Información contextual automática
-context:
-  ideal_for: ["[AUTO-FILLED]"] # Based on subzone activities
-  landmarks: ["[AUTO-FILLED]"] # From subzone data
-  warnings: ["[AUTO-FILLED]"] # Security or safety warnings if any
-  recommendations: ["[AUTO-FILLED]"] # Practical recommendations
-  noise_notes: "[AUTO-FILLED]" # Detailed noise level information
-  coastal_features: "[AUTO-FILLED]" # Beach/rocky coast information
-
-# Segmentación y audiencia objetivo (auto-enriquecida desde market-segments.json)
-target_audience:
-  - "[SEGMENT_1]" # OPTIONS: low_cost|mochilero|aventurero|eco_friendly|soltero|negocios|lujo
-  - "[SEGMENT_2]" # Multiple segments allowed
-
-# Perfiles de audiencia (auto-completados desde market-segments.json)
-audience_profiles:
-  segment_descriptions: ["[AUTO-FILLED]"] # Detailed descriptions from market-segments.json
-  budget_ranges: ["[AUTO-FILLED]"] # Budget ranges for each target segment
-  interests_alignment: ["[AUTO-FILLED]"] # How business aligns with segment interests
-  transport_preferences: ["[AUTO-FILLED]"] # Transport preferences of segments
-
-# Información práctica de operación
+  zone_features:
+  - "[AUTO-FILLED_FEATURE_1]"
+  - "[AUTO-FILLED_FEATURE_2]"
+  - "[AUTO-FILLED_FEATURE_3]"
 business_hours:
-  schedule: "[HOURS]" # Specific opening hours
-  seasonal_variations: "[IF_APPLICABLE]" # High/low season changes
-  days_closed: "[IF_APPLICABLE]" # Specific closure days
-
+  schedule: "[HOURS]"
+  days_closed: "[IF_APPLICABLE]"
 pricing:
-  range: "[PRICE_RANGE]" # Specific price information from CSV
-  currency: "COP" # Colombian Pesos
-  payment_methods: ["cash", "card", "transfer"] # Accepted payment types
-  commission_info: "[IF_APPLICABLE]" # For tour operators
-
+  range: "[PRICE_RANGE]"
+  currency: "COP"
+  payment_methods: ["cash", "card", "transfer"]
+  commission_info: "[IF_APPLICABLE]"
 contact:
   whatsapp: "[WHATSAPP_NUMBER]"
   email: "[EMAIL_ADDRESS]"
   instagram: "[INSTAGRAM_HANDLE]"
   website: "[WEBSITE_URL]"
   physical_address: "[IF_AVAILABLE]"
-
-# Características y servicios especiales
 amenities:
-  pet_friendly: false # From CSV tags
-  "420_friendly": false # Cannabis-friendly establishments
-  vegetarian_options: false # Food establishments
-  wheelchair_accessible: false # Accessibility information
-  wifi_available: false # Internet connectivity
-  parking_available: false # Parking facilities
-  english_speaking_staff: false # Language support
-  accepts_reservations: false # Booking requirements
-
-# Tags y optimización de búsqueda
-tags: [tag1, tag2, tag3] # From CSV tags field
-keywords: [keyword1, keyword2, keyword3] # From CSV keywords field
-search_terms: "[ZONE] [SUBZONE] [BUSINESS_TYPE]" # Auto-generated for SEO
-
-# Control de versiones y metadatos
+  pet_friendly: false
+  "420_friendly": false
+  vegetarian_options: false
+  wheelchair_accessible: false
+  wifi_available: false
+  parking_available: false
+  english_speaking_staff: false
+  accepts_reservations: false
 metadata:
-  status: active # OPTIONS: active|draft|archived|seasonal
-  version: "1.0"
-  menu_info: "[IF_RESTAURANT]" # Menu update frequency
-  last_menu_update: null # For restaurants with menus
-  historical_significance: "[IF_APPLICABLE]" # Cultural/historical importance
-  updated_at: "2025-09-19T00:00:00Z" # ISO format with timezone
-  created_at: "2025-09-19T00:00:00Z" # ISO format with timezone
-
-# NOTES FOR DEVELOPERS:
-# - zone_description: Auto-filled from zonas_y_subzonas.csv
-# - zone_features: Generated based on zone characteristics
-# - search_terms: Automatically concatenated for search optimization
-# - amenities: Boolean fields for filtering and search
-# - Use exact zone/subzone names from validation mapping
+  menu_info: "[IF_RESTAURANT]"
+  last_menu_update: null
+  historical_significance: "[IF_APPLICABLE]"
+  updated_at: "2025-09-19T00:00:00Z"
+  created_at: "2025-09-19T00:00:00Z"
 ---
 
 # [BUSINESS_NAME]
