@@ -100,10 +100,10 @@ export class SemanticChunker {
   /**
    * Enhanced chunking with semantic validation
    */
-  private chunkWithValidation(content: string): string[] {
+  private async chunkWithValidation(content: string): Promise<string[]> {
     // Use LangChain's splitter as base
     const doc = new Document({ pageContent: content })
-    const langchainChunks = this.splitter.splitDocuments([doc])
+    const langchainChunks = await this.splitter.splitDocuments([doc])
     const chunks = langchainChunks.map(chunk => chunk.pageContent)
 
     // Apply semantic validation
@@ -116,7 +116,7 @@ export class SemanticChunker {
     additionalMetadata: Record<string, unknown> = {}
   ): Promise<DocumentChunk[]> {
     // Use enhanced chunking with semantic validation
-    const chunks = this.chunkWithValidation(content)
+    const chunks = await this.chunkWithValidation(content)
 
     // Convert to our format with proper metadata
     return chunks.map((chunk, index) => ({
@@ -139,7 +139,7 @@ export class SemanticChunker {
 
   // Quick test method to preview chunking results with validation
   async previewChunks(content: string): Promise<string[]> {
-    const chunks = this.chunkWithValidation(content)
+    const chunks = await this.chunkWithValidation(content)
     return chunks.map((chunk, i) =>
       `Chunk ${i + 1} (${chunk.length} chars, validated): ${chunk.substring(0, 100)}${chunk.length > 100 ? '...' : ''}`
     )
@@ -148,7 +148,7 @@ export class SemanticChunker {
   /**
    * Analyze chunk quality metrics
    */
-  analyzeChunkQuality(content: string): {
+  async analyzeChunkQuality(content: string): Promise<{
     totalChunks: number
     avgChunkSize: number
     minChunkSize: number
@@ -156,8 +156,8 @@ export class SemanticChunker {
     chunksWithValidStart: number
     chunksWithValidEnd: number
     qualityScore: number
-  } {
-    const chunks = this.chunkWithValidation(content)
+  }> {
+    const chunks = await this.chunkWithValidation(content)
 
     const sizes = chunks.map(chunk => chunk.length)
     const validStarts = chunks.filter(chunk => !chunk.match(/^[a-z]/)).length
