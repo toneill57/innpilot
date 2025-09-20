@@ -1,5 +1,4 @@
 ---
-# Identificación principal
 title: "[DOCUMENT_TITLE]"
 description: "[Brief description of purpose and key information covered]"
 document_type: technical # OPTIONS: sire_docs|technical|regulatory|operational|template|muva|iot|ticketing
