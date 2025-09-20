@@ -1,0 +1,298 @@
+{
+  "segments": {
+    "low_cost": {
+      "name": "Low Cost",
+      "description": "El viajero low cost es ingenioso y práctico, se enfoca en maximizar su experiencia mientras minimiza gastos. Suelen ser más centennials y algunos millennials. Disfruta de actividades gratuitas o de bajo costo, le interesa conocer spots, vida nocturna, secret gems, lugares 4-20 friendly, actividades deportivas y alquilar bicicleta para su transporte.",
+      "daily_budget": {
+        "min": 50000,
+        "max": 150000,
+        "currency": "COP"
+      },
+      "demographics": ["centennials", "millennials"],
+      "characteristics": ["ingenioso", "práctico", "maximiza experiencia", "minimiza gastos"],
+      "interests": [
+        "actividades gratuitas",
+        "actividades de bajo costo",
+        "spots",
+        "vida nocturna",
+        "secret gems",
+        "lugares 4-20 friendly",
+        "actividades deportivas"
+      ],
+      "preferred_transport": ["bicicleta"],
+      "accommodation_types": [
+        "hostales",
+        "casas de familia",
+        "intercambios de trabajo por estadía"
+      ],
+      "food_preferences": [
+        "sitios locales",
+        "preparar su propia comida"
+      ],
+      "budget_priorities": "experiencia sobre comodidad"
+    },
+    "mochilero": {
+      "name": "Mochilero",
+      "description": "El mochilero es un viajero aventurero y curioso, apasionado por descubrir lugares menos turísticos y sumergirse en la cultura local. Le interesa conocer spots, secret gems, lugares 4-20 friendly, hacer yoga, actividades deportivas, buceo, snorkeling y alquilar bicicleta o moto para su transporte.",
+      "daily_budget": {
+        "min": 100000,
+        "max": 300000,
+        "currency": "COP"
+      },
+      "characteristics": ["aventurero", "curioso", "cultural", "explorador"],
+      "interests": [
+        "lugares menos turísticos",
+        "cultura local",
+        "spots",
+        "secret gems",
+        "lugares 4-20 friendly",
+        "yoga",
+        "actividades deportivas",
+        "buceo",
+        "snorkeling"
+      ],
+      "preferred_transport": ["bicicleta", "moto"],
+      "accommodation_types": [
+        "alojamientos económicos"
+      ],
+      "food_preferences": [
+        "restaurantes locales",
+        "preparar sus propias comidas"
+      ],
+      "travel_style": "inmersión cultural"
+    },
+    "aventurero": {
+      "name": "Aventurero",
+      "description": "El viajero aventurero es audaz y apasionado por las experiencias extremas y al aire libre. Disfruta de actividades desafiantes como kite surf, triatlón, wake board, senderismo, acroyoga y cualquier actividad deportiva que ofrezca una experiencia única y le permita explorar de manera intensa. Le interesa conocer spots, secret gems, 4-20 friendly, luxury, interactuar con la naturaleza y participar en expediciones que pongan a prueba sus límites.",
+      "daily_budget": {
+        "min": 200000,
+        "max": 500000,
+        "currency": "COP"
+      },
+      "characteristics": ["audaz", "apasionado", "extremo", "intenso"],
+      "interests": [
+        "experiencias extremas",
+        "actividades al aire libre",
+        "kite surf",
+        "triatlón",
+        "wake board",
+        "senderismo",
+        "acroyoga",
+        "actividades deportivas únicas",
+        "spots",
+        "secret gems",
+        "lugares 4-20 friendly",
+        "luxury",
+        "interacción con naturaleza",
+        "expediciones desafiantes"
+      ],
+      "preferred_transport": ["bicicleta", "moto", "mulita"],
+      "accommodation_types": [
+        "low cost a luxury (variado)"
+      ],
+      "food_preferences": [
+        "low cost a luxury (variado)"
+      ],
+      "travel_style": "exploración intensa",
+      "seeks": "experiencias que pongan a prueba límites"
+    },
+    "eco_friendly": {
+      "name": "Eco-friendly",
+      "description": "El viajero eco friendly es consciente y responsable, dedicado a reducir su impacto ambiental mientras explora el mundo. Disfruta de actividades en el medio ambiente como buceo, snorkeling, senderismo y yoga, le interesa conocer spots, restaurantes, secret gems, lugares 4-20 friendly, eco friendly, veggie friendly y alquilar bicicleta para su transporte.",
+      "daily_budget": {
+        "min": 100000,
+        "max": 250000,
+        "currency": "COP"
+      },
+      "characteristics": ["consciente", "responsable", "ambiental", "sostenible"],
+      "interests": [
+        "actividades en medio ambiente",
+        "buceo",
+        "snorkeling",
+        "senderismo",
+        "yoga",
+        "spots",
+        "restaurantes",
+        "secret gems",
+        "lugares 4-20 friendly",
+        "lugares eco friendly",
+        "lugares veggie friendly"
+      ],
+      "preferred_transport": ["bicicleta"],
+      "accommodation_types": [
+        "alojamientos con conciencia ambiental"
+      ],
+      "food_preferences": [
+        "restaurantes con alimentos orgánicos",
+        "restaurantes con alimentos locales",
+        "preparar sus propias comidas"
+      ],
+      "values": ["reducción impacto ambiental", "sostenibilidad"],
+      "travel_style": "turismo responsable"
+    },
+    "soltero": {
+      "name": "Soltero",
+      "description": "El viajero single es independiente y sociable, interesado en explorar nuevos destinos y conocer personas. Le pueden gustar los lugares tranquilos pero probablemente busque zonas con más actividad, con oferta cultural y nocturna. Disfruta de actividades como clases en grupo de baile o de yoga, buceo y snorkeling. Le interesa conocer restaurantes luxury, vida nocturna, actividades deportivas y alquilar mulita o moto para su transporte.",
+      "daily_budget": {
+        "min": 150000,
+        "max": 400000,
+        "currency": "COP"
+      },
+      "characteristics": ["independiente", "sociable", "explorador", "social"],
+      "interests": [
+        "zonas con actividad",
+        "oferta cultural",
+        "vida nocturna",
+        "clases en grupo de baile",
+        "clases en grupo de yoga",
+        "buceo",
+        "snorkeling",
+        "restaurantes luxury",
+        "actividades deportivas"
+      ],
+      "preferred_transport": ["mulita", "moto"],
+      "accommodation_types": [
+        "hospedajes boutique"
+      ],
+      "food_preferences": [
+        "restaurantes locales",
+        "lugares sofisticados"
+      ],
+      "travel_style": "exploración social",
+      "seeks": "experiencias únicas",
+      "budget_notes": "Presupuesto mayor al viajar solo que en pareja o grupo"
+    },
+    "negocios": {
+      "name": "Negocios",
+      "description": "El viajero de negocios es profesional y eficiente, enfocado en cumplir sus objetivos laborales mientras conoce nuevos lugares. Prefiere zonas urbanas que tengan conexión a internet y con infraestructuras modernas. Disfruta de actividades relacionadas con su trabajo, pero aprovecha su tiempo libre para conocer atracciones culturales o disfrutar de la gastronomía local. Le interesa conocer restaurantes ejecutivos o estar en un alojamiento con comida incluida, también alquilar mulita o moto para su transporte.",
+      "daily_budget": {
+        "min": 400000,
+        "max": 1000000,
+        "currency": "COP"
+      },
+      "characteristics": ["profesional", "eficiente", "objetivo", "práctico"],
+      "interests": [
+        "zonas urbanas",
+        "conexión a internet",
+        "infraestructuras modernas",
+        "actividades relacionadas con trabajo",
+        "atracciones culturales",
+        "gastronomía local",
+        "restaurantes ejecutivos"
+      ],
+      "preferred_transport": ["mulita", "moto"],
+      "accommodation_types": [
+        "alojamientos cómodos y bien ubicados",
+        "alojamientos con conexión internet",
+        "alojamientos con comida incluida"
+      ],
+      "food_preferences": [
+        "restaurantes ejecutivos",
+        "alojamiento con comida incluida"
+      ],
+      "requirements": ["conexión a internet", "infraestructura moderna"],
+      "travel_style": "eficiencia profesional"
+    },
+    "lujo": {
+      "name": "Lujo",
+      "description": "El viajero de lujo es exigente y sofisticado, buscando experiencias exclusivas y de alta calidad. Prefiere actividades glamorosas y bien establecidas como resorts de playa, paseos privados y todo lo que ofrezca una sensación de exclusividad. Disfruta de actividades como visitar spas, ir de compras, boutiques de lujo y asistir a eventos de alto nivel. Le interesa conocer restaurantes luxury, vida nocturna, actividades deportivas y alquilar mulita o moto para su transporte.",
+      "daily_budget": {
+        "min": 1000000,
+        "max": 5000000,
+        "currency": "COP"
+      },
+      "characteristics": ["exigente", "sofisticado", "exclusivo", "alta calidad"],
+      "interests": [
+        "experiencias exclusivas",
+        "actividades glamorosas",
+        "resorts de playa",
+        "paseos privados",
+        "exclusividad",
+        "spas",
+        "compras",
+        "boutiques de lujo",
+        "eventos de alto nivel",
+        "restaurantes luxury",
+        "vida nocturna",
+        "actividades deportivas"
+      ],
+      "preferred_transport": ["mulita", "moto"],
+      "accommodation_types": [
+        "resorts de lujo"
+      ],
+      "food_preferences": [
+        "restaurantes con experiencia culinaria única",
+        "gastronomía local e internacional de alta gama"
+      ],
+      "seeks": "exclusividad y alta calidad",
+      "travel_style": "lujo y sofisticación"
+    }
+  },
+  "budget_ranges": {
+    "budget": {
+      "min": 50000,
+      "max": 150000,
+      "segments": ["low_cost"]
+    },
+    "mid_budget": {
+      "min": 100000,
+      "max": 300000,
+      "segments": ["mochilero", "eco_friendly"]
+    },
+    "high_mid": {
+      "min": 150000,
+      "max": 500000,
+      "segments": ["aventurero", "soltero"]
+    },
+    "high_end": {
+      "min": 400000,
+      "max": 1000000,
+      "segments": ["negocios"]
+    },
+    "luxury": {
+      "min": 1000000,
+      "max": 5000000,
+      "segments": ["lujo"]
+    }
+  },
+  "transport_preferences": {
+    "bicicleta": {
+      "segments": ["low_cost", "mochilero", "aventurero", "eco_friendly"],
+      "cost_level": "muy_bajo",
+      "environmental_impact": "muy_bajo"
+    },
+    "moto": {
+      "segments": ["mochilero", "aventurero", "soltero", "negocios", "lujo"],
+      "cost_level": "medio",
+      "environmental_impact": "medio"
+    },
+    "mulita": {
+      "segments": ["aventurero", "soltero", "negocios", "lujo"],
+      "cost_level": "medio_alto",
+      "environmental_impact": "medio"
+    }
+  },
+  "common_interests": {
+    "spots": ["low_cost", "mochilero", "aventurero", "eco_friendly"],
+    "secret_gems": ["low_cost", "mochilero", "aventurero", "eco_friendly"],
+    "lugares_420_friendly": ["low_cost", "mochilero", "aventurero", "eco_friendly"],
+    "vida_nocturna": ["low_cost", "soltero", "lujo"],
+    "actividades_deportivas": ["low_cost", "mochilero", "aventurero", "soltero", "lujo"],
+    "buceo": ["mochilero", "aventurero", "eco_friendly", "soltero"],
+    "snorkeling": ["mochilero", "aventurero", "eco_friendly", "soltero"],
+    "restaurantes_luxury": ["soltero", "negocios", "lujo"],
+    "yoga": ["mochilero", "aventurero", "eco_friendly", "soltero"]
+  },
+  "validation_rules": {
+    "budget_overlap_allowed": true,
+    "multiple_segments_per_business": true,
+    "segment_name_case_insensitive": true
+  },
+  "notes": {
+    "data_source": "Segmentación.docx.txt",
+    "created_date": "2025-09-19",
+    "purpose": "Market segmentation validation and auto-completion for MUVA listings",
+    "currency": "COP (Colombian Pesos)",
+    "budget_notes": "Daily budget ranges per person"
+  }
+}

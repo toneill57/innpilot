@@ -4,10 +4,11 @@ import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileUploader } from "@/components/FileUploader/FileUploader"
 import { ChatAssistant } from "@/components/ChatAssistant/ChatAssistant"
-import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users } from "lucide-react"
+import MuvaAssistant from "@/components/MuvaAssistant/MuvaAssistant"
+import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users, MapPin } from "lucide-react"
 
 export function Dashboard() {
-  const [activeTab, setActiveTab] = useState<'upload' | 'chat' | 'reports'>('upload')
+  const [activeTab, setActiveTab] = useState<'upload' | 'chat' | 'muva' | 'reports'>('upload')
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -106,6 +107,17 @@ export function Dashboard() {
               Asistente SIRE
             </button>
             <button
+              onClick={() => setActiveTab('muva')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                activeTab === 'muva'
+                  ? 'border-green-500 text-green-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <MapPin className="inline h-4 w-4 mr-2" />
+              Asistente MUVA
+            </button>
+            <button
               onClick={() => setActiveTab('reports')}
               className={`py-2 px-1 border-b-2 font-medium text-sm ${
                 activeTab === 'reports'
@@ -142,6 +154,18 @@ export function Dashboard() {
                 </p>
               </div>
               <ChatAssistant />
+            </div>
+          )}
+
+          {activeTab === 'muva' && (
+            <div className="p-6">
+              <div className="mb-4">
+                <h2 className="text-lg font-medium text-gray-900">Asistente MUVA</h2>
+                <p className="text-sm text-gray-500">
+                  Guía turística especializada en San Andrés, Providencia y destinos colombianos
+                </p>
+              </div>
+              <MuvaAssistant />
             </div>
           )}
 

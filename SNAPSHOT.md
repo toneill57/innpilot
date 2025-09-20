@@ -16,7 +16,7 @@ keywords: [project_snapshot, performance_metrics, technical_status, roadmap]
 # Control de versiones
 status: production-ready
 version: "1.0"
-updated_at: "2025-09-19T18:35:00Z"
+updated_at: "2025-09-19T19:45:00Z"
 created_at: "2025-01-19T00:00:00Z"
 ---
 
@@ -154,6 +154,8 @@ Styling:          Tailwind CSS 4.x
 Build Tool:       Turbopack (--turbopack flag)
 Runtime:          Edge Runtime para API routes
 Component Lib:    Custom shadcn/ui components
+Middleware:       Custom middleware.ts for routing
+State:            React hooks + context patterns
 ```
 
 #### **Backend & API**
@@ -185,19 +187,26 @@ Environment:      .env.local para desarrollo
 
 ### **Arquitectura de Performance Detallada**
 
-#### **Flujo de Request Optimizado**
+#### **Dual Assistant Architecture**
 ```mermaid
 graph TD
-    A[User Query] --> B{Cache Check}
-    B -->|Hit| C[Return Cached 300ms]
-    B -->|Miss| D[OpenAI Embedding 500ms]
-    D --> E{pgvector Available?}
-    E -->|Yes| F[Native Vector Search 300ms]
-    E -->|No| G[Manual Search 800ms]
-    F --> H[Claude Response 1800ms]
-    G --> H
-    H --> I[Cache Result]
-    I --> J[Return Response 3-4s total]
+    A[User Query] --> B{Assistant Type}
+    B -->|SIRE| C[ChatAssistant]
+    B -->|Tourism| D[MuvaAssistant]
+    C --> E{Cache Check}
+    D --> F{Tourism DB}
+    E -->|Hit| G[Return Cached 300ms]
+    E -->|Miss| H[OpenAI Embedding 500ms]
+    F --> I[Tourism Vector Search]
+    H --> J{pgvector Available?}
+    J -->|Yes| K[Native Vector Search 300ms]
+    J -->|No| L[Manual Search 800ms]
+    I --> M[Tourism Claude Response]
+    K --> N[SIRE Claude Response]
+    L --> N
+    M --> O[Return Tourism Result]
+    N --> P[Cache Result]
+    P --> Q[Return SIRE Response 3-4s total]
 ```
 
 #### **Componentes de Performance**
@@ -216,12 +225,15 @@ graph TD
 ```
 src/components/
 ├── Dashboard/Dashboard.tsx          ✅ Interface tabbed optimizada
-├── ChatAssistant/ChatAssistant.tsx  ✅ Mejorado con markdown + historial
-├── FileUploader/FileUploader.tsx    ✅ Validación SIRE básica
+├── ChatAssistant/ChatAssistant.tsx  ✅ SIRE - Mejorado con markdown + historial
+├── MuvaAssistant/MuvaAssistant.tsx  ✅ TOURISM - Sistema de filtros avanzado
+├── FileUploader/FileUploader.tsx    ✅ Validación SIRE mejorada
 └── ui/                              ✅ shadcn/ui components customizados
     ├── button.tsx
     ├── card.tsx
-    └── input.tsx
+    ├── input.tsx
+    ├── badge.tsx
+    └── select.tsx
 ```
 
 #### **Features Implementadas en ChatAssistant**
@@ -235,7 +247,12 @@ src/components/
 
 ### **API Routes Detalladas**
 
-#### **POST /api/chat** (Optimizado)
+#### **Multi-Assistant API Architecture**
+- **POST /api/chat** - SIRE Assistant (Optimizado)
+- **POST /api/muva/chat** - Tourism Assistant (Nuevo)
+- **GET /api/status** - System status monitoring (Nuevo)
+
+#### **POST /api/chat** (SIRE - Optimizado)
 ```typescript
 // Características implementadas:
 ✅ Semantic caching con grupos inteligentes
@@ -283,47 +300,53 @@ Error Rate:   <1% ✅ Robusto
 
 ---
 
-## Pending Priority Tasks {#pending-tasks}
+## Completed & Current Priority Tasks {#current-tasks}
 
-**Q: ¿Cuáles son las tareas pendientes prioritarias y sus estimaciones de desarrollo?**
-**A:** Existen 2 tareas de alta prioridad identificadas para el desarrollo de features:
+**Q: ¿Cuáles son las tareas completadas recientemente y las prioridades actuales?**
+**A:** Task B1 fue completado exitosamente en Enero 2025, ahora enfoque en Dashboard Analytics:
 
-### High Priority - Feature Development
+### ✅ Recently Completed - Feature Development
 
-#### Task B1: Enhanced File Validation
-**Estimación**: 3-4 horas desarrollo + 1 hora testing
-**Impacto**: ⭐⭐⭐⭐⭐ Alto - Mejora directa UX validation
-**ROI**: Alto - Diferenciador competitivo importante
+#### Task B1: Enhanced File Validation ✅ COMPLETADO
+**Completado**: Enero 2025
+**Impacto**: ⭐⭐⭐⭐⭐ Alto - Mejora directa UX implementada
+**ROI**: Alto - Diferenciador competitivo activo
 
-**Subtareas detalladas**:
+**Subtareas completadas**:
 ```
-1. Error Reporting Detallado (1.5h)
+✅ Error Reporting Detallado
    - Validación campo por campo con mensajes específicos
    - Indicadores visuales de errores por línea
    - Sugerencias de corrección automática
 
-2. Soporte Múltiples Formatos (1h)
-   - CSV format support (comma-separated)
-   - Excel file parsing (.xlsx)
-   - Auto-detection formato archivo
+✅ CSV Format Support
+   - Soporte para archivos CSV además de TXT
+   - Conversión automática CSV → TXT delimitado por tabulaciones
 
-3. File Preview System (1h)
-   - Vista previa primeras 10 líneas
-   - Detección automática estructura
-   - Confirmación antes procesamiento
+✅ File Preview
+   - Vista previa de archivos antes de validación
+   - Detección automática de formato
+   - Confirmar estructura antes de procesar
 
-4. Batch Processing (0.5h)
-   - Upload múltiples archivos
-   - Progress indicators para cada archivo
-   - Resumen consolidado resultados
+✅ Batch Processing
+   - Procesamiento de múltiples archivos
+   - Queue system para archivos grandes
+   - Progress indicators
+
+✅ Export Results
+   - Export de resultados de validación
+   - Reportes detallados de errores
+   - Summary statistics
 ```
 
-**Archivos a modificar**:
-- `src/app/api/validate/route.ts` - Lógica validación mejorada
-- `src/components/FileUploader/FileUploader.tsx` - UI enriquecida
-- Crear: `src/lib/validators/` - Nuevos validadores específicos
+**Archivos modificados**:
+- `src/app/api/validate/route.ts` - Lógica validación mejorada ✅
+- `src/components/FileUploader/FileUploader.tsx` - UI enriquecida ✅
+- `src/lib/validators/` - Nuevos validadores específicos ✅
 
-#### **Task B3: Dashboard Analytics**
+### 🚀 Current Priority - Analytics Implementation
+
+#### **Task B3: Dashboard Analytics** (EN PROGRESO)
 **Estimación**: 4-5 horas desarrollo + 1 hora integración
 **Impacto**: ⭐⭐⭐⭐ Alto - Valor agregado significativo
 **ROI**: Medio-Alto - Insights valiosos para usuarios
@@ -382,7 +405,27 @@ Error Rate:   <1% ✅ Robusto
 
 ---
 
-## 🔄 **OPTIMIZACIONES RECIENTES IMPLEMENTADAS**
+## 🔄 **NUEVAS FUNCIONALIDADES IMPLEMENTADAS (2025)**
+
+### **MUVA Tourism Assistant - Nueva Funcionalidad**
+
+#### **Características MUVA Tourism**
+```
+Propósito:         Asistente especializado en turismo San Andrés
+Componente:        src/components/MuvaAssistant/MuvaAssistant.tsx
+API Endpoint:      POST /api/muva/chat
+Utilidades:        src/lib/muva-utils.ts
+Tipo datos:        Tourism embeddings + location filters
+Filtros:           Categorías, ubicación, rating, precio
+```
+
+#### **Integración con InnPilot**
+```
+Dual Assistant:    SIRE + Tourism en mismo dashboard
+Shared UI:         Componentes ui reutilizados
+Separate Context:  Datos SIRE vs Tourism separados
+Unified UX:        Misma experiencia de usuario
+```
 
 ### **Migración pgvector - Timeline Completa**
 
@@ -404,7 +447,7 @@ Error Handling:    Structured logging + metrics detalladas
 Monitoring:        Comprehensive performance tracking
 ```
 
-### **Archivos Modificados en Optimización**
+### **Archivos Modificados en Optimización y Nuevas Features**
 
 #### **Core Performance Files**
 1. **`src/lib/supabase.ts`** - pgvector integration
@@ -413,27 +456,37 @@ Monitoring:        Comprehensive performance tracking
    - Manual search fallback mantenido
    - Debug logging comprensivo
 
-2. **`src/app/api/chat/route.ts`** - Enhanced caching
+2. **`src/app/api/chat/route.ts`** - Enhanced SIRE caching
    - Líneas 12-92: Semantic cache groups
    - Performance metrics tracking
    - Error handling específico por servicio
    - Memory cache optimizado para Edge Runtime
 
-3. **`sql/match_documents_function_fixed.sql`** - Database function
-   - pgvector native function sin metadata column
-   - Optimized similarity calculation
-   - Proper error handling
+3. **`src/app/api/muva/chat/route.ts`** - Tourism API ✨ NUEVO
+   - Tourism-specific embeddings y context
+   - Location-based filtering
+   - Category and price range filters
+   - Separate caching strategy
+
+4. **`src/middleware.ts`** - Request routing ✨ NUEVO
+   - Route-based middleware logic
+   - Request preprocessing
+   - Security headers
 
 #### **Infrastructure Files**
-4. **`scripts/`** - Benchmarking tools
+5. **`scripts/`** - Expanded automation tools (27 scripts total)
+   - `check-mcp-status.js` - MCP monitoring ✨ NUEVO
+   - `populate-muva-embeddings.js` - Tourism data ✨ NUEVO
+   - `mcp-queries.js` - MCP database operations ✨ NUEVO
    - `quick-pgvector-benchmark.js` - Quick performance test
    - `benchmark-pgvector-comparison.js` - Detailed analysis
    - `setup-vector-function.js` - Automated setup
 
-5. **Documentation Updates**
+6. **Documentation Updates**
    - `README.md` - Performance characteristics updated
    - `CLAUDE.md` - pgvector monitoring commands
    - `docs/PGVECTOR_TECHNICAL_GUIDE.md` - Complete technical guide
+   - `SECURITY_FIXES.md` - Security documentation ✨ NUEVO
 
 ### **Performance Benchmarks Detallados**
 
@@ -787,45 +840,54 @@ AS $$
 $$;
 ```
 
-### **File Structure Completa**
+### **File Structure Completa (Actualizada Septiembre 2025)**
 ```
 InnPilot/
 ├── src/
 │   ├── app/
 │   │   ├── api/
-│   │   │   ├── chat/route.ts          ✅ Optimizado
-│   │   │   ├── validate/route.ts      ✅ Básico
-│   │   │   └── health/route.ts        ✅ Enhanced
-│   │   ├── globals.css                ✅ Tailwind
+│   │   │   ├── chat/route.ts          ✅ SIRE Assistant - Optimizado
+│   │   │   ├── muva/chat/route.ts     ✅ Tourism Assistant - NUEVO
+│   │   │   ├── validate/route.ts      ✅ Enhanced Validation
+│   │   │   ├── health/route.ts        ✅ Enhanced
+│   │   │   └── status/route.ts        ✅ System monitoring - NUEVO
+│   │   ├── layout.tsx                 ✅ App layout
 │   │   └── page.tsx                   ✅ Dashboard
 │   ├── components/
-│   │   ├── Dashboard/                 ✅ Tabbed interface
-│   │   ├── ChatAssistant/            ✅ Mejorado
-│   │   ├── FileUploader/             ✅ Básico
-│   │   └── ui/                       ✅ shadcn/ui
-│   └── lib/
-│       ├── supabase.ts               ✅ pgvector + fallback
-│       ├── openai.ts                 ✅ Embeddings
-│       ├── claude.ts                 ✅ Responses
-│       ├── chunking.ts               ✅ Optimizado
-│       └── utils.ts                  ✅ Utilities
-├── scripts/                          ✅ Automation tools
+│   │   ├── Dashboard/                 ✅ Dual assistant interface
+│   │   ├── ChatAssistant/            ✅ SIRE - Mejorado
+│   │   ├── MuvaAssistant/            ✅ Tourism - NUEVO
+│   │   ├── FileUploader/             ✅ Enhanced validation
+│   │   └── ui/                       ✅ shadcn/ui (5 components)
+│   ├── lib/
+│   │   ├── supabase.ts               ✅ pgvector + fallback
+│   │   ├── openai.ts                 ✅ Embeddings
+│   │   ├── claude.ts                 ✅ Responses
+│   │   ├── chunking.ts               ✅ Optimizado
+│   │   ├── muva-utils.ts             ✅ Tourism utilities - NUEVO
+│   │   └── utils.ts                  ✅ Utilities
+│   ├── middleware.ts                 ✅ Request routing - NUEVO
+│   └── __tests__/                    ✅ Jest test suite (5 files)
+├── scripts/                          ✅ 27 automation tools
+│   ├── check-mcp-status.js           ✅ MCP monitoring - NUEVO
+│   ├── populate-muva-embeddings.js   ✅ Tourism data - NUEVO
+│   ├── mcp-*.js                      ✅ MCP operations - NUEVO
 │   ├── quick-pgvector-benchmark.js   ✅ Fast testing
 │   ├── benchmark-pgvector-comparison.js ✅ Detailed
 │   ├── validate-env.js               ✅ Environment
 │   └── setup-vector-function.js      ✅ Database setup
-├── sql/                              ✅ Database functions
-│   └── match_documents_function_fixed.sql ✅ Working version
-├── docs/                             ✅ Documentation
+├── docs/                             ✅ Documentation (4 files)
 │   ├── PGVECTOR_TECHNICAL_GUIDE.md   ✅ Technical guide
 │   ├── DEVELOPMENT.md                ✅ Dev setup
 │   ├── TROUBLESHOOTING.md            ✅ Problem solving
-│   └── openapi.yaml                  ✅ API spec
+│   └── PERFORMANCE_OPTIMIZATION_RESULTS.md ✅ Results
+├── .mcp.json                         ✅ MCP configuration - NUEVO
 ├── README.md                         ✅ Updated
 ├── CLAUDE.md                         ✅ Claude Code instructions
-├── TODO.md                           ✅ Task tracking
-├── BENCHMARK_REPORT_PGVECTOR.md      ✅ Performance results
-└── package.json                      ✅ Dependencies
+├── TODO.md                           ✅ Task tracking updated
+├── SECURITY_FIXES.md                 ✅ Security docs - NUEVO
+├── SNAPSHOT.md                       ✅ This comprehensive status
+└── package.json                      ✅ Next.js 15.5.3 + React 19
 ```
 
 ---
@@ -960,17 +1022,27 @@ La base de performance está sólida (0.490s vs target 2.5s). Cualquier optimiza
 3. **Ecosystem development** (API foundation established)
 4. **Market leadership** (performance + features differentiation)
 
-### **📋 Immediate Next Steps**
+### **📋 Current Next Steps (Septiembre 2025)**
 
-1. **Esta semana**: Comenzar Task B1 (Enhanced File Validation)
-2. **Próxima semana**: Completar validación + comenzar Task B3
-3. **Mes siguiente**: Analytics dashboard + planning Phase 3
+1. **Ahora**: Implementar Task B3 (Dashboard Analytics)
+2. **Próximas 2 semanas**: Completar analytics + testing
+3. **Mes siguiente**: Planning Phase 3 - Advanced features
+4. **Nuevo**: Expansión MUVA tourism features
 
-**El proyecto InnPilot está en estado EXCELENTE para entrar en fase de crecimiento agresivo de features y usuarios.**
+**El proyecto InnPilot está en estado EXCEPCIONAL con funcionalidad dual (SIRE + Tourism) y listo para crecimiento agresivo de usuarios.**
+
+### **🌟 Key September 2025 Achievements**
+- ✅ Enhanced File Validation completado
+- ✅ MUVA Tourism Assistant implementado
+- ✅ Dual assistant architecture funcionando
+- ✅ 27 scripts de automatización disponibles
+- ✅ MCP integration completamente funcional
+- ✅ Next.js 15.5.3 + React 19 migration
 
 ---
 
-*📊 Snapshot generado: 19 de enero, 2025*
-*🔄 Última actualización TODO.md: 19 de enero, 2025*
-*✅ Estado: EXCELENTE - Ready for feature growth phase*
-*🎯 Próximo milestone: Enhanced File Validation completion*
+*📊 Snapshot generado: 19 de septiembre, 2025*
+*🔄 Última actualización TODO.md: Septiembre, 2025*
+*✅ Estado: EXCEPCIONAL - Dual assistant platform ready*
+*🎯 Próximo milestone: Dashboard Analytics completion*
+*🌟 Nueva funcionalidad: MUVA Tourism Assistant active*

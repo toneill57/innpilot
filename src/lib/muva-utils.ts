@@ -1,0 +1,313 @@
+// MUVA Tourism Utilities
+// Separate domain logic for tourism content and recommendations
+
+import { supabase } from './supabase'
+
+export interface MuvaEmbedding {
+  id: string
+  content: string
+  embedding?: number[]
+  title?: string
+  description?: string
+  category: MuvaCategory
+  location?: string
+  city?: string
+  coordinates?: [number, number] // [lat, lng]
+  rating?: number
+  price_range?: PriceRange
+  source_file?: string
+  chunk_index: number
+  total_chunks: number
+  opening_hours?: string
+  contact_info?: ContactInfo
+  tags?: string[]
+  language: string
+  created_at: string
+  updated_at: string
+  similarity?: number
+}
+
+export type MuvaCategory =
+  | 'restaurant' | 'attraction' | 'activity' | 'hotel'
+  | 'transport' | 'shopping' | 'nightlife' | 'beach'
+  | 'culture' | 'nature' | 'adventure' | 'guide'
+
+export type PriceRange = '$' | '$$' | '$$$' | '$$$$'
+
+export interface ContactInfo {
+  phone?: string
+  email?: string
+  website?: string
+  address?: string
+  social_media?: {
+    instagram?: string
+    facebook?: string
+    whatsapp?: string
+  }
+}
+
+export interface MuvaSearchOptions {
+  category?: MuvaCategory
+  location?: string
+  city?: string
+  min_rating?: number
+  price_range?: PriceRange
+  match_count?: number
+  match_threshold?: number
+}
+
+/**
+ * Search MUVA tourism content using pgvector similarity
+ */
+export async function searchMuvaContent(
+  queryEmbedding: number[],
+  options: MuvaSearchOptions = {}
+): Promise<MuvaEmbedding[]> {
+  try {
+    const {
+      category,
+      location,
+      city,
+      min_rating,
+      match_count = 6,
+      match_threshold = 0.3
+    } = options
+
+    console.log(`[MUVA] Searching with embedding length: ${queryEmbedding.length}`)
+    console.log(`[MUVA] Filters - category: ${category}, location: ${location}, min_rating: ${min_rating}`)
+
+    const { data, error } = await supabase.rpc('match_muva_documents', {
+      query_embedding: queryEmbedding,
+      match_threshold,
+      match_count,
+      filter_category: category,
+      filter_location: location,
+      filter_city: city,
+      min_rating
+    })
+
+    if (error) {
+      console.error('[MUVA] Vector search error:', error)
+      throw new Error(`MUVA search failed: ${error.message}`)
+    }
+
+    if (!data || data.length === 0) {
+      console.log('[MUVA] No results found for query')
+      return []
+    }
+
+    console.log(`[MUVA] Found ${data.length} tourism results`)
+    return data.map(formatMuvaResult)
+  } catch (error) {
+    console.error('[MUVA] Search error:', error)
+    throw error
+  }
+}
+
+/**
+ * Search restaurants specifically
+ */
+export async function searchMuvaRestaurants(
+  queryEmbedding: number[],
+  location?: string,
+  minRating?: number,
+  priceRange?: PriceRange,
+  matchCount = 4
+): Promise<Partial<MuvaEmbedding>[]> {
+  try {
+    const { data, error } = await supabase.rpc('search_muva_restaurants', {
+      query_embedding: queryEmbedding,
+      location_filter: location,
+      min_rating: minRating,
+      price_filter: priceRange,
+      match_count: matchCount
+    })
+
+    if (error) {
+      console.error('[MUVA] Restaurant search error:', error)
+      throw new Error(`Restaurant search failed: ${error.message}`)
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('[MUVA] Restaurant search error:', error)
+    throw error
+  }
+}
+
+/**
+ * Search attractions specifically
+ */
+export async function searchMuvaAttractions(
+  queryEmbedding: number[],
+  location?: string,
+  minRating?: number,
+  matchCount = 4
+): Promise<Partial<MuvaEmbedding>[]> {
+  try {
+    const { data, error } = await supabase.rpc('search_muva_attractions', {
+      query_embedding: queryEmbedding,
+      location_filter: location,
+      min_rating: minRating,
+      match_count: matchCount
+    })
+
+    if (error) {
+      console.error('[MUVA] Attraction search error:', error)
+      throw new Error(`Attraction search failed: ${error.message}`)
+    }
+
+    return data || []
+  } catch (error) {
+    console.error('[MUVA] Attraction search error:', error)
+    throw error
+  }
+}
+
+/**
+ * Format MUVA search result
+ */
+function formatMuvaResult(result: any): MuvaEmbedding {
+  return {
+    id: result.id,
+    content: result.content,
+    embedding: result.embedding,
+    title: result.title,
+    description: result.description,
+    category: result.category,
+    location: result.location,
+    city: result.city,
+    coordinates: result.coordinates ? [result.coordinates.x, result.coordinates.y] : undefined,
+    rating: result.rating ? parseFloat(result.rating) : undefined,
+    price_range: result.price_range,
+    source_file: result.source_file,
+    chunk_index: result.chunk_index,
+    total_chunks: result.total_chunks,
+    opening_hours: result.opening_hours,
+    contact_info: result.contact_info,
+    tags: result.tags,
+    language: result.language || 'es',
+    created_at: result.created_at,
+    updated_at: result.updated_at,
+    similarity: result.similarity
+  }
+}
+
+/**
+ * Get categories for filtering
+ */
+export function getMuvaCategories(): { value: MuvaCategory; label: string }[] {
+  return [
+    { value: 'restaurant', label: 'Restaurantes' },
+    { value: 'attraction', label: 'Atracciones' },
+    { value: 'activity', label: 'Actividades' },
+    { value: 'hotel', label: 'Hoteles' },
+    { value: 'transport', label: 'Transporte' },
+    { value: 'shopping', label: 'Compras' },
+    { value: 'nightlife', label: 'Vida Nocturna' },
+    { value: 'beach', label: 'Playas' },
+    { value: 'culture', label: 'Cultura' },
+    { value: 'nature', label: 'Naturaleza' },
+    { value: 'adventure', label: 'Aventura' },
+    { value: 'guide', label: 'Guías' }
+  ]
+}
+
+/**
+ * Get price ranges for filtering
+ */
+export function getPriceRanges(): { value: PriceRange; label: string }[] {
+  return [
+    { value: '$', label: 'Económico ($)' },
+    { value: '$$', label: 'Moderado ($$)' },
+    { value: '$$$', label: 'Costoso ($$$)' },
+    { value: '$$$$', label: 'Muy Costoso ($$$$)' }
+  ]
+}
+
+/**
+ * Check if question is MUVA-related
+ */
+export function isMuvaQuestion(question: string): boolean {
+  const muvaKeywords = [
+    'turismo', 'turista', 'visitar', 'conocer', 'turistico',
+    'restaurante', 'comida', 'comer', 'cenar', 'almorzar',
+    'playa', 'atraccion', 'actividad', 'paseo', 'excursion',
+    'hotel', 'hospedaje', 'alojamiento', 'dormir',
+    'comprar', 'shopping', 'tienda', 'mercado',
+    'cultura', 'museo', 'historia', 'arte',
+    'naturaleza', 'parque', 'aventura', 'buceo',
+    'vida nocturna', 'bar', 'discoteca', 'fiesta',
+    'transporte', 'llegar', 'mover', 'taxi', 'bus',
+    'san andres', 'providencia', 'colombia', 'caribe',
+    'recomendar', 'recomendacion', 'sugerir', 'mejor',
+    'donde', 'que hacer', 'que visitar', 'plan'
+  ]
+
+  const lowerQuestion = question.toLowerCase()
+  return muvaKeywords.some(keyword => lowerQuestion.includes(keyword))
+}
+
+/**
+ * Format MUVA response for better UX
+ */
+export function formatMuvaResponse(results: MuvaEmbedding[], query: string): string {
+  if (results.length === 0) {
+    return "No encontré información específica sobre esa consulta turística. ¿Podrías ser más específico sobre lo que buscas en San Andrés?"
+  }
+
+  let response = "🏝️ **Información Turística de San Andrés:**\n\n"
+
+  results.forEach((result, index) => {
+    const emoji = getCategoryEmoji(result.category)
+    response += `${emoji} **${result.title || 'Información'}**\n`
+
+    if (result.description) {
+      response += `${result.description}\n`
+    } else if (result.content) {
+      response += `${result.content.slice(0, 200)}...\n`
+    }
+
+    if (result.rating) {
+      response += `⭐ Calificación: ${result.rating}/5\n`
+    }
+
+    if (result.price_range) {
+      response += `💰 Precio: ${result.price_range}\n`
+    }
+
+    if (result.location) {
+      response += `📍 Ubicación: ${result.location}\n`
+    }
+
+    if (result.opening_hours) {
+      response += `🕒 Horarios: ${result.opening_hours}\n`
+    }
+
+    response += "\n"
+  })
+
+  return response
+}
+
+/**
+ * Get emoji for category
+ */
+function getCategoryEmoji(category: MuvaCategory): string {
+  const emojiMap: Record<MuvaCategory, string> = {
+    restaurant: '🍽️',
+    attraction: '🎯',
+    activity: '🎪',
+    hotel: '🏨',
+    transport: '🚗',
+    shopping: '🛍️',
+    nightlife: '🌙',
+    beach: '🏖️',
+    culture: '🏛️',
+    nature: '🌿',
+    adventure: '⛰️',
+    guide: '📖'
+  }
+
+  return emojiMap[category] || '📍'
+}

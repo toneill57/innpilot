@@ -27,6 +27,7 @@
     "@langchain/community": "^0.3.56",
     "@langchain/core": "^0.3.77",
     "@langchain/openai": "^0.6.13",
+    "@radix-ui/react-select": "^2.2.6",
     "@supabase/supabase-js": "^2.57.4",
     "@vercel/kv": "^3.0.0",
     "class-variance-authority": "^0.7.1",

@@ -1,0 +1,125 @@
+{
+  "zones": {
+    "Centro": {
+      "description": "Ubicado en el norte de la isla, en el centro encuentras la mayor parte del comercio; hoteles, restaurantes, bares y discotecas, tiendas de ropa, calzado, perfumería, tecnología y mucho más. El centro tiene la mayor concentración de personas de toda la isla y cuenta con la playa principal más extensa llamada spratt bight.",
+      "characteristics": [
+        "Zona comercial principal",
+        "Alta concentración turística",
+        "Vida nocturna y restaurantes",
+        "Playa Spratt Bight",
+        "Mayor concentración de personas"
+      ],
+      "subzones": [
+        "Sarie Bay",
+        "Cabañas",
+        "La rocosa",
+        "Spratt Bigth",
+        "Zona Rosa",
+        "Zona rosa",
+        "La 20 de Julio",
+        "Newball",
+        "Almendros",
+        "Barrio obrero"
+      ],
+      "transport": "Fácil acceso en taxi, bus o moto",
+      "proximity_to_airport": "CLOSE"
+    },
+    "Loma": {
+      "description": "Geográficamente en el centro de la isla, se encuentra La Loma, la única formación montañosa con la que cuenta San Andrés, en La Loma vive la mayor concentración de Raizales de la isla, una zona de mucho valor cultural y natural, aquí encontrarás La Primera Iglesia Bautista, la Laguna Big Pond y diferentes calles que te conectan con el resto de la isla. Medianamente ruidosa, dependiendo de la hora.",
+      "characteristics": [
+        "Zona cultural raizal",
+        "Formación montañosa única",
+        "Alta concentración de nativos",
+        "Valor histórico y natural",
+        "Primera Iglesia Bautista",
+        "Laguna Big Pond"
+      ],
+      "subzones": [
+        "Orange Hill",
+        "Bolivariano",
+        "Back Road",
+        "Barrack",
+        "Lynball cove",
+        "Laguna"
+      ],
+      "transport": "Acceso moderado, requiere transporte",
+      "proximity_to_airport": "MEDIUM"
+    },
+    "San Luis": {
+      "description": "Una amplia zona en el suroriente de la isla, San Luis es conocido por sus coloridas casas isleñas en las que habitan en su mayoría nativos, pero también encontrarás hospedajes turísticos, en esta zona, las playas y actividades son menos concurridas que en el centro, las playas tienen diferentes dimensiones de arena y diferente distancia de la barrera coralina, lo que hace que en unas pueda formarse más oleaje que en otras.",
+      "characteristics": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "subzones": [
+        "Chameys",
+        "Rocky Cay",
+        "Sound bay",
+        "El Paraíso",
+        "El paraíso",
+        "Toom Hooker",
+        "Punta sur",
+        "Chamey"
+      ],
+      "transport": "Requiere moto o taxi, distancias mayores",
+      "proximity_to_airport": "FAR"
+    },
+    "Cove": {
+      "description": "El Cove es toda la zona sur occidente de San Andrés, aquí, no encuentras playas, sino una hermosa formación rocosa coralina antes de las entradas al mar, las cuales son más conocidas por ser excelentes puntos de buceo y apnea. Al ser el occidente de la isla, aquí verás esconderse el sol entre el mar cada tarde, encuentras distintas casas de residentes, e igualmente es una zona con distintas atracciones y alojamientos turísticos, muy tranquila y poco ruidosa.",
+      "characteristics": [
+        "Formación rocosa coralina",
+        "Excelentes puntos de buceo",
+        "Zona de snorkel y apnea",
+        "Mejores atardeceres",
+        "Zona muy tranquila",
+        "Poco ruidosa",
+        "Alojamientos turísticos"
+      ],
+      "subzones": [
+        "Morris Landing",
+        "Brooks Bottom",
+        "Magic Garden",
+        "Schooner Bight",
+        "Sukie Bay",
+        "Sukie bay",
+        "Cove",
+        "Ensenada",
+        "West View",
+        "Tom hooker",
+        "Punta sur",
+        "Punta Sur",
+        "Masally Green"
+      ],
+      "transport": "Acceso moderado a difícil, mejor en moto",
+      "proximity_to_airport": "MEDIUM"
+    }
+  },
+  "validation_rules": {
+    "zone_required": true,
+    "subzone_optional": false,
+    "case_sensitive": false,
+    "allow_variations": true
+  },
+  "common_variations": {
+    "Tom Hooker": ["Toom Hooker", "Tom hooker"],
+    "Spratt Bight": ["Spratt Bigth"],
+    "Rocky Cay": ["Rocky Key"],
+    "La 20 de Julio": ["20 de Julio", "Veinte de Julio"]
+  },
+  "overlapping_subzones": {
+    "Tom Hooker": ["San Luis", "Cove"],
+    "Punta sur": ["San Luis", "Cove"],
+    "Back Road": ["Centro", "Loma"]
+  },
+  "unmapped_subzones_found_in_listings": [],
+  "notes": {
+    "data_source": "zonas_y_subzonas.csv",
+    "created_date": "2025-09-19",
+    "purpose": "Validation and auto-completion for MUVA listings",
+    "overlapping_explanation": "Some subzones appear in multiple zones due to geographical boundaries"
+  }
+}
