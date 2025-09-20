@@ -36,70 +36,164 @@ function chunkDocument(content) {
   const CHUNK_SIZE = 1000
   const OVERLAP = 100
 
-  // Recursive character text splitter with separators
+  // Enhanced separator hierarchy for semantic chunking
   const separators = [
-    '\n\n',    // Double newline (paragraphs)
-    '\n',      // Single newline
-    '. ',      // Sentences
-    '? ',      // Questions
-    '! ',      // Exclamations
-    '; ',      // Semicolons
-    ', ',      // Commas
-    ' ',       // Spaces
-    ''         // Characters (last resort)
+    '\n## ',      // Headers principales
+    '\n### ',     // Subheaders
+    '\n\n',       // Párrafos (más importante que líneas)
+    '\n',         // Líneas
+    '. ',         // Oraciones (crítico para semántica)
+    '! ',         // Exclamaciones
+    '? ',         // Preguntas
+    '; ',         // Punto y coma
+    ', ',         // Comas
+    ' ',          // Espacios
+    ''            // Último recurso
   ]
 
-  function recursiveSplit(text, separators) {
-    if (text.length <= CHUNK_SIZE) {
-      return [text]
+  function isValidSplitPoint(text, splitPoint) {
+    if (splitPoint <= 0 || splitPoint >= text.length) return true
+
+    const prevChar = text[splitPoint - 1]
+    const nextChar = text[splitPoint]
+
+    // No dividir en medio de palabras
+    if (/\w/.test(prevChar) && /\w/.test(nextChar)) {
+      return false
     }
 
-    // Try each separator in order
-    for (const separator of separators) {
-      if (text.includes(separator)) {
-        const parts = text.split(separator)
-        const chunks = []
-        let currentChunk = ''
-
-        for (let i = 0; i < parts.length; i++) {
-          const part = parts[i] + (i < parts.length - 1 ? separator : '')
-
-          // If adding this part would exceed chunk size
-          if (currentChunk.length + part.length > CHUNK_SIZE && currentChunk.length > 0) {
-            chunks.push(currentChunk.trim())
-
-            // Start new chunk with overlap from previous chunk
-            const overlapText = currentChunk.slice(-OVERLAP)
-            currentChunk = overlapText + part
-          } else {
-            currentChunk += part
-          }
-        }
-
-        // Add the last chunk if it has content
-        if (currentChunk.trim()) {
-          chunks.push(currentChunk.trim())
-        }
-
-        return chunks
-      }
+    // No dividir dentro de URLs o código
+    const context = text.substring(Math.max(0, splitPoint - 30), Math.min(text.length, splitPoint + 30))
+    if (context.includes('http://') || context.includes('https://') ||
+        context.includes('```') || context.includes('`')) {
+      return false
     }
 
-    // Fallback: split by character count if no separators found
-    const chunks = []
-    for (let i = 0; i < text.length; i += CHUNK_SIZE - OVERLAP) {
-      const chunk = text.slice(i, i + CHUNK_SIZE)
-      if (chunk.trim()) {
-        chunks.push(chunk.trim())
-      }
-    }
-    return chunks
+    return true
   }
 
-  const chunks = recursiveSplit(content, separators)
+  function findBestSplitPoint(text, preferredEnd) {
+    // Buscar el mejor punto de división usando la jerarquía de separadores
+    for (const separator of separators) {
+      if (separator === '') {
+        // Último recurso: buscar límite de palabra más cercano
+        for (let i = preferredEnd; i > preferredEnd - 200 && i > 0; i--) {
+          if (isValidSplitPoint(text, i)) {
+            return i
+          }
+        }
+        return preferredEnd // Fallback final
+      }
 
-  // Filter out very small chunks (less than 50 characters)
-  return chunks.filter(chunk => chunk.length >= 50)
+      // Buscar el último separador antes del límite preferido
+      let bestSplit = -1
+      let index = text.indexOf(separator)
+
+      while (index !== -1 && index <= preferredEnd) {
+        const splitPoint = index + separator.length
+        if (splitPoint >= CHUNK_SIZE * 0.3 && // No chunks muy pequeños
+            splitPoint <= preferredEnd &&
+            isValidSplitPoint(text, splitPoint)) {
+          bestSplit = splitPoint
+        }
+        index = text.indexOf(separator, index + 1)
+      }
+
+      if (bestSplit !== -1) {
+        return bestSplit
+      }
+    }
+
+    return preferredEnd
+  }
+
+  function createSmartOverlap(previousChunk, nextStart, text) {
+    if (!previousChunk || nextStart >= text.length) return nextStart
+
+    // Buscar el inicio de una oración completa para el overlap
+    const overlapRegion = text.substring(Math.max(0, nextStart - OVERLAP), nextStart + 50)
+
+    // Buscar patrones que indican inicio de oración
+    const sentenceStarters = [
+      /\n[A-Z]/,     // Nueva línea + mayúscula
+      /\. [A-Z]/,    // Punto + espacio + mayúscula
+      /^[A-Z]/,      // Inicio con mayúscula
+      /\n## /,       // Headers
+      /\n### /       // Subheaders
+    ]
+
+    for (const pattern of sentenceStarters) {
+      const match = overlapRegion.match(pattern)
+      if (match) {
+        const adjustedStart = nextStart - OVERLAP + match.index
+        if (match[0].includes('\n') || match[0].includes('.')) {
+          return adjustedStart + (match[0].includes('.') ? 2 : 1) // Skip the newline or ". "
+        }
+        return adjustedStart
+      }
+    }
+
+    // Si no encontramos un buen inicio, usar el punto original sin overlap destructivo
+    return nextStart
+  }
+
+  // Algoritmo principal de chunking con validación semántica
+  const chunks = []
+  let currentPos = 0
+
+  while (currentPos < content.length) {
+    let chunkEnd = currentPos + CHUNK_SIZE
+
+    if (chunkEnd >= content.length) {
+      // Último chunk
+      const finalChunk = content.substring(currentPos).trim()
+      if (finalChunk.length >= 30) {
+        chunks.push(finalChunk)
+      }
+      break
+    }
+
+    // Encontrar el mejor punto de división
+    const bestSplit = findBestSplitPoint(content.substring(currentPos), CHUNK_SIZE)
+    const actualEnd = currentPos + bestSplit
+
+    // Extraer el chunk
+    const chunk = content.substring(currentPos, actualEnd).trim()
+    if (chunk.length >= 30) {
+      chunks.push(chunk)
+    }
+
+    // Calcular el próximo inicio con overlap inteligente
+    const nextStart = createSmartOverlap(chunk, actualEnd, content)
+    currentPos = Math.max(nextStart, currentPos + 50) // Asegurar progreso mínimo
+  }
+
+  // Post-procesamiento para garantizar calidad semántica
+  return chunks
+    .filter(chunk => chunk.length >= 50)
+    .map(chunk => {
+      let processed = chunk.trim()
+
+      // Si empieza con minúscula y no es un nombre especial, buscar mejor inicio
+      if (/^[a-z]/.test(processed) && processed.length > 100) {
+        const sentenceMatch = processed.match(/[.!?]\s+[A-Z]/)
+        if (sentenceMatch) {
+          const betterStart = processed.indexOf(sentenceMatch[0]) + sentenceMatch[0].length - 1
+          processed = processed.substring(betterStart).trim()
+        }
+      }
+
+      // Si termina en medio de palabra, truncar en espacio anterior
+      if (/\w$/.test(processed) && processed.length > 100) {
+        const lastSpace = processed.lastIndexOf(' ')
+        if (lastSpace > processed.length * 0.8) {
+          processed = processed.substring(0, lastSpace).trim()
+        }
+      }
+
+      return processed
+    })
+    .filter(chunk => chunk.length >= 50)
 }
 
 function extractFrontmatter(content) {
@@ -147,7 +241,14 @@ function normalizeMetadata(frontmatter) {
   // 1. Normalize timestamps to ISO format
   ['updated_at', 'created_at'].forEach(field => {
     if (normalized[field]) {
-      const timestamp = normalized[field];
+      let timestamp = normalized[field];
+
+      // Clean up value: remove comments and extra quotes
+      if (typeof timestamp === 'string') {
+        timestamp = timestamp.replace(/\s*#.*$/, '').trim(); // Remove comments
+        timestamp = timestamp.replace(/^["']|["']$/g, ''); // Remove surrounding quotes
+      }
+
       // If it's already ISO format, keep it
       if (timestamp.includes('T')) {
         normalized[field] = timestamp;
@@ -193,12 +294,28 @@ function normalizeMetadata(frontmatter) {
 }
 
 function determineDocumentType(filePath, frontmatter) {
-  // 1. Priority: use document_type from frontmatter
-  if (frontmatter?.document_type) {
-    return frontmatter.document_type.toLowerCase().replace('-', '_')
+  // 1. Detect MUVA documents by path
+  if (filePath.includes('_assets/muva') || filePath.includes('/muva/')) {
+    return 'muva'
   }
 
-  // 2. Fallback: use category from frontmatter
+  // 2. Detect MUVA documents by business_type in frontmatter
+  if (frontmatter?.business_type) {
+    return 'muva'
+  }
+
+  // 3. Priority: use document_type from frontmatter
+  if (frontmatter?.document_type) {
+    let docType = frontmatter.document_type
+    // Clean up value: remove comments and extra quotes
+    if (typeof docType === 'string') {
+      docType = docType.replace(/\s*#.*$/, '').trim() // Remove comments
+      docType = docType.replace(/^["']|["']$/g, '') // Remove surrounding quotes
+    }
+    return docType.toLowerCase().replace('-', '_')
+  }
+
+  // 4. Fallback: use category from frontmatter
   if (frontmatter?.category) {
     return frontmatter.category.toLowerCase()
   }
@@ -313,34 +430,68 @@ async function processDocument(filePath) {
       // Generate embedding
       const embedding = await generateEmbedding(chunk)
 
-      // Prepare insert data - use columns that exist in the database (from screenshot)
-      const insertData = {
-        content: chunk,
-        embedding: `[${embedding.join(',')}]`, // Format as vector literal for pgvector
-        source_file: filename,
-        document_type: documentType,
-        chunk_index: i,
-        total_chunks: chunks.length,
-        // Metadata fields that exist in the database
-        title: frontmatter?.title || null,
-        description: frontmatter?.description || null,
-        category: frontmatter?.category || null,
-        status: frontmatter?.status || null,
-        version: frontmatter?.version || null,
-        language: frontmatter?.language || 'es', // Already normalized with default
-        embedding_model: 'text-embedding-3-large',
-        // Optional fields from normalized metadata
-        section_title: frontmatter?.section_title || null,
-        token_count: chunk.split(/\s+/).length, // Calculate token count
-        updated_at: frontmatter?.updated_at || null,
-        created_at: frontmatter?.created_at || null,
-        tags: frontmatter?.tags || null, // Already normalized arrays
-        keywords: frontmatter?.keywords || null // Already normalized arrays
+      // Prepare insert data based on table schema
+      let insertData
+
+      if (documentType === 'muva') {
+        // Map business_type to valid category values
+        const businessTypeMap = {
+          'actividad': 'activity',
+          'restaurante': 'restaurant',
+          'spot': 'attraction',
+          'night life': 'nightlife',
+          'alquiler': 'shopping'
+        }
+
+        const businessType = frontmatter?.business_type?.toLowerCase() || ''
+        const mappedCategory = businessTypeMap[businessType] || frontmatter?.category || 'activity'
+
+        // muva_embeddings table fields
+        insertData = {
+          content: chunk,
+          embedding: `[${embedding.join(',')}]`, // Format as vector literal for pgvector
+          source_file: filename,
+          chunk_index: i,
+          total_chunks: chunks.length,
+          title: frontmatter?.name || frontmatter?.title || null, // Use 'name' from muva docs
+          description: frontmatter?.description || null,
+          category: mappedCategory,
+          location: frontmatter?.location?.zone || frontmatter?.location || null,
+          city: frontmatter?.location?.city || 'San Andrés',
+          tags: frontmatter?.tags || null,
+          language: frontmatter?.language || 'es',
+          created_at: frontmatter?.created_at || null,
+          updated_at: frontmatter?.updated_at || null
+        }
+      } else {
+        // document_embeddings table fields
+        insertData = {
+          content: chunk,
+          embedding: `[${embedding.join(',')}]`, // Format as vector literal for pgvector
+          source_file: filename,
+          document_type: documentType,
+          chunk_index: i,
+          total_chunks: chunks.length,
+          title: frontmatter?.title || null,
+          description: frontmatter?.description || null,
+          category: frontmatter?.category || null,
+          status: frontmatter?.status || null,
+          version: frontmatter?.version || null,
+          language: frontmatter?.language || 'es',
+          embedding_model: 'text-embedding-3-large',
+          section_title: frontmatter?.section_title || null,
+          token_count: chunk.split(/\s+/).length, // Calculate token count
+          updated_at: frontmatter?.updated_at || null,
+          created_at: frontmatter?.created_at || null,
+          tags: frontmatter?.tags || null,
+          keywords: frontmatter?.keywords || null
+        }
       }
 
-      // Insert into Supabase with error handling
+      // Insert into appropriate table based on document type
+      const tableName = documentType === 'muva' ? 'muva_embeddings' : 'document_embeddings'
       const { error } = await supabase
-        .from('document_embeddings')
+        .from(tableName)
         .insert(insertData)
 
       if (error) {
@@ -402,16 +553,36 @@ async function populateEmbeddings() {
     })
 
     console.log('\n🗑️  Clearing existing embeddings...')
-    const { error: deleteError } = await supabase
-      .from('document_embeddings')
-      .delete()
-      .not('id', 'is', null) // Delete all rows with proper UUID syntax
 
-    if (deleteError) {
-      console.warn('⚠️  Warning clearing existing embeddings:', deleteError.message)
-    } else {
-      console.log('✅ Existing embeddings cleared')
+    // Detect document types to determine which tables to clear
+    const hasmuvaFiles = files.some(file => file.includes('muva') || file.includes('_assets/muva'))
+    const hasSireFiles = files.some(file => !file.includes('muva') && !file.includes('_assets/muva'))
+
+    // Clear muva_embeddings if processing MUVA files
+    if (hasmuvaFiles) {
+      const { error: deleteMuvaError } = await supabase
+        .from('muva_embeddings')
+        .delete()
+        .not('id', 'is', null)
+
+      if (deleteMuvaError) {
+        console.warn('⚠️  Warning clearing muva embeddings:', deleteMuvaError.message)
+      }
     }
+
+    // Clear document_embeddings if processing SIRE files
+    if (hasSireFiles) {
+      const { error: deleteError } = await supabase
+        .from('document_embeddings')
+        .delete()
+        .not('id', 'is', null)
+
+      if (deleteError) {
+        console.warn('⚠️  Warning clearing document embeddings:', deleteError.message)
+      }
+    }
+
+    console.log('✅ Existing embeddings cleared')
 
     // Process each document
     const documentResults = []

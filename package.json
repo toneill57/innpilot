@@ -19,7 +19,9 @@
     "clear-database": "node scripts/clear-database.js",
     "test-performance": "node scripts/test-performance.js",
     "benchmark-detailed": "node scripts/detailed-benchmark.js",
-    "setup-pgvector": "node scripts/setup-vector-function.js"
+    "setup-pgvector": "node scripts/setup-vector-function.js",
+    "deploy-agent": "node scripts/deploy-agent.js",
+    "deploy-agent:verbose": "node scripts/deploy-agent.js --verbose"
   },
   "type": "module",
   "dependencies": {

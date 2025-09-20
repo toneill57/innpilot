@@ -202,8 +202,8 @@ ${context}
 Pregunta del usuario: ${question}`
 
     const claudeResponse = await anthropic.messages.create({
-      model: process.env.CLAUDE_MODEL || 'claude-3-5-haiku-20241022',
-      max_tokens: parseInt(process.env.CLAUDE_MAX_TOKENS || '1000'),
+      model: process.env.CLAUDE_MUVA_MODEL || 'claude-3-5-sonnet-20241022',
+      max_tokens: parseInt(process.env.CLAUDE_MUVA_MAX_TOKENS || '1500'),
       messages: [
         {
           role: 'user',

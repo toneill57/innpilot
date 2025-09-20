@@ -1,0 +1,637 @@
+{
+  "timestamp": "2025-09-20T05:00:17.270Z",
+  "summary": {
+    "sire": {
+      "totalChunks": 8,
+      "totalIssues": 13,
+      "qualityScore": -62,
+      "stats": {
+        "totalChunks": 8,
+        "avgLength": 833,
+        "minLength": 546,
+        "maxLength": 967,
+        "cutsInWords": 0,
+        "incompleteStarts": 4,
+        "incompleteEnds": 2,
+        "tooShort": 0,
+        "tooLong": 0
+      }
+    },
+    "muva": {
+      "totalChunks": 38,
+      "totalIssues": 69,
+      "qualityScore": -82,
+      "stats": {
+        "totalChunks": 38,
+        "avgLength": 759,
+        "minLength": 525,
+        "maxLength": 989,
+        "cutsInWords": 0,
+        "incompleteStarts": 29,
+        "incompleteEnds": 9,
+        "tooShort": 0,
+        "tooLong": 0
+      }
+    }
+  },
+  "issues": {
+    "sire": [
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 0,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 1,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends mid-word: \"texto delimitado por\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 1,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk starts mid-sentence: \"rtar información al SIRE?**\n**A:** El proceso ofic...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 1,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 2,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk starts mid-sentence: \"oger la opción \"guardar como\" y seleccionar tipo d...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 2,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 3,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 4,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 5,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends mid-word: \"ento} antes de envío\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 5,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk starts mid-sentence: \"ercosur y CAN)\n\n**VALIDACIÓN CRÍTICA**: Solo estos...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 5,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 6,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 7,
+        "sourceFile": "pasos-para-reportar-al-sire.md",
+        "issue": "Chunk starts mid-sentence: \"archivo\n- **Prevention**: Mantener orden estricto ...\""
+      }
+    ],
+    "muva": [
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 0,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 1,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"isla perfecto para quedarse a pasar el día después...\""
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 2,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends mid-word: \"y manglares al borde\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 2,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"distancia de la barrera coralina, lo que hace que ...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 2,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 3,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"al aeropuerto:** FAR\n- **Características costeras:...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 3,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 4,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends mid-word: \"enta para operadores\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 4,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"ida está incluido en la actividad. Ideal para qued...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 4,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 6,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"omparable, conectando la práctica milenaria del yo...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 6,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 7,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"s prácticas de yoga, para finalizar con ejercicios...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 7,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 8,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends mid-word: \"dades de bienestar y\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 8,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"ica es para todos los niveles, enfoque en conexión...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 8,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 9,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends mid-word: \"vidad de desconexión\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 9,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 10,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"ienestar personal\n- **Negocios (400.000-1.000.000 ...\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 11,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"encia incluye transporte, snack de fruta y acceso ...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 11,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 12,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk starts mid-sentence: \"a:** Bienestar integral, desconexión digital, cone...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 12,
+        "sourceFile": "yoga-san-andres.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 13,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 14,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"gias alimentarias, todo en un espacio lindo y a pr...\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 15,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"en esta zona. De día, encontrarás venta de activid...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 15,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 16,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"sa tanto de día como de noche. Ubicación central i...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 16,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 17,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 18,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"eran disfrutar de opciones alimentarias saludables...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 18,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 19,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends mid-word: \"nicas y lugares para\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 19,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"ita:** Este lugar es único en la isla, prueba sus ...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 19,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 20,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends mid-word: \" low cost hasta lujo\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 20,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"a ambiental\n- **Solteros:** Independientes que bus...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 20,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 21,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"restaurante de su tipo en la isla\n- **Precios acce...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 21,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 23,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk starts mid-sentence: \"un ambiente relajado donde todos son bienvenidos, ...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 23,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 24,
+        "sourceFile": "bali-smoothies.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 25,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 26,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"na formación rocosa coralina que ofrece una experi...\""
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 27,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends mid-word: \" sin playas de arena\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 27,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"nte es una zona con distintas atracciones y alojam...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 27,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 28,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"eropuerto:** MEDIUM\n- **Características costeras:*...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 28,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 29,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"rfecto para ver atardeceres. Llevar protector sola...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 29,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 30,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"rvicios especiales:** Casitas artesanales frente a...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 30,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 31,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"o y una excelente energía para atenderte, mantenie...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 31,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 32,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends mid-word: \"racciones culturales\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 32,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"con hambre para probar comidas para compartir, int...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 32,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "WORD_CUT_END",
+        "severity": "HIGH",
+        "chunkIndex": 33,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends mid-word: \"eriencias inclusivas\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 33,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"zación\n- **Negocios:** Profesionales que aprovecha...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 33,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 34,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"os los gustos\n- **Acceso libre:** Perfecto para pr...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 34,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 35,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"grupos y mayor comodidad\n- **Tour organizado:** Pa...\""
+      },
+      {
+        "type": "INCOMPLETE_START",
+        "severity": "MEDIUM",
+        "chunkIndex": 36,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk starts mid-sentence: \"pre te reciben con linda energía y una sonrisa, ma...\""
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 36,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      },
+      {
+        "type": "ABRUPT_CUT",
+        "severity": "MEDIUM",
+        "chunkIndex": 37,
+        "sourceFile": "big-mama.md",
+        "issue": "Chunk ends abruptly without punctuation"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "priority": "HIGH",
+      "issue": "Word cuts detected",
+      "solution": "Implement better word boundary detection in chunking algorithm",
+      "affectedDomains": [
+        "SIRE",
+        "MUVA"
+      ]
+    },
+    {
+      "priority": "HIGH",
+      "issue": "Overall chunk quality below 80%",
+      "solution": "Consider using the unified-embeddings.js script with improved semantic validation",
+      "affectedDomains": [
+        "SIRE",
+        "MUVA"
+      ]
+    }
+  ]
+}
