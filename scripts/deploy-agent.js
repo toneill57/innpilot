@@ -35,10 +35,7 @@ const CONFIG = {
     '/api/muva/chat'
   ],
   vercel: {
-    // Token preferido por el usuario
     apiToken: 'jqBCRguPAbRYHYTXgxOVse5h',
-    // Token alternativo
-    fallbackToken: 'YNsZRGUbHOxuaKUWwp197YTQ',
     baseUrl: 'https://api.vercel.com',
     projectName: 'innpilot'
   },
