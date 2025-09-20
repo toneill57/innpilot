@@ -102,9 +102,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match all API routes
+    // Only match API routes for now
     '/api/(.*)',
-    // Match all routes except static files
-    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 }
