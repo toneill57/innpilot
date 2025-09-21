@@ -173,6 +173,52 @@ export async function GET(request: NextRequest) {
       return acc
     }, {}) || {}
 
+    // Process popular queries with counts
+    const queryCount = popularQueries?.reduce((acc: Record<string, { count: number, category: string }>, pq) => {
+      const key = pq.normalized_query
+      if (key && acc[key]) {
+        acc[key].count++
+      } else if (key) {
+        acc[key] = { count: 1, category: pq.category }
+      }
+      return acc
+    }, {}) || {}
+
+    const popularQueriesWithCount = Object.entries(queryCount)
+      .sort(([,a], [,b]) => b.count - a.count)
+      .slice(0, 10)
+      .map(([query, data]) => ({
+        query,
+        category: data.category,
+        count: data.count
+      }))
+
+    // Process category distribution with counts
+    const categoryCount = categoryStats?.reduce((acc: Record<string, number>, cs) => {
+      if (cs.category) {
+        acc[cs.category] = (acc[cs.category] || 0) + 1
+      }
+      return acc
+    }, {}) || {}
+
+    const categoryDistributionWithCount = Object.entries(categoryCount).map(([category, count]) => ({
+      category,
+      count,
+      percentage: totalQueries > 0 ? Math.round((count / totalQueries) * 100) : 0
+    }))
+
+    // Process hourly usage with counts
+    const hourlyCount = hourlyStats?.reduce((acc: Record<number, number>, hs) => {
+      const hour = new Date(hs.timestamp).getHours()
+      acc[hour] = (acc[hour] || 0) + 1
+      return acc
+    }, {}) || {}
+
+    const hourlyUsageWithCount = Object.entries(hourlyCount).map(([hour, count]) => ({
+      hour: parseInt(hour),
+      count
+    }))
+
     // Recent activity trends
     const last24Hours = analytics?.filter(a =>
       new Date(a.timestamp) > new Date(Date.now() - 24 * 60 * 60 * 1000)
@@ -187,20 +233,9 @@ export async function GET(request: NextRequest) {
         avgQuality,
         periodDays: days
       },
-      popularQueries: popularQueries?.map(pq => ({
-        query: pq.normalized_query,
-        category: pq.category,
-        count: pq.count
-      })) || [],
-      categoryDistribution: categoryStats?.map(cs => ({
-        category: cs.category,
-        count: cs.count,
-        percentage: totalQueries > 0 ? Math.round((cs.count / totalQueries) * 100) : 0
-      })) || [],
-      hourlyUsage: hourlyStats?.map(hs => ({
-        hour: hs.hour_of_day,
-        count: hs.count
-      })) || [],
+      popularQueries: popularQueriesWithCount,
+      categoryDistribution: categoryDistributionWithCount,
+      hourlyUsage: hourlyUsageWithCount,
       semanticGroups: Object.entries(semanticGroups).map(([group, count]) => ({
         group,
         count,

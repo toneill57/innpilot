@@ -25,6 +25,14 @@ export interface MuvaEmbedding {
   created_at: string
   updated_at: string
   similarity?: number
+  // Nueva metadata extendida
+  amenities?: AmenitiesInfo
+  business_hours_detailed?: BusinessHours
+  pricing_detailed?: PricingDetails
+  zone_info?: ZoneInfo
+  search_terms?: string
+  business_type_spanish?: string
+  metadata_extra?: MetadataExtra
 }
 
 export type MuvaCategory =
@@ -46,6 +54,46 @@ export interface ContactInfo {
   }
 }
 
+export interface AmenitiesInfo {
+  pet_friendly?: boolean
+  "420_friendly"?: boolean
+  vegetarian_options?: boolean
+  wheelchair_accessible?: boolean
+  wifi_available?: boolean
+  parking_available?: boolean
+  english_speaking_staff?: boolean
+  accepts_reservations?: boolean
+}
+
+export interface BusinessHours {
+  schedule?: string
+  days_closed?: string
+}
+
+export interface PricingDetails {
+  range?: string
+  currency?: string
+  payment_methods?: string[]
+  commission_info?: string
+}
+
+export interface ZoneInfo {
+  zone?: string
+  zone_description?: string
+  subzone_description?: string
+  zone_features?: string[]
+}
+
+export interface MetadataExtra {
+  historical_significance?: string
+  menu_info?: string
+  last_menu_update?: string
+  status?: string
+  version?: string
+  updated_at?: string
+  created_at?: string
+}
+
 export interface MuvaSearchOptions {
   category?: MuvaCategory
   location?: string
@@ -54,6 +102,16 @@ export interface MuvaSearchOptions {
   price_range?: PriceRange
   match_count?: number
   match_threshold?: number
+  // Nuevos filtros por amenities
+  pet_friendly?: boolean
+  "420_friendly"?: boolean
+  vegetarian_options?: boolean
+  wheelchair_accessible?: boolean
+  wifi_available?: boolean
+  english_speaking_staff?: boolean
+  // Filtro por zona
+  zone?: string
+  business_type_spanish?: string
 }
 
 /**
@@ -70,12 +128,35 @@ export async function searchMuvaContent(
       city,
       min_rating,
       match_count = 6,
-      match_threshold = 0.3
+      match_threshold = 0.3,
+      // Nuevos filtros
+      pet_friendly,
+      "420_friendly": fourTwentyFriendly,
+      vegetarian_options,
+      wheelchair_accessible,
+      wifi_available,
+      english_speaking_staff,
+      zone,
+      business_type_spanish
     } = options
 
     console.log(`[MUVA] Searching with embedding length: ${queryEmbedding.length}`)
-    console.log(`[MUVA] Filters - category: ${category}, location: ${location}, min_rating: ${min_rating}`)
+    console.log(`[MUVA] Filters - category: ${category}, location: ${location}, zone: ${zone}`)
 
+    // Usar búsqueda extendida si hay filtros de amenities o zona
+    const hasExtendedFilters = pet_friendly !== undefined ||
+                              fourTwentyFriendly !== undefined ||
+                              vegetarian_options !== undefined ||
+                              wheelchair_accessible !== undefined ||
+                              wifi_available !== undefined ||
+                              english_speaking_staff !== undefined ||
+                              zone || business_type_spanish
+
+    if (hasExtendedFilters) {
+      return searchMuvaContentExtended(queryEmbedding, options)
+    }
+
+    // Búsqueda tradicional para compatibilidad
     const { data, error } = await supabase.rpc('match_muva_documents', {
       query_embedding: queryEmbedding,
       match_threshold,
@@ -100,6 +181,109 @@ export async function searchMuvaContent(
     return data.map(formatMuvaResult)
   } catch (error) {
     console.error('[MUVA] Search error:', error)
+    throw error
+  }
+}
+
+/**
+ * Extended search using new metadata columns
+ */
+async function searchMuvaContentExtended(
+  queryEmbedding: number[],
+  options: MuvaSearchOptions = {}
+): Promise<MuvaEmbedding[]> {
+  try {
+    const {
+      category,
+      location,
+      city,
+      min_rating,
+      match_count = 6,
+      match_threshold = 0.3,
+      pet_friendly,
+      "420_friendly": fourTwentyFriendly,
+      vegetarian_options,
+      wheelchair_accessible,
+      wifi_available,
+      english_speaking_staff,
+      zone,
+      business_type_spanish
+    } = options
+
+    console.log(`[MUVA] Extended search with amenities filters`)
+
+    // Construir query con filtros extendidos
+    let query = supabase
+      .from('muva_embeddings')
+      .select(`
+        id, content, title, description, category, location, city,
+        coordinates, rating, price_range, source_file, chunk_index,
+        total_chunks, opening_hours, contact_info, tags, language,
+        created_at, updated_at, images, image_metadata,
+        amenities, business_hours_detailed, pricing_detailed,
+        zone_info, search_terms, business_type_spanish, metadata_extra
+      `)
+
+    // Aplicar filtros básicos
+    if (category) {
+      query = query.eq('category', category)
+    }
+    if (location) {
+      query = query.eq('location', location)
+    }
+    if (city) {
+      query = query.eq('city', city)
+    }
+    if (min_rating) {
+      query = query.gte('rating', min_rating)
+    }
+    if (business_type_spanish) {
+      query = query.eq('business_type_spanish', business_type_spanish)
+    }
+
+    // Filtros de zona usando JSONB
+    if (zone) {
+      query = query.eq('zone_info->zone', zone)
+    }
+
+    // Filtros de amenities usando JSONB
+    if (pet_friendly !== undefined) {
+      query = query.eq('amenities->pet_friendly', pet_friendly)
+    }
+    if (fourTwentyFriendly !== undefined) {
+      query = query.eq('amenities->420_friendly', fourTwentyFriendly)
+    }
+    if (vegetarian_options !== undefined) {
+      query = query.eq('amenities->vegetarian_options', vegetarian_options)
+    }
+    if (wheelchair_accessible !== undefined) {
+      query = query.eq('amenities->wheelchair_accessible', wheelchair_accessible)
+    }
+    if (wifi_available !== undefined) {
+      query = query.eq('amenities->wifi_available', wifi_available)
+    }
+    if (english_speaking_staff !== undefined) {
+      query = query.eq('amenities->english_speaking_staff', english_speaking_staff)
+    }
+
+    query = query.limit(match_count)
+
+    const { data, error } = await query
+
+    if (error) {
+      console.error('[MUVA] Extended search error:', error)
+      throw new Error(`Extended MUVA search failed: ${error.message}`)
+    }
+
+    if (!data || data.length === 0) {
+      console.log('[MUVA] No results found with extended filters')
+      return []
+    }
+
+    console.log(`[MUVA] Found ${data.length} results with extended filters`)
+    return data.map(formatMuvaResult)
+  } catch (error) {
+    console.error('[MUVA] Extended search error:', error)
     throw error
   }
 }
@@ -189,7 +373,15 @@ function formatMuvaResult(result: any): MuvaEmbedding {
     language: result.language || 'es',
     created_at: result.created_at,
     updated_at: result.updated_at,
-    similarity: result.similarity
+    similarity: result.similarity,
+    // Nueva metadata extendida
+    amenities: result.amenities,
+    business_hours_detailed: result.business_hours_detailed,
+    pricing_detailed: result.pricing_detailed,
+    zone_info: result.zone_info,
+    search_terms: result.search_terms,
+    business_type_spanish: result.business_type_spanish,
+    metadata_extra: result.metadata_extra
   }
 }
 

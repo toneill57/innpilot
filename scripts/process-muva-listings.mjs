@@ -13,6 +13,11 @@ import matter from 'gray-matter';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { chunkText } from '../src/lib/chunking.ts';
+import dotenv from 'dotenv';
+
+// Cargar variables de entorno
+dotenv.config({ path: '.env.local' });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -88,44 +93,10 @@ function getPriceRange(price) {
 }
 
 /**
- * Crea chunks de texto con validación semántica
+ * Crea chunks de texto usando SemanticChunker optimizado
  */
-function createChunks(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
-  const chunks = [];
-  const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-
-  let currentChunk = '';
-  let currentLength = 0;
-
-  for (const sentence of sentences) {
-    const trimmedSentence = sentence.trim();
-    const sentenceLength = trimmedSentence.length;
-
-    if (currentLength + sentenceLength <= chunkSize) {
-      currentChunk += (currentChunk ? ' ' : '') + trimmedSentence;
-      currentLength += sentenceLength;
-    } else {
-      if (currentChunk) {
-        chunks.push(currentChunk);
-      }
-
-      // Crear overlap con las últimas oraciones del chunk anterior
-      if (chunks.length > 0 && overlap > 0) {
-        const overlapText = currentChunk.substring(Math.max(0, currentChunk.length - overlap));
-        currentChunk = overlapText + ' ' + trimmedSentence;
-        currentLength = currentChunk.length;
-      } else {
-        currentChunk = trimmedSentence;
-        currentLength = sentenceLength;
-      }
-    }
-  }
-
-  if (currentChunk) {
-    chunks.push(currentChunk);
-  }
-
-  return chunks;
+async function createChunks(text, chunkSize = CHUNK_SIZE, overlap = CHUNK_OVERLAP) {
+  return await chunkText(text, chunkSize, overlap);
 }
 
 /**
@@ -214,7 +185,7 @@ ${mainContent}
     `.trim();
 
     // Crear chunks
-    const chunks = createChunks(fullContent);
+    const chunks = await createChunks(fullContent);
     console.log(`  📊 Chunks creados: ${chunks.length}`);
 
     // Eliminar embeddings existentes para este documento
@@ -256,12 +227,43 @@ ${mainContent}
           whatsapp: metadata.contact.whatsapp || null,
           email: metadata.contact.email || null,
           instagram: metadata.contact.instagram || null,
-          phone: metadata.contact.phone || null
+          phone: metadata.contact.phone || null,
+          website: metadata.contact.website || null,
+          physical_address: metadata.contact.physical_address || null
         },
         tags: metadata.tags,
         language: 'es',
         images: frontmatter.images || [],
-        image_metadata: frontmatter.image_metadata || null
+        image_metadata: frontmatter.image_metadata || null,
+        // Nuevas columnas con metadata extendida
+        amenities: frontmatter.amenities || {},
+        business_hours_detailed: {
+          schedule: metadata.business_hours.schedule || null,
+          days_closed: metadata.business_hours.days_closed || null
+        },
+        pricing_detailed: {
+          range: metadata.pricing.range || null,
+          currency: metadata.pricing.currency || 'COP',
+          payment_methods: metadata.pricing.payment_methods || [],
+          commission_info: metadata.pricing.commission_info || null
+        },
+        zone_info: {
+          zone: metadata.location.zone || null,
+          zone_description: metadata.location.zone_description || null,
+          subzone_description: metadata.location.subzone_description || null,
+          zone_features: metadata.location.zone_features || []
+        },
+        search_terms: metadata.search_terms || '',
+        business_type_spanish: metadata.business_type || '',
+        metadata_extra: {
+          historical_significance: frontmatter.metadata?.historical_significance || null,
+          menu_info: frontmatter.metadata?.menu_info || null,
+          last_menu_update: frontmatter.metadata?.last_menu_update || null,
+          status: frontmatter.status || 'active',
+          version: frontmatter.version || '1.0',
+          updated_at: frontmatter.metadata?.updated_at || null,
+          created_at: frontmatter.metadata?.created_at || null
+        }
       };
 
       // Insertar en Supabase

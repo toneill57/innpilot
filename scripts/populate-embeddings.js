@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 import OpenAI from 'openai'
 import { createClient } from '@supabase/supabase-js'
 import { glob } from 'glob'
+import { chunkText } from '../src/lib/chunking.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -32,168 +33,9 @@ async function generateEmbedding(text) {
   return response.data[0].embedding
 }
 
-function chunkDocument(content) {
-  const CHUNK_SIZE = 1000
-  const OVERLAP = 100
-
-  // Enhanced separator hierarchy for semantic chunking
-  const separators = [
-    '\n## ',      // Headers principales
-    '\n### ',     // Subheaders
-    '\n\n',       // Párrafos (más importante que líneas)
-    '\n',         // Líneas
-    '. ',         // Oraciones (crítico para semántica)
-    '! ',         // Exclamaciones
-    '? ',         // Preguntas
-    '; ',         // Punto y coma
-    ', ',         // Comas
-    ' ',          // Espacios
-    ''            // Último recurso
-  ]
-
-  function isValidSplitPoint(text, splitPoint) {
-    if (splitPoint <= 0 || splitPoint >= text.length) return true
-
-    const prevChar = text[splitPoint - 1]
-    const nextChar = text[splitPoint]
-
-    // No dividir en medio de palabras
-    if (/\w/.test(prevChar) && /\w/.test(nextChar)) {
-      return false
-    }
-
-    // No dividir dentro de URLs o código
-    const context = text.substring(Math.max(0, splitPoint - 30), Math.min(text.length, splitPoint + 30))
-    if (context.includes('http://') || context.includes('https://') ||
-        context.includes('```') || context.includes('`')) {
-      return false
-    }
-
-    return true
-  }
-
-  function findBestSplitPoint(text, preferredEnd) {
-    // Buscar el mejor punto de división usando la jerarquía de separadores
-    for (const separator of separators) {
-      if (separator === '') {
-        // Último recurso: buscar límite de palabra más cercano
-        for (let i = preferredEnd; i > preferredEnd - 200 && i > 0; i--) {
-          if (isValidSplitPoint(text, i)) {
-            return i
-          }
-        }
-        return preferredEnd // Fallback final
-      }
-
-      // Buscar el último separador antes del límite preferido
-      let bestSplit = -1
-      let index = text.indexOf(separator)
-
-      while (index !== -1 && index <= preferredEnd) {
-        const splitPoint = index + separator.length
-        if (splitPoint >= CHUNK_SIZE * 0.3 && // No chunks muy pequeños
-            splitPoint <= preferredEnd &&
-            isValidSplitPoint(text, splitPoint)) {
-          bestSplit = splitPoint
-        }
-        index = text.indexOf(separator, index + 1)
-      }
-
-      if (bestSplit !== -1) {
-        return bestSplit
-      }
-    }
-
-    return preferredEnd
-  }
-
-  function createSmartOverlap(previousChunk, nextStart, text) {
-    if (!previousChunk || nextStart >= text.length) return nextStart
-
-    // Buscar el inicio de una oración completa para el overlap
-    const overlapRegion = text.substring(Math.max(0, nextStart - OVERLAP), nextStart + 50)
-
-    // Buscar patrones que indican inicio de oración
-    const sentenceStarters = [
-      /\n[A-Z]/,     // Nueva línea + mayúscula
-      /\. [A-Z]/,    // Punto + espacio + mayúscula
-      /^[A-Z]/,      // Inicio con mayúscula
-      /\n## /,       // Headers
-      /\n### /       // Subheaders
-    ]
-
-    for (const pattern of sentenceStarters) {
-      const match = overlapRegion.match(pattern)
-      if (match) {
-        const adjustedStart = nextStart - OVERLAP + match.index
-        if (match[0].includes('\n') || match[0].includes('.')) {
-          return adjustedStart + (match[0].includes('.') ? 2 : 1) // Skip the newline or ". "
-        }
-        return adjustedStart
-      }
-    }
-
-    // Si no encontramos un buen inicio, usar el punto original sin overlap destructivo
-    return nextStart
-  }
-
-  // Algoritmo principal de chunking con validación semántica
-  const chunks = []
-  let currentPos = 0
-
-  while (currentPos < content.length) {
-    let chunkEnd = currentPos + CHUNK_SIZE
-
-    if (chunkEnd >= content.length) {
-      // Último chunk
-      const finalChunk = content.substring(currentPos).trim()
-      if (finalChunk.length >= 30) {
-        chunks.push(finalChunk)
-      }
-      break
-    }
-
-    // Encontrar el mejor punto de división
-    const bestSplit = findBestSplitPoint(content.substring(currentPos), CHUNK_SIZE)
-    const actualEnd = currentPos + bestSplit
-
-    // Extraer el chunk
-    const chunk = content.substring(currentPos, actualEnd).trim()
-    if (chunk.length >= 30) {
-      chunks.push(chunk)
-    }
-
-    // Calcular el próximo inicio con overlap inteligente
-    const nextStart = createSmartOverlap(chunk, actualEnd, content)
-    currentPos = Math.max(nextStart, currentPos + 50) // Asegurar progreso mínimo
-  }
-
-  // Post-procesamiento para garantizar calidad semántica
-  return chunks
-    .filter(chunk => chunk.length >= 50)
-    .map(chunk => {
-      let processed = chunk.trim()
-
-      // Si empieza con minúscula y no es un nombre especial, buscar mejor inicio
-      if (/^[a-z]/.test(processed) && processed.length > 100) {
-        const sentenceMatch = processed.match(/[.!?]\s+[A-Z]/)
-        if (sentenceMatch) {
-          const betterStart = processed.indexOf(sentenceMatch[0]) + sentenceMatch[0].length - 1
-          processed = processed.substring(betterStart).trim()
-        }
-      }
-
-      // Si termina en medio de palabra, truncar en espacio anterior
-      if (/\w$/.test(processed) && processed.length > 100) {
-        const lastSpace = processed.lastIndexOf(' ')
-        if (lastSpace > processed.length * 0.8) {
-          processed = processed.substring(0, lastSpace).trim()
-        }
-      }
-
-      return processed
-    })
-    .filter(chunk => chunk.length >= 50)
+async function chunkDocument(content) {
+  // Use the optimized SemanticChunker from chunking.ts
+  return await chunkText(content, 1000, 100)
 }
 
 function extractFrontmatter(content) {
@@ -417,7 +259,7 @@ async function processDocument(filePath) {
   }
 
   // Chunk the document
-  const chunks = chunkDocument(content)
+  const chunks = await chunkDocument(content)
   console.log(`📋 Document split into ${chunks.length} chunks`)
 
   // Process each chunk

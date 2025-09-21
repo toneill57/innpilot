@@ -18,18 +18,18 @@ location:
   - "[AUTO-FILLED_FEATURE_3]"
 business_hours:
   schedule: "9:00 a 20:00 h"
-  days_closed: "[IF_APPLICABLE]"
+  days_closed: ""
 pricing:
   range: "Minicurso: $160"
   currency: "COP"
   payment_methods: ["cash", "card", "transfer"]
-  commission_info: "[IF_APPLICABLE]"
+  commission_info: ""
 contact:
   whatsapp: "Whatsapp: 3176359608  Instagram: @buceocaribeazul"
   email: "[EMAIL_ADDRESS]"
   instagram: "[INSTAGRAM_HANDLE]"
   website: "[WEBSITE_URL]"
-  physical_address: "[IF_AVAILABLE]"
+  physical_address: ""
 amenities:
   pet_friendly: false
   "420_friendly": false
@@ -42,7 +42,7 @@ amenities:
 metadata:
   menu_info: "[IF_RESTAURANT]"
   last_menu_update: null
-  historical_significance: "[IF_APPLICABLE]"
+  historical_significance: ""
   updated_at: "2025-09-20T00:00:00Z"
   created_at: "2025-09-20T00:00:00Z"
 ---

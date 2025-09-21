@@ -9,59 +9,121 @@ import { searchMuvaContent, searchByMetadata, isMuvaQuestion, formatMuvaResponse
 
 export const runtime = 'edge'
 
-// Semantic question groups for intelligent caching (MUVA tourism focus)
+// Enhanced semantic question groups for intelligent caching (MUVA tourism focus)
 const MUVA_SEMANTIC_GROUPS = {
   "mejores_restaurantes": [
-    "mejores restaurantes",
-    "dónde comer",
-    "restaurantes recomendados",
-    "comida típica",
-    "gastronomía local",
-    "restaurantes de mariscos"
+    "mejores restaurantes", "dónde comer", "restaurantes recomendados",
+    "comida típica", "gastronomía local", "restaurantes de mariscos",
+    "pescado fresco", "langosta", "cangrejo", "comida del mar",
+    "almuerzo", "cena", "desayuno", "brunch", "comida caribeña"
   ],
-  "playas_actividades": [
-    "mejores playas",
-    "qué hacer en la playa",
-    "actividades acuáticas",
-    "snorkeling", "buceo",
-    "deportes acuáticos",
-    "playa para familias"
+  "restaurantes_economicos": [
+    "restaurantes baratos", "comida económica", "presupuesto bajo",
+    "restaurantes accesibles", "comida barata", "donde comer barato"
+  ],
+  "restaurantes_premium": [
+    "restaurantes caros", "fine dining", "restaurantes elegantes",
+    "cena romántica", "alta cocina", "restaurantes exclusivos"
+  ],
+  "bebidas_smoothies": [
+    "smoothies", "jugos", "batidos", "bebidas naturales",
+    "jugos de frutas", "bebidas tropicales", "smoothie bowl"
+  ],
+  "playas_principales": [
+    "mejores playas", "playa principal", "spratt bight",
+    "playa bonita", "arena blanca", "aguas cristalinas"
+  ],
+  "playas_snorkel": [
+    "snorkeling", "buceo", "arrecife", "peces tropicales",
+    "vida marina", "corales", "buceo libre", "máscara y snorkel"
+  ],
+  "actividades_acuaticas": [
+    "actividades acuáticas", "deportes acuáticos", "jet ski",
+    "kayak", "windsurf", "kitesurf", "parasailing", "banana boat"
+  ],
+  "excursiones_islas": [
+    "johnny cay", "acuario", "tour de islas", "catamarán",
+    "isla del acuario", "excursión", "paseo en lancha", "tour marítimo"
   ],
   "vida_nocturna": [
-    "bares", "discotecas",
-    "vida nocturna",
-    "dónde salir de noche",
-    "música en vivo",
-    "entretenimiento nocturno"
+    "bares", "discotecas", "vida nocturna", "dónde salir de noche",
+    "música en vivo", "entretenimiento nocturno", "rumba", "fiesta",
+    "drinks", "cocktails", "reggae", "música caribeña"
   ],
-  "transporte": [
-    "cómo moverse",
-    "transporte",
-    "taxi", "buses",
-    "alquiler de motos",
-    "cómo llegar",
-    "movilidad"
+  "transporte_general": [
+    "cómo moverse", "transporte", "movilidad", "cómo llegar"
   ],
-  "alojamiento": [
-    "hoteles",
-    "dónde hospedarse",
-    "alojamiento",
-    "mejores hoteles",
-    "resorts",
-    "posadas"
+  "taxi_mototaxi": [
+    "taxi", "mototaxi", "uber", "transporte privado", "carrera"
   ],
-  "compras": [
-    "qué comprar",
-    "mercados",
-    "tiendas",
-    "artesanías",
-    "souvenirs",
-    "shopping"
+  "alquiler_vehiculos": [
+    "alquiler de motos", "rental", "alquiler de carros",
+    "scooter", "bicicleta", "vehículo"
+  ],
+  "buses_publico": [
+    "buses", "transporte público", "colectivo", "ruta"
+  ],
+  "alojamiento_hoteles": [
+    "hoteles", "dónde hospedarse", "alojamiento", "mejores hoteles",
+    "resorts", "hotel con piscina", "hotel frente al mar"
+  ],
+  "alojamiento_economico": [
+    "posadas", "hospedaje barato", "hotel económico",
+    "backpacker", "alojamiento presupuesto", "casa de huéspedes"
+  ],
+  "alojamiento_lujo": [
+    "resort de lujo", "hotel 5 estrellas", "hotel boutique",
+    "spa hotel", "hotel premium", "suite presidencial"
+  ],
+  "compras_general": [
+    "qué comprar", "shopping", "tiendas", "centros comerciales"
+  ],
+  "artesanias_souvenirs": [
+    "artesanías", "souvenirs", "recuerdos", "productos locales",
+    "artesanía local", "handicrafts", "regalos típicos"
+  ],
+  "mercados_locales": [
+    "mercados", "mercado local", "productos frescos",
+    "frutas tropicales", "verduras", "pescado fresco"
+  ],
+  "cultura_historia": [
+    "cultura", "historia", "museo", "sitios históricos",
+    "patrimonio", "tradiciones", "arquitectura colonial"
+  ],
+  "naturaleza_parques": [
+    "naturaleza", "parques", "jardín botánico", "ecoturismo",
+    "senderos", "observación de aves", "flora y fauna"
+  ],
+  "aventura_extrema": [
+    "aventura", "deportes extremos", "parapente", "escalada",
+    "rappel", "canopy", "adrenalina", "aventura extrema"
+  ],
+  "familia_ninos": [
+    "actividades familiares", "para niños", "familia",
+    "niños pequeños", "entretenimiento familiar", "diversión familiar"
+  ],
+  "clima_tiempo": [
+    "clima", "tiempo", "lluvia", "temporada seca",
+    "mejor época", "huracanes", "temperatura"
+  ],
+  "presupuesto_costos": [
+    "cuánto cuesta", "precios", "presupuesto", "económico",
+    "caro", "barato", "costos", "tarifas"
+  ],
+  "recomendaciones_generales": [
+    "qué hacer", "recomendaciones", "plan de viaje",
+    "itinerario", "primera vez", "imperdibles", "must do"
   ]
 }
 
 // Memory cache for MUVA responses (Edge Runtime compatible)
 const muvaCache = new Map<string, { data: unknown, expires: number }>()
+
+// Embedding cache to avoid repeated OpenAI API calls
+const embeddingCache = new Map<string, { embedding: number[], expires: number }>()
+
+// Request deduplication cache for simultaneous identical requests
+const pendingRequests = new Map<string, Promise<any>>()
 
 // Simple hash function for cache keys (Edge Runtime compatible)
 function hashMuvaQuestion(question: string): string {
@@ -109,6 +171,42 @@ function setMuvaCache(key: string, data: unknown, ttlSeconds: number = 3600) {
     data,
     expires: Date.now() + (ttlSeconds * 1000)
   })
+}
+
+// Embedding cache helpers
+function getEmbeddingCache(question: string): number[] | null {
+  const key = hashMuvaQuestion(question)
+  const cached = embeddingCache.get(key)
+  if (cached && cached.expires > Date.now()) {
+    return cached.embedding
+  }
+  if (cached) {
+    embeddingCache.delete(key) // Clean expired
+  }
+  return null
+}
+
+function setEmbeddingCache(question: string, embedding: number[], ttlSeconds: number = 7200) {
+  const key = hashMuvaQuestion(question)
+  embeddingCache.set(key, {
+    embedding,
+    expires: Date.now() + (ttlSeconds * 1000)
+  })
+}
+
+// Request deduplication helpers
+function getOrCreateRequest<T>(key: string, requestFn: () => Promise<T>): Promise<T> {
+  if (pendingRequests.has(key)) {
+    console.log(`[MUVA] 🔄 Deduplicating request for key: ${key}`)
+    return pendingRequests.get(key)!
+  }
+
+  const promise = requestFn().finally(() => {
+    pendingRequests.delete(key)
+  })
+
+  pendingRequests.set(key, promise)
+  return promise
 }
 
 // Tourism-specific error messages
@@ -255,11 +353,12 @@ function getMuvaSemanticGroup(question: string): string | null {
   return null
 }
 
-// Track metrics for analytics
+// Enhanced performance tracking for analytics
 async function trackMuvaMetrics(metrics: {
   endpoint: string
   response_time: number
   cache_hit: boolean
+  embedding_cache_hit?: boolean
   category?: string
   filters_used: number
   results_found: number
@@ -271,20 +370,85 @@ async function trackMuvaMetrics(metrics: {
   city?: string
   result_quality?: number
   context_chunks_used?: number
+  context_size_chars?: number
+  model_used?: string
+  embedding_time?: number
+  search_time?: number
+  claude_time?: number
 }) {
   try {
-    // Analytics tracking temporarily disabled due to Edge Runtime URL limitation
-    // In production, this would use absolute URLs or direct database insertion
-    console.log(`[MUVA Metrics] 📊 Analytics data:`, {
+    // Enhanced analytics tracking with performance breakdown
+    const performanceData = {
       query: metrics.question.substring(0, 50),
       category: metrics.category,
-      response_time: metrics.response_time,
+      total_response_time: metrics.response_time,
       cache_hit: metrics.cache_hit,
+      embedding_cache_hit: metrics.embedding_cache_hit || false,
       results_found: metrics.results_found,
-      semantic_group: metrics.semantic_group
-    })
+      semantic_group: metrics.semantic_group,
+      performance_breakdown: {
+        embedding_time: metrics.embedding_time || 0,
+        search_time: metrics.search_time || 0,
+        claude_time: metrics.claude_time || 0,
+        context_size_chars: metrics.context_size_chars || 0,
+        model_used: metrics.model_used || 'unknown'
+      },
+      optimization_impact: {
+        embedding_saved: metrics.embedding_cache_hit ? metrics.embedding_time || 0 : 0,
+        cache_category: metrics.cache_hit ? 'semantic_cache' : 'no_cache'
+      }
+    }
+
+    console.log(`[MUVA Metrics] 📊 Enhanced Analytics:`, performanceData)
+
+    // Log performance alerts for slow queries
+    if (metrics.response_time > 2000) {
+      console.warn(`[MUVA Performance] ⚠️ Slow query detected: ${metrics.response_time}ms`, {
+        question: metrics.question.substring(0, 30),
+        embedding_time: metrics.embedding_time,
+        search_time: metrics.search_time,
+        claude_time: metrics.claude_time,
+        results_found: metrics.results_found
+      })
+    }
+
+    // Log optimization wins
+    if (metrics.embedding_cache_hit) {
+      console.log(`[MUVA Optimization] ✅ Embedding cache saved ~${metrics.embedding_time}ms`)
+    }
+
+    if (metrics.cache_hit) {
+      console.log(`[MUVA Optimization] ✅ Semantic cache hit - instant response`)
+    }
+
   } catch (error) {
     console.error(`[MUVA Metrics] ❌ Failed to track analytics:`, error)
+  }
+}
+
+// Performance monitoring helper
+function logPerformanceBreakdown(timings: {
+  total: number
+  embedding: number
+  search: number
+  claude: number
+  embeddingCacheHit: boolean
+  responseCacheHit: boolean
+}) {
+  const breakdown = [
+    `Total: ${timings.total}ms`,
+    `Embedding: ${timings.embedding}ms ${timings.embeddingCacheHit ? '(cached)' : ''}`,
+    `Search: ${timings.search}ms`,
+    `Claude: ${timings.claude}ms`,
+    `Cache: ${timings.responseCacheHit ? 'semantic hit' : 'miss'}`
+  ].join(' | ')
+
+  if (timings.total < 500) {
+    console.log(`[MUVA Performance] 🚀 Fast response: ${breakdown}`)
+  } else if (timings.total < 1500) {
+    console.log(`[MUVA Performance] ⚡ Good response: ${breakdown}`)
+  } else {
+    console.warn(`[MUVA Performance] 🐌 Slow response: ${breakdown}`)
   }
 }
 
@@ -372,17 +536,37 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(cachedWithMetrics)
     }
 
-    // Step 1: Generate embedding for the question
+    // Step 1: Generate or retrieve embedding for the question
     const embeddingStart = Date.now()
-    const embeddingResponse = await openai.embeddings.create({
-      model: 'text-embedding-3-large',
-      input: question,
-      dimensions: 3072
-    })
-    const queryEmbedding = embeddingResponse.data[0].embedding
-    const embeddingTime = Date.now() - embeddingStart
+    let queryEmbedding: number[]
+    let embeddingTime: number
+    let embeddingCacheHit = false
 
-    console.log(`[MUVA] Embedding generated in ${embeddingTime}ms`)
+    // Check embedding cache first
+    const cachedEmbedding = getEmbeddingCache(question)
+    if (cachedEmbedding) {
+      queryEmbedding = cachedEmbedding
+      embeddingTime = Date.now() - embeddingStart
+      embeddingCacheHit = true
+      console.log(`[MUVA] ✅ Embedding cache hit - ${embeddingTime}ms`)
+    } else {
+      // Use request deduplication for embedding generation
+      const embeddingKey = `embedding_${hashMuvaQuestion(question)}`
+      const embeddingResponse = await getOrCreateRequest(embeddingKey, async () => {
+        return await openai.embeddings.create({
+          model: 'text-embedding-3-large',
+          input: question,
+          dimensions: 3072
+        })
+      })
+
+      queryEmbedding = embeddingResponse.data[0].embedding
+      embeddingTime = Date.now() - embeddingStart
+
+      // Cache the embedding for future use
+      setEmbeddingCache(question, queryEmbedding, 7200) // 2 hours cache
+      console.log(`[MUVA] Embedding generated and cached in ${embeddingTime}ms`)
+    }
 
     // Step 2: Hierarchical search - vectorial first, then metadata
     const searchStart = Date.now()
@@ -455,47 +639,38 @@ export async function POST(request: NextRequest) {
     // Step 3: Generate response with Claude
     const claudeStart = Date.now()
 
-    // Build context from search results with source tracking
+    // Build optimized context from search results - only essential data
     const context = searchResults.map(result => {
       let contextStr = `**${result.title || 'Información Turística'}**\n`
 
+      // Use description if available, otherwise truncate content
       if (result.description) {
-        contextStr += `Descripción: ${result.description}\n`
+        contextStr += `${result.description}\n`
+      } else if (result.content) {
+        // Truncate content to 200 chars to reduce context size
+        const truncatedContent = result.content.length > 200
+          ? result.content.substring(0, 200) + '...'
+          : result.content
+        contextStr += `${truncatedContent}\n`
       }
 
-      contextStr += `Contenido: ${result.content}\n`
+      // Only include essential metadata that affects recommendations
+      const essentialData = []
 
-      if (result.category) {
-        contextStr += `Categoría: ${result.category}\n`
-      }
+      if (result.category) essentialData.push(`Categoría: ${result.category}`)
+      if (result.location) essentialData.push(`Ubicación: ${result.location}`)
+      if (result.rating) essentialData.push(`⭐ ${result.rating}/5`)
+      if (result.price_range) essentialData.push(`💰 ${result.price_range}`)
+      if (result.opening_hours) essentialData.push(`🕒 ${result.opening_hours}`)
 
-      if (result.location) {
-        contextStr += `Ubicación: ${result.location}\n`
-      }
-
-      if (result.rating) {
-        contextStr += `Calificación: ${result.rating}/5 estrellas\n`
-      }
-
-      if (result.price_range) {
-        contextStr += `Rango de precio: ${result.price_range}\n`
-      }
-
-      if (result.opening_hours) {
-        contextStr += `Horarios: ${result.opening_hours}\n`
-      }
-
+      // Simplified contact info - only phone and address
       if (result.contact_info) {
-        contextStr += `Contacto: ${JSON.stringify(result.contact_info)}\n`
+        if (result.contact_info.phone) essentialData.push(`📞 ${result.contact_info.phone}`)
+        if (result.contact_info.address) essentialData.push(`📍 ${result.contact_info.address}`)
       }
 
-      if (result.tags && result.tags.length > 0) {
-        contextStr += `Tags: ${result.tags.join(', ')}\n`
-      }
-
-      // Add source tracking for transparency
-      if (result.source_file) {
-        contextStr += `Fuente: ${result.source_file}\n`
+      if (essentialData.length > 0) {
+        contextStr += essentialData.join(' | ') + '\n'
       }
 
       return contextStr
@@ -596,9 +771,19 @@ ${context}
 
 Pregunta del usuario: ${question}`
 
+    // Use faster model for simple queries, Sonnet for complex ones
+    const isSimpleQuery = searchResults.length <= 2 || question.length < 50
+    const modelToUse = isSimpleQuery
+      ? 'claude-3-5-haiku-20241022'  // Faster for simple queries
+      : (process.env.CLAUDE_MUVA_MODEL || 'claude-3-5-sonnet-20241022')
+
+    const maxTokens = isSimpleQuery ? 800 : parseInt(process.env.CLAUDE_MUVA_MAX_TOKENS || '1200')
+
+    console.log(`[MUVA] Using ${modelToUse} for ${isSimpleQuery ? 'simple' : 'complex'} query`)
+
     const claudeResponse = await anthropic.messages.create({
-      model: process.env.CLAUDE_MUVA_MODEL || 'claude-3-5-sonnet-20241022',
-      max_tokens: parseInt(process.env.CLAUDE_MUVA_MAX_TOKENS || '1500'),
+      model: modelToUse,
+      max_tokens: maxTokens,
       messages: [
         {
           role: 'user',
@@ -612,6 +797,16 @@ Pregunta del usuario: ${question}`
 
     console.log(`[MUVA] Claude response generated in ${claudeTime}ms`)
     console.log(`[MUVA] Total request time: ${totalTime}ms`)
+
+    // Log detailed performance breakdown
+    logPerformanceBreakdown({
+      total: totalTime,
+      embedding: embeddingTime,
+      search: searchTime,
+      claude: claudeTime,
+      embeddingCacheHit,
+      responseCacheHit: false
+    })
 
     const answer = claudeResponse.content[0].type === 'text'
       ? claudeResponse.content[0].text
@@ -627,6 +822,9 @@ Pregunta del usuario: ${question}`
         search_time_ms: searchTime,
         claude_time_ms: claudeTime,
         cache_hit: false,
+        embedding_cache_hit: embeddingCacheHit,
+        model_used: modelToUse,
+        context_size_chars: context.length,
         filters_applied: Object.keys({ category, location, city, min_rating, price_range }).filter(key =>
           (key === 'category' && category) ||
           (key === 'location' && location) ||
@@ -655,11 +853,12 @@ Pregunta del usuario: ${question}`
     setMuvaCache(cacheKey, result, 3600)
     console.log(`[MUVA] 💾 Saved to semantic cache`)
 
-    // Track metrics for analytics
+    // Track enhanced metrics for analytics
     await trackMuvaMetrics({
       endpoint: 'muva_chat',
       response_time: totalTime,
       cache_hit: false,
+      embedding_cache_hit: embeddingCacheHit,
       category,
       location,
       city,
@@ -670,7 +869,12 @@ Pregunta del usuario: ${question}`
       question,
       session_id: sessionId,
       result_quality: result.performance.result_quality,
-      context_chunks_used: searchResults.length
+      context_chunks_used: searchResults.length,
+      context_size_chars: context.length,
+      model_used: modelToUse,
+      embedding_time: embeddingTime,
+      search_time: searchTime,
+      claude_time: claudeTime
     })
 
     return NextResponse.json(result)

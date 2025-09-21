@@ -18,18 +18,18 @@ location:
   - "[AUTO-FILLED_FEATURE_3]"
 business_hours:
   schedule: "Averiguar"
-  days_closed: "[IF_APPLICABLE]"
+  days_closed: ""
 pricing:
   range: "50000"
   currency: "COP"
   payment_methods: ["cash", "card", "transfer"]
-  commission_info: "[IF_APPLICABLE]"
+  commission_info: ""
 contact:
   whatsapp: "320 926 0935 - 324 560 4878 - hansdiveshop@gmail.com"
   email: "[EMAIL_ADDRESS]"
   instagram: "[INSTAGRAM_HANDLE]"
   website: "[WEBSITE_URL]"
-  physical_address: "[IF_AVAILABLE]"
+  physical_address: ""
 amenities:
   pet_friendly: false
   "420_friendly": false
@@ -42,7 +42,7 @@ amenities:
 metadata:
   menu_info: "[IF_RESTAURANT]"
   last_menu_update: null
-  historical_significance: "[IF_APPLICABLE]"
+  historical_significance: ""
   updated_at: "2025-09-20T00:00:00Z"
   created_at: "2025-09-20T00:00:00Z"
 ---
