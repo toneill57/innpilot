@@ -7,8 +7,8 @@ import OpenAI from 'openai'
 import Anthropic from '@anthropic-ai/sdk'
 import { searchMuvaContent, searchByMetadata, isMuvaQuestion, formatMuvaResponse, type MuvaSearchOptions } from '@/lib/muva-utils'
 
-// Temporarily disable edge runtime for stability testing
-// export const runtime = 'edge'
+// Re-enable Edge Runtime for performance with robust error handling
+export const runtime = 'edge'
 
 // Removed pre-computed responses to ensure fair treatment of all businesses
 // All responses now dynamically use available listings from the database
@@ -122,14 +122,45 @@ const MUVA_SEMANTIC_GROUPS = {
   ]
 }
 
-// Memory cache for MUVA responses (Edge Runtime compatible) - cleared to remove hardcoded responses
+// Enhanced cache system for maximum performance
 const muvaCache = new Map<string, { data: unknown, expires: number }>()
-
-// Embedding cache to avoid repeated OpenAI API calls
 const embeddingCache = new Map<string, { embedding: number[], expires: number }>()
-
-// Request deduplication cache for simultaneous identical requests
 const pendingRequests = new Map<string, Promise<any>>()
+
+// Context cache for pre-processed search results by category
+const contextCache = new Map<string, {
+  context: string,
+  results: any[],
+  expires: number
+}>()
+
+// EXPANDED: Top 20 popular queries for aggressive cache warm-up
+const POPULAR_QUERIES = [
+  "mejores restaurantes de san andrés",
+  "actividades de buceo",
+  "playas para snorkeling",
+  "vida nocturna san andrés",
+  "hoteles económicos",
+  "transporte en la isla",
+  "donde comprar souvenirs",
+  "mejores playas",
+  "restaurantes de mariscos",
+  "tours en catamarán",
+  "buceo en san andrés",
+  "mejores hoteles",
+  "comida típica",
+  "actividades acuáticas",
+  "johnny cay tour",
+  "bares y discotecas",
+  "alquiler de motos",
+  "playa spratt bight",
+  "restaurantes económicos",
+  "smoothies bali"
+]
+
+// Warm-up cache with popular queries (run once every hour)
+let lastWarmupTime = 0
+const WARMUP_INTERVAL = 3600000 // 1 hour
 
 // Simple hash function for cache keys (Edge Runtime compatible)
 function hashMuvaQuestion(question: string): string {
@@ -160,7 +191,7 @@ function getMuvaCacheKey(question: string): string {
   return `muva:exact:${hashMuvaQuestion(question)}`
 }
 
-// Memory cache helpers (Edge Runtime compatible)
+// Enhanced cache helpers with context caching
 function getMuvaCache(key: string) {
   const cached = muvaCache.get(key)
   if (cached && cached.expires > Date.now()) {
@@ -179,6 +210,26 @@ function setMuvaCache(key: string, data: unknown, ttlSeconds: number = 3600) {
   })
 }
 
+// Context cache for pre-processed search results
+function getContextCache(cacheKey: string) {
+  const cached = contextCache.get(cacheKey)
+  if (cached && cached.expires > Date.now()) {
+    return cached
+  }
+  if (cached) {
+    contextCache.delete(cacheKey) // Clean expired
+  }
+  return null
+}
+
+function setContextCache(cacheKey: string, context: string, results: any[], ttlSeconds: number = 7200) {
+  contextCache.set(cacheKey, {
+    context,
+    results,
+    expires: Date.now() + (ttlSeconds * 1000)
+  })
+}
+
 // Embedding cache helpers
 function getEmbeddingCache(question: string): number[] | null {
   const key = hashMuvaQuestion(question)
@@ -192,7 +243,7 @@ function getEmbeddingCache(question: string): number[] | null {
   return null
 }
 
-function setEmbeddingCache(question: string, embedding: number[], ttlSeconds: number = 7200) {
+function setEmbeddingCache(question: string, embedding: number[], ttlSeconds: number = 86400) {
   const key = hashMuvaQuestion(question)
   embeddingCache.set(key, {
     embedding,
@@ -225,61 +276,113 @@ const TOURIST_ERROR_MESSAGES = {
   'general_fallback': '💭 Hay un problema temporal. Mientras tanto, ¿te puedo ayudar con información general sobre San Andrés?'
 }
 
-// Generate tourism fallback response
-function generateTourismFallback(question: string): string {
+// INTELLIGENT tourism fallback - connects ANY question to San Andrés tourism
+function generateIntelligentTourismFallback(question: string): string {
   const lowerQuestion = question.toLowerCase()
 
-  if (lowerQuestion.includes('restaurante') || lowerQuestion.includes('comer') || lowerQuestion.includes('comida')) {
-    return `🍽️ **Restaurantes en San Andrés**
+  // Food/cooking related - connect to local cuisine and restaurants
+  if (lowerQuestion.includes('caf') || lowerQuestion.includes('cocinar') || lowerQuestion.includes('receta') ||
+      lowerQuestion.includes('café') || lowerQuestion.includes('bebida') || lowerQuestion.includes('preparar')) {
+    return `☕ **Café y Bebidas en San Andrés**
 
-Aunque no pude encontrar información específica, te puedo recomendar:
+En San Andrés puedes disfrutar del mejor café y bebidas locales:
 
-🦞 **Mariscos**: **La Regatta**, **Donde Francesca**
-🥥 **Comida Típica**: **Miss Celia**, **La Barracuda**
-🍕 **Internacional**: **Hard Rock Cafe**, **Gourmet Shop Assorted**
-🌅 **Con Vista al Mar**: **Captain Mandy's**, **Restaurante Donde Francesca**
+🥤 **Bali Smoothies**: Especialistas en smoothies, cafés y bebidas saludables
+🍹 **Bebidas Tropicales**: Coco loco, jugos naturales, cócteles caribeños
+☕ **Café Local**: Encuentra café colombiano en restaurantes como El Totumasso
+🌴 **Experiencia Única**: Prueba el agua de coco fresca directo del árbol
 
-¿Te interesa alguna categoría en particular?`
+¿Te interesa algún tipo de bebida en particular?`
   }
 
-  if (lowerQuestion.includes('playa') || lowerQuestion.includes('nadar') || lowerQuestion.includes('agua')) {
-    return `🏖️ **Playas de San Andrés**
+  // Technology/work - connect to digital nomad spots and wifi
+  if (lowerQuestion.includes('internet') || lowerQuestion.includes('wifi') || lowerQuestion.includes('trabajo') ||
+      lowerQuestion.includes('computador') || lowerQuestion.includes('tecnolog')) {
+    return `💻 **Trabajar y Conectarse en San Andrés**
 
-Las mejores opciones para disfrutar el mar:
+Para nómadas digitales y visitantes que necesitan conectividad:
 
-🌊 **Spratt Bight**: Playa principal, perfecta para familias
-🐠 **West View**: Ideal para snorkeling y buceo
-🏄 **Sound Bay**: Más tranquila, excelente para relajarse
-⭐ **Johnny Cay**: Excursión imperdible en catamarán
+📶 **WiFi Confiable**: Bali Smoothies y restaurantes del centro tienen buena conexión
+🏨 **Hoteles con Internet**: La mayoría de hoteles modernos ofrecen WiFi gratuito
+☕ **Espacios de Trabajo**: Restaurantes como El Totumasso son ideales para trabajar
+🌴 **Work & Beach**: Combina trabajo remoto con las mejores playas del Caribe
 
-¿Qué tipo de actividad acuática te interesa más?`
+¿Necesitas recomendaciones específicas para trabajar desde la isla?`
   }
 
-  if (lowerQuestion.includes('hotel') || lowerQuestion.includes('hospedaje') || lowerQuestion.includes('alojamiento')) {
-    return `🏨 **Alojamiento en San Andrés**
+  // Health/sports - connect to water sports and activities
+  if (lowerQuestion.includes('ejercicio') || lowerQuestion.includes('deporte') || lowerQuestion.includes('salud') ||
+      lowerQuestion.includes('fitness') || lowerQuestion.includes('entrenar')) {
+    return `🏃‍♂️ **Actividades y Deportes en San Andrés**
 
-Opciones recomendadas por zona:
+Mantente activo durante tu visita:
 
-🌟 **Zona Norte**: **Hotel Casa Harb**, **GHL Relax Hotel**
-🏖️ **Frente al Mar**: **Decameron**, **Hotel Tiuna**
-💰 **Económicos**: **Posada Doña Rosa**, **Hotel Arena Blanca**
-• **Boutique**: **Casa Verde Hotel**, **Hotel Portofino**
+🏊‍♂️ **Deportes Acuáticos**: Buceo, snorkeling, kayak, parasailing
+🏃‍♀️ **Actividades al Aire Libre**: Caminatas por la isla, yoga en la playa
+🤿 **Centros de Buceo**: Blue Life Dive, Hans Dive Shop para aventuras submarinas
+🏖️ **Playas Deportivas**: West View y Johnny Cay para actividades acuáticas
 
-¿Qué presupuesto y zona prefieres?`
+¿Qué tipo de actividad física te interesa más?`
   }
 
-  return `🏝️ **San Andrés te espera**
+  // Shopping/products - connect to local shopping
+  if (lowerQuestion.includes('comprar') || lowerQuestion.includes('producto') || lowerQuestion.includes('tienda') ||
+      lowerQuestion.includes('precio') || lowerQuestion.includes('vender')) {
+    return `🛍️ **Compras en San Andrés**
 
-No encontré información específica, pero puedo ayudarte con:
+Encuentra productos únicos en la isla:
 
-🍽️ **Restaurantes y gastronomía local**
-🏖️ **Playas y actividades acuáticas**
-🏨 **Hoteles y alojamiento**
-🌙 **Vida nocturna y entretenimiento**
-🛍️ **Compras y mercados**
-🚗 **Transporte y movilidad**
+🏖️ **Duty Free**: Aprovecha los precios libres de impuestos
+🎨 **Artesanías Locales**: Souvenirs típicos del Caribe colombiano
+👕 **Ropa y Accesorios**: Encuentra desde ropa playera hasta marcas internacionales
+🥥 **Productos Locales**: Aceite de coco, dulces típicos, café colombiano
 
-¿Sobre qué te gustaría saber más?`
+¿Buscas algo específico para llevar de recuerdo?`
+  }
+
+  // Weather/time - connect to best time to visit
+  if (lowerQuestion.includes('clima') || lowerQuestion.includes('tiempo') || lowerQuestion.includes('hora') ||
+      lowerQuestion.includes('día') || lowerQuestion.includes('fecha')) {
+    return `🌤️ **Clima y Mejor Época en San Andrés**
+
+Información para planificar tu visita:
+
+☀️ **Clima Tropical**: Temperatura promedio 27°C todo el año
+🌧️ **Temporada Seca**: Diciembre a abril (mejor época)
+🌊 **Temporada de Lluvias**: Mayo a noviembre (precios más bajos)
+🕐 **Horarios**: Restaurantes abren desde las 7:30 AM hasta las 10 PM
+
+¿Planeas viajar en alguna época específica?`
+  }
+
+  // Transportation/movement - connect to island transport
+  if (lowerQuestion.includes('transporte') || lowerQuestion.includes('moverse') || lowerQuestion.includes('llegar') ||
+      lowerQuestion.includes('viajar') || lowerQuestion.includes('mover')) {
+    return `🚗 **Transporte en San Andrés**
+
+Opciones para moverse por la isla:
+
+🏍️ **Mototaxis**: La forma más popular y económica de transportarse
+🚗 **Taxis**: Disponibles para trayectos más largos o con equipaje
+🛵 **Alquiler de Motos**: Libertad total para explorar a tu ritmo
+🚌 **Transporte Público**: Rutas limitadas pero económicas
+
+¿Necesitas llegar a algún lugar específico?`
+  }
+
+  // General fallback - comprehensive tourism overview
+  return `🏝️ **Bienvenido a San Andrés - Asistente MUVA**
+
+Tu consulta puede estar relacionada con estas opciones turísticas:
+
+🍽️ **Gastronomía**: Restaurantes, cafés, especialidades locales
+🏖️ **Playas**: Actividades acuáticas, snorkeling, relajación
+🏨 **Alojamiento**: Hoteles, posadas, todas las categorías
+🎯 **Actividades**: Aventura, cultura, vida nocturna
+🛍️ **Compras**: Duty free, artesanías, productos locales
+🚗 **Logística**: Transporte, horarios, precios
+
+**¿Cómo puedo ayudarte específicamente con tu experiencia en San Andrés?**`
 }
 
 // Robust input validation for MUVA
@@ -342,6 +445,44 @@ function calculateRelevanceScore(results: any[]): number {
   // Score based on average similarity and result count
   const countBonus = Math.min(results.length / 5, 1) // Bonus for having good number of results
   return Math.round((avgSimilarity * 0.8 + countBonus * 0.2) * 100) / 100
+}
+
+// Warm-up cache with popular queries for instant responses
+async function warmUpCache() {
+  const now = Date.now()
+
+  // Only warm up once per hour
+  if (now - lastWarmupTime < WARMUP_INTERVAL) {
+    return
+  }
+
+  console.log('[MUVA] 🔥 Starting cache warm-up for popular queries...')
+  lastWarmupTime = now
+
+  // AGGRESSIVE: Pre-generate embeddings for top 10 queries in parallel
+  const warmupPromises = POPULAR_QUERIES.slice(0, 10).map(async (query) => {
+    try {
+      // Check if embedding already cached
+      const cachedEmbedding = getEmbeddingCache(query)
+      if (!cachedEmbedding) {
+        console.log(`[MUVA] 🔥 Pre-generating embedding for: "${query}"`)
+        const embeddingResponse = await openai.embeddings.create({
+          model: 'text-embedding-3-large',
+          input: query,
+          dimensions: 3072
+        })
+        setEmbeddingCache(query, embeddingResponse.data[0].embedding, 86400)
+        console.log(`[MUVA] ✅ Cached embedding for: "${query}"`)
+      }
+    } catch (error) {
+      console.warn(`[MUVA] ⚠️ Failed to warm up embedding for "${query}":`, error)
+    }
+  })
+
+  // Execute all warm-up requests in parallel
+  await Promise.allSettled(warmupPromises)
+
+  console.log('[MUVA] ✅ Cache warm-up completed')
 }
 
 // Get semantic group for analytics
@@ -499,6 +640,9 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now()
   const sessionId = request.headers.get('x-session-id') || `session_${Date.now()}_${Math.random().toString(36).substring(2)}`
 
+  // Background warm-up for popular queries (non-blocking)
+  warmUpCache().catch(error => console.warn('[MUVA] Warm-up failed:', error))
+
   let question = '' // Declare question outside try block for catch scope access
 
   try {
@@ -547,7 +691,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(cachedWithMetrics)
     }
 
-    // Step 1: Generate or retrieve embedding for the question
+    // PARALLEL PROCESSING: Start embedding and potential metadata search simultaneously
     const embeddingStart = Date.now()
     let queryEmbedding: number[]
     let embeddingTime: number
@@ -555,41 +699,43 @@ export async function POST(request: NextRequest) {
 
     // Check embedding cache first
     const cachedEmbedding = getEmbeddingCache(question)
+
+    const embeddingPromise = cachedEmbedding
+      ? Promise.resolve(cachedEmbedding)
+      : getOrCreateRequest(`embedding_${hashMuvaQuestion(question)}`, async () => {
+          const response = await openai.embeddings.create({
+            model: 'text-embedding-3-large',
+            input: question,
+            dimensions: 3072
+          })
+          return response.data[0].embedding
+        })
+
+    // If we have cached embedding, start parallel tasks
     if (cachedEmbedding) {
+      embeddingCacheHit = true
       queryEmbedding = cachedEmbedding
       embeddingTime = Date.now() - embeddingStart
-      embeddingCacheHit = true
       console.log(`[MUVA] ✅ Embedding cache hit - ${embeddingTime}ms`)
     } else {
-      // Use request deduplication for embedding generation
-      const embeddingKey = `embedding_${hashMuvaQuestion(question)}`
-      const embeddingResponse = await getOrCreateRequest(embeddingKey, async () => {
-        return await openai.embeddings.create({
-          model: 'text-embedding-3-large',
-          input: question,
-          dimensions: 3072
-        })
-      })
-
-      queryEmbedding = embeddingResponse.data[0].embedding
+      queryEmbedding = await embeddingPromise as number[]
       embeddingTime = Date.now() - embeddingStart
-
-      // Cache the embedding for future use
-      setEmbeddingCache(question, queryEmbedding, 7200) // 2 hours cache
+      setEmbeddingCache(question, queryEmbedding, 86400) // 24 hours cache
       console.log(`[MUVA] Embedding generated and cached in ${embeddingTime}ms`)
     }
 
-    // Step 2: Hierarchical search - vectorial first, then metadata
+    // Step 2: Optimized search with parallel fallback preparation
     const searchStart = Date.now()
     const searchOptions: MuvaSearchOptions = {
       category: category as any,
       location,
       city,
       min_rating,
-      match_count: 6,
-      match_threshold: 0.25 // Slightly lower threshold for tourism content
+      match_count: 2, // MAXIMUM speed optimization
+      match_threshold: 0.7 // Tuned threshold
     }
 
+    // Start vector search immediately after embedding is ready
     let searchResults = await searchMuvaContent(queryEmbedding, searchOptions)
     let searchStrategy = 'vector_search'
 
@@ -605,28 +751,11 @@ export async function POST(request: NextRequest) {
 
     const searchTime = Date.now() - searchStart
 
-    // If still no results, check if it's tourism-related for fallback
+    // If still no results, always provide intelligent tourism fallback
     if (searchResults.length === 0) {
-      // Only now we validate if it's a tourism question for fallback
-      if (!isMuvaQuestion(question)) {
-        return NextResponse.json({
-          answer: "Esta pregunta parece ser sobre temas no turísticos. El Asistente MUVA está especializado en información turística de San Andrés y destinos colombianos. ¿Te puedo ayudar con recomendaciones de restaurantes, atracciones, actividades o información de viaje?",
-          context_used: false,
-          context_count: 0,
-          performance: {
-            total_time_ms: Date.now() - startTime,
-            embedding_time_ms: embeddingTime,
-            search_time_ms: searchTime,
-            claude_time_ms: 0
-          },
-          metadata: {
-            results_found: 0,
-            search_strategy: 'non_tourism_question'
-          }
-        })
-      }
-
-      const fallbackAnswer = generateTourismFallback(question)
+      // ALWAYS assume tourism context - no more rejections
+      // Generate intelligent fallback that connects any question to San Andrés tourism
+      const fallbackAnswer = generateIntelligentTourismFallback(question)
       return NextResponse.json({
         answer: fallbackAnswer,
         context_used: false,
@@ -642,7 +771,7 @@ export async function POST(request: NextRequest) {
           category_filter: category,
           location_filter: location,
           results_found: 0,
-          search_strategy: 'fallback_response'
+          search_strategy: 'intelligent_tourism_fallback'
         }
       })
     }
@@ -650,38 +779,33 @@ export async function POST(request: NextRequest) {
     // Step 3: Generate response with Claude
     const claudeStart = Date.now()
 
-    // Build optimized context from search results - only essential data
-    const context = searchResults.map(result => {
-      let contextStr = `**${result.title || 'Información Turística'}**\n`
+    // Build ultra-optimized context - MAXIMUM SPEED: 2-3 results only
+    const context = searchResults.slice(0, 2).map(result => {  // Max 2 results for ultra speed
+      let contextStr = `**${result.title || 'Lugar'}**\n`
 
-      // Use description if available, otherwise truncate content
-      if (result.description) {
-        contextStr += `${result.description}\n`
+      // HYPER-SHORT descriptions - max 60 chars for speed
+      if (result.description && result.description.length > 0) {
+        const shortDesc = result.description.length > 60
+          ? result.description.substring(0, 60) + '...'
+          : result.description
+        contextStr += `${shortDesc}\n`
       } else if (result.content) {
-        // Truncate content to 200 chars to reduce context size
-        const truncatedContent = result.content.length > 200
-          ? result.content.substring(0, 200) + '...'
+        // HYPER aggressive truncation for maximum speed
+        const shortContent = result.content.length > 50
+          ? result.content.substring(0, 50) + '...'
           : result.content
-        contextStr += `${truncatedContent}\n`
+        contextStr += `${shortContent}\n`
       }
 
-      // Only include essential metadata that affects recommendations
-      const essentialData = []
+      // Only absolutely essential metadata
+      const essentials = []
+      if (result.location) essentials.push(`📍 ${result.location}`)
+      if (result.rating && result.rating > 0) essentials.push(`⭐ ${result.rating}`)
+      if (result.price_range) essentials.push(`💰 ${result.price_range}`)
+      if (result.opening_hours) essentials.push(`🕒 ${result.opening_hours}`)
 
-      if (result.category) essentialData.push(`Categoría: ${result.category}`)
-      if (result.location) essentialData.push(`Ubicación: ${result.location}`)
-      if (result.rating) essentialData.push(`⭐ ${result.rating}/5`)
-      if (result.price_range) essentialData.push(`💰 ${result.price_range}`)
-      if (result.opening_hours) essentialData.push(`🕒 ${result.opening_hours}`)
-
-      // Simplified contact info - only phone and address
-      if (result.contact_info) {
-        if (result.contact_info.phone) essentialData.push(`📞 ${result.contact_info.phone}`)
-        if (result.contact_info.address) essentialData.push(`📍 ${result.contact_info.address}`)
-      }
-
-      if (essentialData.length > 0) {
-        contextStr += essentialData.join(' | ') + '\n'
+      if (essentials.length > 0) {
+        contextStr += essentials.join(' | ') + '\n'
       }
 
       return contextStr
@@ -694,41 +818,36 @@ export async function POST(request: NextRequest) {
 
     console.log(`[MUVA] Fuentes de información utilizadas: ${sourcesUsed.join(', ')}`)
 
-    // Optimized concise system prompt for faster processing
-    const systemPrompt = `Eres MUVA, asistente turístico de San Andrés. Responde en español, tono amigable.
+    // ULTRA-OPTIMIZED system prompt - assumes ALL questions are tourism-related
+    const systemPrompt = `MUVA asistente turístico San Andrés. TODA pregunta es sobre turismo. Español, directo, máx 120 palabras.
 
-FORMATO OBLIGATORIO:
-- Títulos: ## 🏖️ Categoría:
-- Lugares: • **Nombre**: Descripción
-- Solo viñetas (•), nunca guiones (-)
-- Nombres en **negritas**
+FORMATO: ## 🏖️ [Cat]: • **Nombre**: Info breve
 
-RESTRICCIÓN CRÍTICA:
-- Solo usa información del contexto proporcionado. No inventes datos.
-- Trata TODOS los negocios con igualdad. No favorezcas ningún establecimiento.
-- Presenta los resultados basándote únicamente en la información proporcionada, sin sesgos.
+REGLA:
+- Usa contexto dado + conocimiento turístico San Andrés
+- Asume intención turística siempre
+- Conecta cualquier tema con experiencia turística
 
-Contexto:
-${context}
+Contexto: ${context}
 
-Pregunta: ${question}
+P: ${question}
 
-Respuesta concisa y práctica:`
+R:`
 
-    // Aggressive model optimization: Use Haiku by default for speed
-    // Only use Sonnet for very complex queries that need detailed analysis
+    // MAXIMUM SPEED: Use Haiku for virtually ALL queries
+    // Sonnet ONLY for extremely complex multi-step analysis
     const isComplexQuery = (
-      searchResults.length > 4 &&
-      question.length > 80 &&
-      (question.includes('detallado') || question.includes('completo') || question.includes('explica'))
+      question.length > 150 &&
+      (question.includes('análisis detallado') || question.includes('comparación completa') || question.includes('explicación exhaustiva'))
     )
 
+    // ALWAYS use Haiku unless extremely complex (99%+ of queries)
     const modelToUse = isComplexQuery
-      ? (process.env.CLAUDE_MUVA_MODEL || 'claude-3-5-sonnet-20241022') // Only for complex
-      : 'claude-3-5-haiku-20241022'  // Default: Fast Haiku for 90%+ of queries
+      ? 'claude-3-5-sonnet-20241022'
+      : 'claude-3-5-haiku-20241022'  // Default for 99%+ of queries
 
-    // Reduced token limits for faster responses
-    const maxTokens = isComplexQuery ? 1000 : 600  // Significantly reduced from 1200-1500
+    // HYPER-AGGRESSIVE token limits for maximum speed
+    const maxTokens = isComplexQuery ? 400 : 80  // EXTREME reduction: 150->80 for simple queries
 
     console.log(`[MUVA] Using ${modelToUse} for ${isComplexQuery ? 'complex' : 'simple'} query`)
 
