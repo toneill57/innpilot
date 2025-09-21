@@ -25,12 +25,17 @@ interface Message {
     embedding_time_ms: number
     search_time_ms: number
     claude_time_ms: number
+    cache_hit?: boolean
+    filters_applied?: number
+    result_quality?: number
+    semantic_group?: string
   }
   metadata?: {
     category_filter?: string
     location_filter?: string
     results_found: number
     search_strategy: string
+    search_query?: string
   }
 }
 
@@ -80,13 +85,7 @@ Te puedo ayudar con:
 🛍️ **Compras** - Mercados y tiendas locales
 🚗 **Transporte** - Cómo moverse por la isla
 
-**Ejemplos de preguntas:**
-- "¿Cuáles son los mejores restaurantes de mariscos en San Andrés?"
-- "¿Qué playas recomiendas para bucear?"
-- "¿Dónde puedo comprar artesanías locales?"
-- "¿Qué actividades hay para hacer en familia?"
-
-¿En qué te puedo ayudar hoy? 😊`,
+¿En qué te puedo ayudar hoy?`,
         timestamp: new Date()
       }])
     }
@@ -147,9 +146,9 @@ Te puedo ayudar con:
         content: `Disculpa, hubo un error procesando tu consulta turística. Por favor intenta nuevamente.
 
 💡 **Sugerencias para mejorar tu búsqueda:**
-- Sé más específico: "restaurantes de mariscos en San Andrés"
-- Usa palabras clave: "playas para bucear", "hoteles económicos"
-- Pregunta por categorías: "actividades familiares", "vida nocturna"
+* Sé más específico: "restaurantes de mariscos en San Andrés"
+* Usa palabras clave: "playas para bucear", "hoteles económicos"
+* Pregunta por categorías: "actividades familiares", "vida nocturna"
 
 ¿Te gustaría probar con una de las preguntas sugeridas?`,
         timestamp: new Date(),
@@ -268,13 +267,7 @@ Te puedo ayudar con:
 🛍️ **Compras** - Mercados y tiendas locales
 🚗 **Transporte** - Cómo moverse por la isla
 
-**Ejemplos de preguntas:**
-- "¿Cuáles son los mejores restaurantes de mariscos en San Andrés?"
-- "¿Qué playas recomiendas para bucear?"
-- "¿Dónde puedo comprar artesanías locales?"
-- "¿Qué actividades hay para hacer en familia?"
-
-¿En qué te puedo ayudar hoy? 😊`,
+¿En qué te puedo ayudar hoy?`,
         timestamp: new Date()
       }])
     }, 100)
@@ -307,6 +300,250 @@ Te puedo ayudar con:
   }
 
   const hasActiveFilters = Object.values(filters).some(value => value !== undefined && value !== '')
+
+  // Function to get emoji for titles/headers based on content
+  const getTitleEmoji = (text: string): string => {
+    const lowerText = text.toLowerCase()
+
+    // Transporte/Rutas/Recorrido
+    if (lowerText.includes('opciones') || lowerText.includes('recorrido') ||
+        lowerText.includes('ruta') || lowerText.includes('transporte') ||
+        lowerText.includes('cómo llegar') || lowerText.includes('movilidad')) {
+      return '🛣️'
+    }
+
+    // Ubicaciones/Lugares/Paradas
+    if (lowerText.includes('ubicación') || lowerText.includes('paradas') ||
+        lowerText.includes('lugares') || lowerText.includes('destinos') ||
+        lowerText.includes('puntos') || lowerText.includes('sitios')) {
+      return '📍'
+    }
+
+    // Consejos/Tips/Recomendaciones
+    if (lowerText.includes('consejos') || lowerText.includes('tips') ||
+        lowerText.includes('recomendaciones') || lowerText.includes('importante') ||
+        lowerText.includes('sugerencias') || lowerText.includes('adicional')) {
+      return '💡'
+    }
+
+    // Tiempo/Duración/Horarios
+    if (lowerText.includes('tiempo') || lowerText.includes('duración') ||
+        lowerText.includes('horarios') || lowerText.includes('cuando') ||
+        lowerText.includes('distancia') || lowerText.includes('cronograma')) {
+      return '⏰'
+    }
+
+    // Seguridad/Precauciones
+    if (lowerText.includes('seguridad') || lowerText.includes('precaución') ||
+        lowerText.includes('cuidado') || lowerText.includes('riesgos') ||
+        lowerText.includes('protección') || lowerText.includes('advertencias')) {
+      return '🛡️'
+    }
+
+    // Precios/Costos/Dinero
+    if (lowerText.includes('precios') || lowerText.includes('costos') ||
+        lowerText.includes('económico') || lowerText.includes('dinero') ||
+        lowerText.includes('tarifas') || lowerText.includes('presupuesto')) {
+      return '💰'
+    }
+
+    // Comida/Restaurantes/Gastronomía
+    if (lowerText.includes('comida') || lowerText.includes('restaurantes') ||
+        lowerText.includes('gastronomía') || lowerText.includes('platos') ||
+        lowerText.includes('menú') || lowerText.includes('cocina')) {
+      return '🍽️'
+    }
+
+    // Playas/Actividades acuáticas
+    if (lowerText.includes('playas') || lowerText.includes('actividades') ||
+        lowerText.includes('buceo') || lowerText.includes('mar') ||
+        lowerText.includes('agua') || lowerText.includes('deportes')) {
+      return '🏖️'
+    }
+
+    // Hoteles/Alojamiento
+    if (lowerText.includes('hoteles') || lowerText.includes('alojamiento') ||
+        lowerText.includes('hospedaje') || lowerText.includes('estadía') ||
+        lowerText.includes('habitaciones') || lowerText.includes('resorts')) {
+      return '🏨'
+    }
+
+    // Atracciones/Turismo
+    if (lowerText.includes('atracciones') || lowerText.includes('turismo') ||
+        lowerText.includes('visitar') || lowerText.includes('ver') ||
+        lowerText.includes('cultura') || lowerText.includes('historia')) {
+      return '🎯'
+    }
+
+    // Vida nocturna/Entretenimiento
+    if (lowerText.includes('vida nocturna') || lowerText.includes('entretenimiento') ||
+        lowerText.includes('bares') || lowerText.includes('discotecas') ||
+        lowerText.includes('noche') || lowerText.includes('fiesta')) {
+      return '🌙'
+    }
+
+    // Compras/Shopping
+    if (lowerText.includes('compras') || lowerText.includes('shopping') ||
+        lowerText.includes('tiendas') || lowerText.includes('mercados') ||
+        lowerText.includes('souvenirs') || lowerText.includes('artesanías')) {
+      return '🛍️'
+    }
+
+    // Default para títulos generales
+    return '🏝️'
+  }
+
+  // Function to get dynamic emoji based on content context
+  const getDynamicEmoji = (text: string): string => {
+    const lowerText = text.toLowerCase()
+
+    // Compras/Shopping
+    if (lowerText.includes('precio') || lowerText.includes('negociar') || lowerText.includes('mercado') ||
+        lowerText.includes('artesanías') || lowerText.includes('comprar') || lowerText.includes('vender')) {
+      return '🛍️'
+    }
+
+    // Restaurantes/Food
+    if (lowerText.includes('reserva') || lowerText.includes('menú') || lowerText.includes('comida') ||
+        lowerText.includes('horario') || lowerText.includes('cocina') || lowerText.includes('plato')) {
+      return '🍽️'
+    }
+
+    // Playas/Beach
+    if (lowerText.includes('protector') || lowerText.includes('marea') || lowerText.includes('sol') ||
+        lowerText.includes('agua') || lowerText.includes('playa') || lowerText.includes('bucear')) {
+      return '🏖️'
+    }
+
+    // Hoteles/Hotels
+    if (lowerText.includes('check-in') || lowerText.includes('reservación') || lowerText.includes('habitación') ||
+        lowerText.includes('hotel') || lowerText.includes('alojamiento')) {
+      return '🏨'
+    }
+
+    // Verificación/Authentication
+    if (lowerText.includes('autenticidad') || lowerText.includes('verificar') || lowerText.includes('origen') ||
+        lowerText.includes('certificado') || lowerText.includes('genuino')) {
+      return '📋'
+    }
+
+    // Precios/Money
+    if (lowerText.includes('costo') || lowerText.includes('económico') || lowerText.includes('barato') ||
+        lowerText.includes('dinero') || lowerText.includes('pagar')) {
+      return '💰'
+    }
+
+    // Transporte
+    if (lowerText.includes('transporte') || lowerText.includes('taxi') || lowerText.includes('bus') ||
+        lowerText.includes('moto') || lowerText.includes('llegar')) {
+      return '🚗'
+    }
+
+    // Tiempo/Horarios
+    if (lowerText.includes('horario') || lowerText.includes('tiempo') || lowerText.includes('temporada') ||
+        lowerText.includes('hora') || lowerText.includes('cuando')) {
+      return '⏰'
+    }
+
+    // Consejos generales
+    return '💡'
+  }
+
+  // Function to check if this is a place/establishment vs a tip/advice
+  const isEstablishmentList = (text: string, context: string = ''): boolean => {
+    // Look for patterns that indicate establishments (bold names followed by descriptions)
+    const hasEstablishmentPattern = /\*\*[^*]+\*\*:\s*[A-Z]/.test(text)
+
+    // Look for context that indicates tips/advice in the surrounding content
+    const fullContext = (context + text).toLowerCase()
+    const isTipContext = /consejos?|tips?|recomendaciones?|importante|recuerda|adicional/i.test(fullContext)
+
+    // If it has establishment pattern and no tip context, it's an establishment
+    if (hasEstablishmentPattern && !isTipContext) return true
+
+    // If it doesn't have establishment pattern, it's likely a tip
+    if (!hasEstablishmentPattern) return false
+
+    // Default to establishment if unclear
+    return true
+  }
+
+  // Function to clean emoji bullet points from markdown content (ONLY at start of lines)
+  const cleanEmojiBulletPoints = (content: string): string => {
+    // Replace emoji bullet points with normal bullet points
+    // CRITICAL: Only replace emojis that are at START of line followed by SPACE
+    return content
+      // Specific problematic emojis used as bullet points
+      .replace(/^(\s*)🌴\s+/gm, '$1• ')
+      .replace(/^(\s*)🏖️\s+/gm, '$1• ')
+      .replace(/^(\s*)🍽️\s+/gm, '$1• ')
+      .replace(/^(\s*)🎯\s+/gm, '$1• ')
+      .replace(/^(\s*)🎪\s+/gm, '$1• ')
+      .replace(/^(\s*)🏨\s+/gm, '$1• ')
+      .replace(/^(\s*)🌙\s+/gm, '$1• ')
+      .replace(/^(\s*)🛍️\s+/gm, '$1• ')
+      .replace(/^(\s*)🚗\s+/gm, '$1• ')
+      .replace(/^(\s*)🌿\s+/gm, '$1• ')
+      .replace(/^(\s*)⛰️\s+/gm, '$1• ')
+      .replace(/^(\s*)🏛️\s+/gm, '$1• ')
+      .replace(/^(\s*)📖\s+/gm, '$1• ')
+      .replace(/^(\s*)📍\s+/gm, '$1• ')
+      .replace(/^(\s*)⭐\s+/gm, '$1• ')
+      .replace(/^(\s*)💰\s+/gm, '$1• ')
+      // Only palmera emoji that was the main problem
+      .replace(/^(\s*)🌴\s/gm, '$1• ')
+      // ALSO standardize all dashes to bullet points for consistency
+      .replace(/^(\s*)-\s+/gm, '$1• ')
+  }
+
+  // Function to clean malformed markdown and convert inline lists to vertical format
+  const convertInlineListsToVertical = (content: string): string => {
+    return content
+      // FIRST: Convert all dashes (-) to bullet points (•) to standardize
+      .replace(/^(\s*)-\s+/gm, '$1• ')
+
+      // SECOND: Convert inline bullet lists to vertical format
+      // Pattern: "Text • Item1 • Item2 • Item3" -> Vertical list
+      .replace(/^(.+?)\s*•\s*(.+)$/gm, (match, prefix, items) => {
+        // Check if this looks like an inline list (multiple bullet points)
+        if (items.includes('•')) {
+          const allItems = items.split(/\s*•\s*/).filter(item => item.trim())
+
+          // If prefix looks like a title (has colon or is bold), make it a title
+          if (prefix.includes(':') || (prefix.includes('**') && prefix.endsWith('**'))) {
+            const cleanTitle = prefix.replace(/[*:]/g, '').trim()
+            const itemList = allItems
+              .map(item => `• ${item.trim()}`)
+              .join('\n')
+
+            return `## ${cleanTitle}:\n\n${itemList}`
+          } else {
+            // Otherwise, treat first item as part of the list
+            const allListItems = [prefix.trim(), ...allItems]
+            return allListItems
+              .map(item => `• ${item.trim()}`)
+              .join('\n')
+          }
+        }
+        return match
+      })
+
+      // THIRD: Handle remaining inline patterns in titles
+      // Example: "**Title**: • Item1 • Item2"
+      .replace(/(\*\*[^*]+\*\*)\s*:\s*•\s*(.+)/g, (match, title, items) => {
+        const itemList = items
+          .split(/\s*•\s*/)
+          .filter(item => item.trim())
+          .map(item => `• ${item.trim()}`)
+          .join('\n')
+
+        return `${title}:\n\n${itemList}`
+      })
+
+      // FOURTH: Ensure proper spacing around titles
+      .replace(/^(#{1,3}\s+[^\n]+)$/gm, '\n$1\n')
+      .replace(/\n\n\n+/g, '\n\n') // Remove excessive line breaks
+  }
 
   // Category styling helpers
   const getCategoryIcon = (category: string): string => {
@@ -563,7 +800,7 @@ Te puedo ayudar con:
           aria-live="polite"
           aria-label="Mensajes del chat turístico"
         >
-          {messages.map((message, index) => (
+          {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} group ${
@@ -634,32 +871,40 @@ Te puedo ayudar con:
                           {children}
                         </h1>
                       ),
-                      h2: ({ children }) => (
-                        <h2 className="font-semibold text-lg mb-2 text-blue-700 border-b border-blue-200 pb-1">
-                          {children}
-                        </h2>
-                      ),
-                      h3: ({ children }) => (
-                        <h3 className="font-medium text-base mb-2 text-green-700">
-                          {children}
-                        </h3>
-                      ),
+                      h2: ({ children }) => {
+                        const textContent = children?.toString() || ''
+                        const emoji = getTitleEmoji(textContent)
+                        return (
+                          <h2 className="font-semibold text-lg mb-3 mt-5 text-blue-700 border-b border-blue-200 pb-1">
+                            {emoji} {children}
+                          </h2>
+                        )
+                      },
+                      h3: ({ children }) => {
+                        return (
+                          <h3 className="font-medium text-base mb-2 mt-3 text-gray-800">
+                            {children}
+                          </h3>
+                        )
+                      },
                       p: ({ children }) => (
                         <p className="mb-2 last:mb-0 leading-relaxed text-gray-700">
                           {children}
                         </p>
                       ),
                       ul: ({ children }) => (
-                        <ul className="list-none mb-3 space-y-2">
+                        <ul className="list-none mb-3">
                           {children}
                         </ul>
                       ),
-                      li: ({ children }) => (
-                        <li className="flex items-start gap-2">
-                          <span className="text-green-500 mt-1 flex-shrink-0">🌴</span>
-                          <span className="flex-1">{children}</span>
-                        </li>
-                      ),
+                      li: ({ children }) => {
+                        return (
+                          <div className="flex items-start gap-2 mb-2 leading-relaxed">
+                            <span className="text-blue-600 mt-1 flex-shrink-0 font-bold select-none text-sm">•</span>
+                            <div className="flex-1 text-gray-700 text-sm">{children}</div>
+                          </div>
+                        )
+                      },
                       strong: ({ children }) => (
                         <strong className="font-semibold text-blue-600">
                           {children}
@@ -676,17 +921,12 @@ Te puedo ayudar con:
                           {children}
                         </code>
                       ),
-                      // Custom handling for tourism emojis and formatting
-                      text: ({ value }) => {
-                        // Enhanced emoji rendering for tourism content
-                        if (typeof value === 'string') {
-                          return value
-                        }
-                        return value
+                      text: ({ children }) => {
+                        return <span>{children}</span>
                       }
                     }}
                   >
-                    {message.content}
+                    {convertInlineListsToVertical(cleanEmojiBulletPoints(message.content))}
                   </ReactMarkdown>
                 </div>
 
