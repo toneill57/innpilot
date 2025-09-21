@@ -288,14 +288,14 @@ export function isMuvaQuestion(question: string): boolean {
 /**
  * Format MUVA response for better UX
  */
-export function formatMuvaResponse(results: MuvaEmbedding[], query: string): string {
+export function formatMuvaResponse(results: MuvaEmbedding[]): string {
   if (results.length === 0) {
     return "No encontré información específica sobre esa consulta turística. ¿Podrías ser más específico sobre lo que buscas en San Andrés?"
   }
 
   let response = "🏝️ **Información Turística de San Andrés:**\n\n"
 
-  results.forEach((result, index) => {
+  results.forEach((result) => {
     const emoji = getCategoryEmoji(result.category)
     response += `${emoji} **${result.title || 'Información'}**\n`
 
@@ -328,7 +328,7 @@ export function formatMuvaResponse(results: MuvaEmbedding[], query: string): str
 }
 
 /**
- * Get emoji for category
+ * Get emoji for category titles (not for bullet points)
  */
 function getCategoryEmoji(category: MuvaCategory): string {
   const emojiMap: Record<MuvaCategory, string> = {

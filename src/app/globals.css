@@ -401,6 +401,39 @@ body {
   }
 }
 
+/* Shimmer loading animation for skeletons */
+@keyframes shimmerSkeleton {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Advanced animation classes */
+@keyframes spin-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 1s linear infinite;
+}
+
+/* Transition duration classes */
+.duration-100 { transition-duration: 100ms; }
+.duration-200 { transition-duration: 200ms; }
+.duration-300 { transition-duration: 300ms; }
+.duration-400 { transition-duration: 400ms; }
+.duration-500 { transition-duration: 500ms; }
+.duration-700 { transition-duration: 700ms; }
+.duration-1000 { transition-duration: 1000ms; }
+
 /* Enhanced card hover effects */
 .listing-card-enhanced {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

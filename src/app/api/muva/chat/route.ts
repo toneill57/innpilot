@@ -118,7 +118,7 @@ const TOURIST_ERROR_MESSAGES = {
   'invalid_filters': '🔍 Los filtros seleccionados no son compatibles. Intenta con menos filtros específicos.',
   'embedding_error': '🤖 Error al procesar tu pregunta. ¿Podrías reformularla de manera más simple?',
   'claude_error': '💭 Error al generar la respuesta. Permíteme intentarlo de nuevo.',
-  'general_fallback': '🌴 Hay un problema temporal. Mientras tanto, ¿te puedo ayudar con información general sobre San Andrés?'
+  'general_fallback': '💭 Hay un problema temporal. Mientras tanto, ¿te puedo ayudar con información general sobre San Andrés?'
 }
 
 // Generate tourism fallback response
@@ -159,7 +159,7 @@ Opciones recomendadas por zona:
 🌟 **Zona Norte**: **Hotel Casa Harb**, **GHL Relax Hotel**
 🏖️ **Frente al Mar**: **Decameron**, **Hotel Tiuna**
 💰 **Económicos**: **Posada Doña Rosa**, **Hotel Arena Blanca**
-🌴 **Boutique**: **Casa Verde Hotel**, **Hotel Portofino**
+• **Boutique**: **Casa Verde Hotel**, **Hotel Portofino**
 
 ¿Qué presupuesto y zona prefieres?`
   }
@@ -329,9 +329,12 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now()
   const sessionId = request.headers.get('x-session-id') || `session_${Date.now()}_${Math.random().toString(36).substring(2)}`
 
+  let question = '' // Declare question outside try block for catch scope access
+
   try {
     const requestData: MuvaChatRequest = await request.json()
-    const { question, category, location, city, min_rating, price_range } = requestData
+    const { category, location, city, min_rating, price_range } = requestData
+    question = requestData.question // Assign question value
 
     // Robust input validation
     const validation = validateMuvaInput(requestData)
@@ -452,7 +455,7 @@ export async function POST(request: NextRequest) {
     // Step 3: Generate response with Claude
     const claudeStart = Date.now()
 
-    // Build context from search results
+    // Build context from search results with source tracking
     const context = searchResults.map(result => {
       let contextStr = `**${result.title || 'Información Turística'}**\n`
 
@@ -490,8 +493,20 @@ export async function POST(request: NextRequest) {
         contextStr += `Tags: ${result.tags.join(', ')}\n`
       }
 
+      // Add source tracking for transparency
+      if (result.source_file) {
+        contextStr += `Fuente: ${result.source_file}\n`
+      }
+
       return contextStr
     }).join('\n---\n')
+
+    // Log sources used for transparency
+    const sourcesUsed = searchResults
+      .map(r => r.source_file || r.title || 'Documento sin título')
+      .filter((source, index, array) => array.indexOf(source) === index) // Remove duplicates
+
+    console.log(`[MUVA] Fuentes de información utilizadas: ${sourcesUsed.join(', ')}`)
 
     const systemPrompt = `Eres MUVA, un asistente turístico especializado en San Andrés, Providencia y destinos colombianos.
 
@@ -509,13 +524,72 @@ Tu misión es ayudar a turistas y viajeros con:
 INSTRUCCIONES:
 1. Responde SOLO en español
 2. Usa un tono amigable, entusiasta y conocedor
-3. Usa emojis con moderación: uno por sección principal (🍽️ Restaurante), pero NO en cada bullet point. Para listas usa viñetas simples (• o -)
+3. Usa emojis SOLAMENTE para títulos de sección H2 (## 🍽️ Restaurantes y Gastronomía:), pero NUNCA uses emojis como bullet points en las listas. SIEMPRE usa bullet points normales (•) para listas, NO emojis de palmeras (🌴) ni otros emojis como viñetas
 4. Proporciona información práctica y específica
 5. Si mencionas lugares, incluye detalles como ubicación, horarios, precios cuando estén disponibles
 6. Organiza la información de manera clara y fácil de leer
-7. Si no tienes información específica, sugiere alternativas relacionadas
+7. **RESTRICCIÓN CRÍTICA: SOLO usa información del contexto turístico proporcionado. NUNCA inventes, asumas o agregues información que no esté explícitamente en los datos de la base de datos. Si no tienes información específica sobre algo, di claramente que no está disponible en tu base de datos.**
 8. Siempre enfócate en el aspecto turístico y de experiencia del viajero
 9. IMPORTANTE: Siempre que menciones nombres de negocios, restaurantes, hoteles, lugares específicos o atracciones, ponlos en **negritas** para destacarlos visualmente (ej: **Bali Smoothies**, **Hotel Casa Harb**, **Johnny Cay**)
+10. CRÍTICO: Para todas las listas, usa EXCLUSIVAMENTE bullet points normales (• o -). NO uses ningún emoji como viñeta, especialmente NO uses 🌴, 🏖️, 🍽️ o cualquier otro emoji como bullet point
+11. FORMATO CRÍTICO DE SECCIONES Y LISTAS:
+
+**TÍTULOS DE SECCIÓN**: Usa formato H2 (##) seguido de dos puntos y SALTO DE LÍNEA obligatorio:
+
+## 🏖️ Playas Perfectas para Familias:
+
+• **Playa Spratt Bight**: Arena suave, aguas tranquilas, ideal para niños pequeños
+• **Rocky Cay**: Perfecta para snorkel familiar, muy poco profunda
+• **Playa Honda**: Tranquila, con zona de juegos y restaurantes cercanos
+
+## 🎯 Tours Familiares Imperdibles:
+
+• **Johnny Cay**: Tour de medio día con snorkel, picnic y diversión en una pequeña isla
+• **Tour de los 7 Colores**: Paseo en lancha donde los niños pueden ver diferentes tonalidades del mar
+• **Acuario San Andrés**: Exhibiciones educativas de vida marina local
+
+12. REGLAS OBLIGATORIAS PARA FORMATO:
+- NUNCA pongas listas en la misma línea que el título
+- SIEMPRE usa salto de línea después de títulos con dos puntos ":"
+- CADA establecimiento debe ir en línea separada con viñeta "•"
+- Usa formato: • **Nombre**: Descripción completa
+- NO uses guiones (-), SOLO viñetas (•)
+
+13. FORMATO ESPECÍFICO PARA LUGARES:
+NUNCA uses H3 para lugares específicos. SIEMPRE mantenlos como elementos de lista bajo categorías H2:
+
+## 🎯 Actividades Familiares:
+
+• **Johnny Cay**: Tour de medio día perfecto para familias. Pequeña isla con playas cristalinas, ideal para snorkel con niños, incluye picnic y tiempo de playa
+• **Acuario San Andrés**: Experiencia educativa y divertida. Exhibiciones de vida marina local, actividades interactivas para niños, entrada económica, horario 9:00 am - 5:00 pm
+
+14. REGLA CRÍTICA: NUNCA uses guiones (-) en listas. SIEMPRE usa viñetas (•)
+
+15. REGLA CRÍTICA: NUNCA hagas listas inline (en la misma línea). SIEMPRE formato vertical:
+
+❌ INCORRECTO (NUNCA HAGAS ESTO):
+• Senderos fáciles para caminar • Especies locales de plantas • Ideal para aprender sobre ecosistema
+• Arena suave • Aguas tranquilas • Ideal para niños pequeños • Servicios cercanos
+
+✅ CORRECTO (SIEMPRE HAZ ESTO):
+• Senderos fáciles para caminar
+• Especies locales de plantas
+• Ideal para aprender sobre ecosistema isleño
+• Entrada económica
+
+• Arena suave
+• Aguas tranquilas
+• Ideal para niños pequeños
+• Servicios cercanos
+
+16. FORMATO DE MARKDOWN LIMPIO:
+- NUNCA dejes asteriscos expuestos: **texto incompleto
+- SIEMPRE completa el markdown: **texto completo**
+- NUNCA dejes hashtags expuestos: ### en medio del texto
+
+15. DIFERENCIA DE FORMATO:
+- Lugares específicos: • **Nombre**: Descripción (viñeta azul)
+- Consejos/tips: • Texto del consejo (emoji dinámico)
 
 Contexto turístico disponible:
 ${context}

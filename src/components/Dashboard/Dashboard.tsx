@@ -2,13 +2,38 @@
 
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileUploader } from "@/components/FileUploader/FileUploader"
-import { ChatAssistant } from "@/components/ChatAssistant/ChatAssistant"
-import MuvaAssistant from "@/components/MuvaAssistant/MuvaAssistant"
+import { ChatErrorBoundary, MuvaErrorBoundary } from "@/components/ErrorBoundary"
+import {
+  ChatAssistantLazy,
+  MuvaAssistantLazy,
+  ReportsTabLazy,
+  useComponentPreloader
+} from "@/components/LazyComponents"
+import { FadeIn, StaggeredList, HoverCard, AnimatedCounter } from "@/components/Animations"
 import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users, MapPin } from "lucide-react"
 
 export function Dashboard() {
   const [activeTab, setActiveTab] = useState<'upload' | 'chat' | 'muva' | 'reports'>('upload')
+  const { preloadComponent } = useComponentPreloader()
+
+  // Preload components on tab hover
+  const handleTabHover = (tab: 'upload' | 'chat' | 'muva' | 'reports') => {
+    switch (tab) {
+      case 'chat':
+        preloadComponent('dashboard')
+        break
+      case 'muva':
+        preloadComponent('muva')
+        break
+      case 'reports':
+        preloadComponent('reports')
+        break
+    }
+  }
+
+  const handleTabChange = (tab: 'upload' | 'chat' | 'muva' | 'reports') => {
+    setActiveTab(tab)
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -16,77 +41,87 @@ export function Dashboard() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <div className="flex items-center">
-              <Shield className="h-8 w-8 text-blue-600 mr-3" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">InnPilot</h1>
-                <p className="text-sm text-gray-500">Plataforma de Gestión SIRE</p>
+            <FadeIn direction="left" duration={600}>
+              <div className="flex items-center">
+                <Shield className="h-8 w-8 text-blue-600 mr-3" />
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">InnPilot</h1>
+                  <p className="text-sm text-gray-500">Plataforma de Gestión SIRE</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">Colombia</p>
-                <p className="text-xs text-gray-500">Gestión Hotelera</p>
+            </FadeIn>
+            <FadeIn direction="right" duration={600} delay={200}>
+              <div className="flex items-center space-x-4">
+                <div className="text-right">
+                  <p className="text-sm font-medium text-gray-900">Colombia</p>
+                  <p className="text-xs text-gray-500">Gestión Hotelera</p>
+                </div>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Reportes Enviados</CardTitle>
-              <FileCheck className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">24</div>
-              <p className="text-xs text-muted-foreground">+2 desde ayer</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Validaciones OK</CardTitle>
-              <Shield className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">98.5%</div>
-              <p className="text-xs text-muted-foreground">Tasa de éxito</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Consultas Chat</CardTitle>
-              <MessageCircle className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">156</div>
-              <p className="text-xs text-muted-foreground">Este mes</p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Huéspedes Reportados</CardTitle>
-              <Users className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">1,247</div>
-              <p className="text-xs text-muted-foreground">Total registrados</p>
-            </CardContent>
-          </Card>
-        </div>
+        <StaggeredList
+          className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8"
+          delay={150}
+        >
+          {[
+            {
+              title: "Reportes Enviados",
+              value: 24,
+              subtitle: "+2 desde ayer",
+              icon: FileCheck
+            },
+            {
+              title: "Validaciones OK",
+              value: "98.5%",
+              subtitle: "Tasa de éxito",
+              icon: Shield
+            },
+            {
+              title: "Consultas Chat",
+              value: 156,
+              subtitle: "Este mes",
+              icon: MessageCircle
+            },
+            {
+              title: "Huéspedes Reportados",
+              value: 1247,
+              subtitle: "Total registrados",
+              icon: Users
+            }
+          ].map((stat, index) => (
+            <HoverCard key={index} intensity="medium">
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+                  <stat.icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">
+                    {typeof stat.value === 'number' ? (
+                      <AnimatedCounter to={stat.value} />
+                    ) : (
+                      stat.value
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{stat.subtitle}</p>
+                </CardContent>
+              </Card>
+            </HoverCard>
+          ))}
+        </StaggeredList>
 
         {/* Navigation Tabs */}
         <div className="mb-8">
           <nav className="flex space-x-8">
             <button
-              onClick={() => setActiveTab('upload')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              onClick={() => handleTabChange('upload')}
+              onMouseEnter={() => handleTabHover('upload')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
                 activeTab === 'upload'
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -96,8 +131,9 @@ export function Dashboard() {
               Validar Archivos SIRE
             </button>
             <button
-              onClick={() => setActiveTab('chat')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              onClick={() => handleTabChange('chat')}
+              onMouseEnter={() => handleTabHover('chat')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
                 activeTab === 'chat'
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -107,8 +143,9 @@ export function Dashboard() {
               Asistente SIRE
             </button>
             <button
-              onClick={() => setActiveTab('muva')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              onClick={() => handleTabChange('muva')}
+              onMouseEnter={() => handleTabHover('muva')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
                 activeTab === 'muva'
                   ? 'border-green-500 text-green-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -118,8 +155,9 @@ export function Dashboard() {
               Asistente MUVA
             </button>
             <button
-              onClick={() => setActiveTab('reports')}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              onClick={() => handleTabChange('reports')}
+              onMouseEnter={() => handleTabHover('reports')}
+              className={`py-2 px-1 border-b-2 font-medium text-sm transition-colors ${
                 activeTab === 'reports'
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -132,61 +170,80 @@ export function Dashboard() {
         </div>
 
         {/* Tab Content */}
-        <div className="bg-white rounded-lg shadow">
-          {activeTab === 'upload' && (
-            <div className="p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Validador de Archivos SIRE</h2>
-                <p className="text-sm text-gray-500">
-                  Sube tu archivo TXT para validar el formato y contenido antes de enviarlo al SIRE
-                </p>
+        <FadeIn direction="up" duration={400} delay={300}>
+          <div className="bg-white rounded-lg shadow">
+            {activeTab === 'upload' && (
+              <div className="p-6">
+                <FadeIn direction="up" delay={100}>
+                  <div className="mb-4">
+                    <h2 className="text-lg font-medium text-gray-900">Validador de Archivos SIRE</h2>
+                    <p className="text-sm text-gray-500">
+                      Sube tu archivo TXT para validar el formato y contenido antes de enviarlo al SIRE
+                    </p>
+                  </div>
+                </FadeIn>
+                <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+                  <div className="flex flex-col space-y-1.5 p-6">
+                    <h3 className="text-2xl font-semibold leading-none tracking-tight">
+                      Subir Archivo SIRE
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Arrastra tu archivo .txt aquí o haz clic para seleccionar
+                    </p>
+                  </div>
+                  <div className="p-6 pt-0">
+                    <div className="border-2 border-dashed rounded-lg p-8 text-center border-gray-300">
+                      <p className="text-lg font-medium text-gray-900 mb-2">
+                        Selecciona un archivo TXT
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Formato SIRE con 13 campos separados por tabulaciones
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <FileUploader />
-            </div>
-          )}
+            )}
 
-          {activeTab === 'chat' && (
-            <div className="p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Asistente SIRE</h2>
-                <p className="text-sm text-gray-500">
-                  Consulta dudas sobre procedimientos, validaciones y compliance del SIRE
-                </p>
+            {activeTab === 'chat' && (
+              <div className="p-6">
+                <FadeIn direction="up" delay={100}>
+                  <div className="mb-4">
+                    <h2 className="text-lg font-medium text-gray-900">Asistente SIRE</h2>
+                    <p className="text-sm text-gray-500">
+                      Consulta dudas sobre procedimientos, validaciones y compliance del SIRE
+                    </p>
+                  </div>
+                </FadeIn>
+                <ChatErrorBoundary>
+                  <ChatAssistantLazy />
+                </ChatErrorBoundary>
               </div>
-              <ChatAssistant />
-            </div>
-          )}
+            )}
 
-          {activeTab === 'muva' && (
-            <div className="p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Asistente MUVA</h2>
-                <p className="text-sm text-gray-500">
-                  Guía turística especializada en San Andrés, Providencia y destinos colombianos
-                </p>
+            {activeTab === 'muva' && (
+              <div className="p-6">
+                <FadeIn direction="up" delay={100}>
+                  <div className="mb-4">
+                    <h2 className="text-lg font-medium text-gray-900">Asistente MUVA</h2>
+                    <p className="text-sm text-gray-500">
+                      Guía turística especializada en San Andrés, Providencia y destinos colombianos
+                    </p>
+                  </div>
+                </FadeIn>
+                <MuvaErrorBoundary>
+                  <MuvaAssistantLazy />
+                </MuvaErrorBoundary>
               </div>
-              <MuvaAssistant />
-            </div>
-          )}
+            )}
 
-          {activeTab === 'reports' && (
-            <div className="p-6">
-              <div className="mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Reportes y Métricas</h2>
-                <p className="text-sm text-gray-500">
-                  Historial de validaciones y estadísticas de uso
-                </p>
+            {activeTab === 'reports' && (
+              <div className="p-6">
+                <ReportsTabLazy />
               </div>
-              <div className="text-center py-12">
-                <BarChart3 className="mx-auto h-12 w-12 text-gray-400" />
-                <h3 className="mt-2 text-sm font-medium text-gray-900">Próximamente</h3>
-                <p className="mt-1 text-sm text-gray-500">
-                  Panel de reportes y métricas en desarrollo
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        </FadeIn>
       </div>
     </div>
   )

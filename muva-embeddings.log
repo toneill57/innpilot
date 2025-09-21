@@ -1,0 +1,204 @@
+🚀 PROCESADOR DE EMBEDDINGS MUVA - LISTINGS
+==================================================
+📁 Directorio: /Users/oneill/Sites/apps/InnPilot/_assets/muva/listings
+🔧 Chunking: 1000 chars, 100 overlap
+==================================================
+
+📂 Escaneando archivos...
+📊 Archivos encontrados: 24
+
+🔄 Iniciando procesamiento...
+
+
+📄 Procesando: banzai-surf-school.md
+  📊 Chunks creados: 2
+  🔄 Procesando chunk 1/2
+  🔄 Procesando chunk 2/2
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: blue-life-dive.md
+  📊 Chunks creados: 2
+  🔄 Procesando chunk 1/2
+  🔄 Procesando chunk 2/2
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: buceo-caribe-azul.md
+  📊 Chunks creados: 4
+  🔄 Procesando chunk 1/4
+  🔄 Procesando chunk 2/4
+  🔄 Procesando chunk 3/4
+  🔄 Procesando chunk 4/4
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: hans-dive-shop.md
+  📊 Chunks creados: 2
+  🔄 Procesando chunk 1/2
+  🔄 Procesando chunk 2/2
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: richie-parasail.md
+  📊 Chunks creados: 2
+  🔄 Procesando chunk 1/2
+  🔄 Procesando chunk 2/2
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: sai-xperience-kitesurf.md
+  📊 Chunks creados: 2
+  🔄 Procesando chunk 1/2
+  🔄 Procesando chunk 2/2
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: seawolf-actividad.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: yoga-san-andres.md
+  📊 Chunks creados: 14
+  🔄 Procesando chunk 1/14
+  🔄 Procesando chunk 2/14
+  🔄 Procesando chunk 3/14
+  🔄 Procesando chunk 4/14
+  🔄 Procesando chunk 5/14
+  🔄 Procesando chunk 6/14
+  🔄 Procesando chunk 7/14
+  🔄 Procesando chunk 8/14
+  🔄 Procesando chunk 9/14
+  🔄 Procesando chunk 10/14
+  🔄 Procesando chunk 11/14
+  🔄 Procesando chunk 12/14
+  🔄 Procesando chunk 13/14
+  🔄 Procesando chunk 14/14
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: da-black-almond.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: eco-xtreme-san-andres.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: seawolf-alquiler.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: caribbean-nights.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: aqua.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: bali-smoothies.md
+  📊 Chunks creados: 10
+  🔄 Procesando chunk 1/10
+  🔄 Procesando chunk 2/10
+  🔄 Procesando chunk 3/10
+  🔄 Procesando chunk 4/10
+  🔄 Procesando chunk 5/10
+  🔄 Procesando chunk 6/10
+  🔄 Procesando chunk 7/10
+  🔄 Procesando chunk 8/10
+  🔄 Procesando chunk 9/10
+  🔄 Procesando chunk 10/10
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: coral-creppes.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: el-totumasso.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: seaweed.md
+  ❌ Error procesando seaweed.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 21, column 17:
+      days_closed: "[IF_APPLICABLE]"
+                    ^
+
+📄 Procesando: tierra-dentro.md
+  📊 Chunks creados: 1
+  🔄 Procesando chunk 1/1
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: big-mama.md
+  📊 Chunks creados: 14
+  🔄 Procesando chunk 1/14
+  🔄 Procesando chunk 2/14
+  🔄 Procesando chunk 3/14
+  🔄 Procesando chunk 4/14
+  🔄 Procesando chunk 5/14
+  🔄 Procesando chunk 6/14
+  🔄 Procesando chunk 7/14
+  🔄 Procesando chunk 8/14
+  🔄 Procesando chunk 9/14
+  🔄 Procesando chunk 10/14
+  🔄 Procesando chunk 11/14
+  🔄 Procesando chunk 12/14
+  🔄 Procesando chunk 13/14
+  🔄 Procesando chunk 14/14
+  ✅ Archivo procesado exitosamente
+
+📄 Procesando: jardín-botanico.md
+  ❌ Error procesando jardín-botanico.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 4, column 14:
+    document_type: muva
+                 ^
+
+📄 Procesando: madguana.md
+  ❌ Error procesando madguana.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 24, column 14:
+      currency: "COP"
+                 ^
+
+📄 Procesando: masally-antiguo.md
+  ❌ Error procesando masally-antiguo.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 24, column 11:
+      currency: "COP"
+              ^
+
+📄 Procesando: masally-nuevo.md
+  ❌ Error procesando masally-nuevo.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 5, column 17:
+    business_type: "Spot"
+                    ^
+
+📄 Procesando: reggae-roots.md
+  ❌ Error procesando reggae-roots.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 24, column 11:
+      currency: "COP"
+              ^
+
+==================================================
+📈 REPORTE FINAL
+==================================================
+✅ Archivos procesados: 18/24
+📦 Total chunks generados: 61
+⏱️  Tiempo total: 57.61 segundos
+
+⚠️  Errores encontrados: 6
+  - seaweed.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 21, column 17:
+      days_closed: "[IF_APPLICABLE]"
+                    ^
+  - jardín-botanico.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 4, column 14:
+    document_type: muva
+                 ^
+  - madguana.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 24, column 14:
+      currency: "COP"
+                 ^
+  - masally-antiguo.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 24, column 11:
+      currency: "COP"
+              ^
+  - masally-nuevo.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 5, column 17:
+    business_type: "Spot"
+                    ^
+  - reggae-roots.md: can not read a block mapping entry; a multiline key may not be an implicit key at line 24, column 11:
+      currency: "COP"
+              ^
+
+🔍 Verificando en base de datos...
+📊 Total embeddings en muva_embeddings: 61

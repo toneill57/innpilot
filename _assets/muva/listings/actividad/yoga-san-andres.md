@@ -1,117 +1,50 @@
 ---
-# Identificación principal
 name: "Yoga San Andrés"
 description: "Experiencia única de yoga frente al mar en playa Chameys, combinando práctica de bienestar con conexión natural y transporte incluido para una comunidad de yoga isleña"
-document_type: muva # Fixed for MUVA tourism domain
-business_type: "Actividad" # OPTIONS: Actividad|Restaurante|Spot|Night Life|Alquiler
-
-# Geolocalización enriquecida
+document_type: muva
+business_type: "Actividad"
+tags: ["yoga", "bienestar", "actividad deportiva", "playa", "transporte incluido", "community"]
+keywords: ["yoga", "clases de yoga", "acroyoga", "playa", "bienestar", "relajación"]
+status: active
+version: "1.0"
+search_terms: "San Luis Chameys Actividad"
 location:
-  zone: "San Luis" # OPTIONS: Centro|Loma|San Luis|Cove
+  zone: "San Luis"
   zone_description: "Una amplia zona en el suroriente de la isla, San Luis es conocido por sus coloridas casas isleñas en las que habitan en su mayoría nativos, pero también encontrarás hospedajes turísticos, en esta zona, las playas y actividades son menos concurridas que en el centro, las playas tienen diferentes dimensiones de arena y diferente distancia de la barrera coralina, lo que hace que en unas pueda formarse más oleaje que en otras."
-  subzone: "Chameys" # Validated against zones mapping
   subzone_description: "Después de la entrada de Orange Hill a La Loma, encontrarás una base militar y después de esta, empieza la playa de Chamey, una playa corta, adornada por algunas viejas tablas de surf y con palmeras y manglares al borde de la playa, visitada por pescadores locales, kite surfers y turistas que van a realizar las actividades que allí se ofrecen."
-  noise_level: "muy_tranquilo" # muy_tranquilo|tranquilo|moderado|ruidoso|muy_ruidoso|variable
-  security_level: "seguro" # muy_seguro|seguro|moderado|inseguro
-  proximity_to_airport: "FAR"
-  raizal_name: "" # Traditional Raizal name
-
-# Características de la zona (auto-generadas desde zone-mapping.json)
-zone_features:
+  zone_features:
   - "Casas isleñas coloridas con población nativa"
   - "Playas menos concurridas que en el centro"
   - "Playa corta con palmeras y manglares"
-
-# Información contextual automática
-context:
-  ideal_for: ["kitesurf", "actividades acuáticas"] # Based on subzone activities
-  landmarks: ["Base militar", "Tablas de surf viejas"] # From subzone data
-  warnings: [] # Security or safety warnings if any
-  recommendations: ["Zona perfecta para actividades tranquilas frente al mar"] # Practical recommendations
-  noise_notes: "Un lugar tranquilo y sin mucho ruido" # Detailed noise level information
-  coastal_features: "Playa corta con palmeras y manglares al borde" # Beach/rocky coast information
-
-# Segmentación y audiencia objetivo (auto-enriquecida desde market-segments.json)
-target_audience:
-  - "low_cost" # OPTIONS: low_cost|mochilero|aventurero|eco_friendly|soltero|negocios|lujo
-  - "mochilero"
-  - "aventurero"
-  - "soltero"
-  - "negocios"
-
-# Perfiles de audiencia (auto-completados desde market-segments.json)
-audience_profiles:
-  segment_descriptions: [
-    "Viajeros low cost ingeniosos que buscan actividades deportivas y experiencias de bajo costo",
-    "Mochileros aventureros apasionados por yoga, actividades deportivas y cultura local",
-    "Aventureros audaces interesados en acroyoga, senderismo y experiencias al aire libre",
-    "Viajeros solteros independientes que disfrutan de clases en grupo de yoga y actividades deportivas",
-    "Viajeros de negocios que aprovechan tiempo libre para actividades relacionadas con bienestar"
-  ]
-  budget_ranges: [
-    "50.000-150.000 COP diario (low_cost)",
-    "100.000-300.000 COP diario (mochilero)",
-    "200.000-500.000 COP diario (aventurero)",
-    "150.000-400.000 COP diario (soltero)",
-    "400.000-1.000.000 COP diario (negocios)"
-  ]
-  interests_alignment: [
-    "Actividades deportivas, actividades de bajo costo",
-    "Yoga, actividades deportivas, cultura local, lugares menos turísticos",
-    "Acroyoga, senderismo, actividades al aire libre, experiencias únicas",
-    "Clases en grupo de yoga, actividades deportivas, experiencias únicas",
-    "Actividades relacionadas con trabajo, bienestar profesional"
-  ]
-  transport_preferences: [
-    "Bicicleta (low_cost, mochilero, aventurero)",
-    "Moto (mochilero, aventurero, soltero, negocios)",
-    "Mulita (aventurero, soltero, negocios)"
-  ]
-
-# Información práctica de operación
 business_hours:
-  schedule: "Lunes, miércoles y viernes a las 9:30" # Specific opening hours
-  seasonal_variations: "" # High/low season changes
-  days_closed: "Martes, jueves, sábados y domingos" # Specific closure days
-
+  schedule: "Lunes, miércoles y viernes a las 9:30"
+  days_closed: "Martes, jueves, sábados y domingos"
 pricing:
-  range: "$90,000 COP" # Specific price information from CSV
-  currency: "COP" # Colombian Pesos
-  payment_methods: ["cash", "transfer"] # Accepted payment types
-  commission_info: "10% comisión por venta" # For tour operators
-
+  range: "$90,000 COP"
+  currency: "COP"
+  payment_methods: ["cash", "transfer"]
+  commission_info: "10% comisión por venta"
 contact:
   whatsapp: ""
   email: ""
   instagram: "@yoga.sanandres"
   website: ""
   physical_address: "Playa Chameys, San Luis, San Andrés"
-
-# Características y servicios especiales
 amenities:
-  pet_friendly: false # From CSV tags
-  "420_friendly": false # Cannabis-friendly establishments
-  vegetarian_options: false # Food establishments
-  wheelchair_accessible: false # Accessibility information
-  wifi_available: false # Internet connectivity
-  parking_available: false # Parking facilities
-  english_speaking_staff: true # Language support
-  accepts_reservations: true # Booking requirements
-
-# Tags y optimización de búsqueda
-tags: ["yoga", "bienestar", "actividad deportiva", "playa", "transporte incluido", "community"]
-keywords: ["yoga", "clases de yoga", "acroyoga", "playa", "bienestar", "relajación"]
-search_terms: "San Luis Chameys Actividad" # Auto-generated for SEO
-
-# Control de versiones y metadatos
+  pet_friendly: false
+  "420_friendly": false
+  vegetarian_options: false
+  wheelchair_accessible: false
+  wifi_available: false
+  parking_available: false
+  english_speaking_staff: true
+  accepts_reservations: true
 metadata:
-  status: active # OPTIONS: active|draft|archived|seasonal
-  version: "1.0"
-  menu_info: "" # Menu update frequency
-  last_menu_update: null # For restaurants with menus
-  historical_significance: "Primera comunidad de yoga establecida en San Andrés, promoviendo bienestar integral" # Cultural/historical importance
-  updated_at: "2025-09-19T00:00:00Z" # ISO format with timezone
-  created_at: "2025-09-19T00:00:00Z" # ISO format with timezone
+  menu_info: ""
+  last_menu_update: null
+  historical_significance: "Primera comunidad de yoga establecida en San Andrés, promoviendo bienestar integral"
+  updated_at: "2025-09-19T00:00:00Z"
+  created_at: "2025-09-19T00:00:00Z"
 ---
 
 # Yoga San Andrés

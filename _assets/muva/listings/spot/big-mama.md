@@ -1,125 +1,50 @@
 ---
-# Identificación principal
 name: "Big Mama"
 description: "Spot icónico frente al mar en El Cove, famoso por sus atardeceres espectaculares, comida isleña auténtica y ambiente artesanal con casitas construidas sobre formación rocosa coralina"
-document_type: muva # Fixed for MUVA tourism domain
-business_type: "Spot" # OPTIONS: Actividad|Restaurante|Spot|Night Life|Alquiler
-
-# Geolocalización enriquecida
+document_type: muva
+business_type: "Spot"
+tags: ["pet friendly", "opciones veggies", "4-20 friendly", "secret gem", "sunset spot", "local culture"]
+keywords: ["hoyo soplador", "atardecer", "caretear", "buena atención", "cultura isleña", "formación rocosa"]
+status: active
+version: "1.0"
+search_terms: "Cove Cove Spot"
 location:
-  zone: "Cove" # OPTIONS: Centro|Loma|San Luis|Cove
+  zone: "Cove"
   zone_description: "El Cove es toda la zona sur occidente de San Andrés, aquí, no encuentras playas, sino una hermosa formación rocosa coralina antes de las entradas al mar, las cuales son más conocidas por ser excelentes puntos de buceo y apnea. Al ser el occidente de la isla, aquí verás esconderse el sol entre el mar cada tarde, encuentras distintas casas de residentes, e igualmente es una zona con distintas atracciones y alojamientos turísticos, muy tranquila y poco ruidosa."
-  subzone: "Cove" # Validated against zones mapping
   subzone_description: "En el kilómetro 9 de la isla, encuentras esta hermosa zona, donde se ubica el icónico letrero de I Love Sai con vista al atardecer, un lugar de viviendas raizales, pero también de muchos alojamientos turísticos campestres, aquí encuentras spots de la isla como Big Mama."
-  noise_level: "muy_tranquilo" # muy_tranquilo|tranquilo|moderado|ruidoso|muy_ruidoso|variable
-  security_level: "muy_seguro" # muy_seguro|seguro|moderado|inseguro
-  proximity_to_airport: "MEDIUM"
-  raizal_name: "" # Traditional Raizal name
-
-# Características de la zona (auto-generadas desde zone-mapping.json)
-zone_features:
+  zone_features:
   - "Formación rocosa coralina sin playas de arena"
   - "Excelentes puntos de buceo y apnea"
   - "Mejores atardeceres de la isla"
-
-# Información contextual automática
-context:
-  ideal_for: ["buceo", "snorkel", "apnea", "atardeceres"] # Based on subzone activities
-  landmarks: ["Letrero I Love Sai", "Big Mama"] # From subzone data
-  warnings: [] # Security or safety warnings if any
-  recommendations: ["Lugar ideal para alojamientos campestres", "Perfecto para ver atardeceres"] # Practical recommendations
-  noise_notes: "Un lugar muy tranquilo, seguro y sin ruido" # Detailed noise level information
-  coastal_features: "Formación rocosa coralina, sin playas de arena" # Beach/rocky coast information
-
-# Segmentación y audiencia objetivo (auto-enriquecida desde market-segments.json)
-target_audience:
-  - "low_cost" # OPTIONS: low_cost|mochilero|aventurero|eco_friendly|soltero|negocios|lujo
-  - "mochilero"
-  - "aventurero"
-  - "eco_friendly"
-  - "soltero"
-  - "negocios"
-  - "lujo"
-
-# Perfiles de audiencia (auto-completados desde market-segments.json)
-audience_profiles:
-  segment_descriptions: [
-    "Viajeros low cost ingeniosos que buscan spots únicos y actividades gratuitas",
-    "Mochileros aventureros apasionados por secret gems y cultura local",
-    "Aventureros audaces que buscan spots únicos y experiencias al aire libre",
-    "Viajeros eco-friendly conscientes que buscan lugares eco friendly y secret gems",
-    "Viajeros solteros independientes interesados en zonas con actividad cultural",
-    "Viajeros de negocios que aprovechan tiempo libre para atracciones culturales",
-    "Viajeros de lujo exigentes que buscan experiencias exclusivas y atardeceres únicos"
-  ]
-  budget_ranges: [
-    "50.000-150.000 COP diario (low_cost)",
-    "100.000-300.000 COP diario (mochilero)",
-    "200.000-500.000 COP diario (aventurero)",
-    "100.000-250.000 COP diario (eco_friendly)",
-    "150.000-400.000 COP diario (soltero)",
-    "400.000-1.000.000 COP diario (negocios)",
-    "1.000.000-5.000.000 COP diario (lujo)"
-  ]
-  interests_alignment: [
-    "Spots únicos, actividades gratuitas, secret gems",
-    "Secret gems, cultura local, spots auténticos",
-    "Spots únicos, experiencias al aire libre, lugares especiales",
-    "Secret gems, lugares eco friendly, conexión con naturaleza",
-    "Zonas con actividad, experiencias únicas, socialización",
-    "Atracciones culturales, gastronomía local",
-    "Experiencias exclusivas, atardeceres únicos, gastronomía premium"
-  ]
-  transport_preferences: [
-    "Bicicleta (low_cost, mochilero, aventurero, eco_friendly)",
-    "Moto (mochilero, aventurero, soltero, negocios, lujo)",
-    "Mulita (aventurero, soltero, negocios, lujo)"
-  ]
-
-# Información práctica de operación
 business_hours:
-  schedule: "9:00 - 19:00" # Specific opening hours
-  seasonal_variations: "" # High/low season changes
-  days_closed: "" # Specific closure days
-
+  schedule: "9:00 - 19:00"
+  days_closed: ""
 pricing:
-  range: "Entrada libre. Comidas: $60,000 - $170,000 COP" # Specific price information from CSV
-  currency: "COP" # Colombian Pesos
-  payment_methods: ["cash", "card"] # Accepted payment types
-  commission_info: "" # For tour operators
-
+  range: "Entrada libre. Comidas: $60,000 - $170,000 COP"
+  currency: "COP"
+  payment_methods: ["cash", "card"]
+  commission_info: ""
 contact:
   whatsapp: ""
   email: ""
   instagram: "@bigmama_km9"
   website: ""
   physical_address: "Kilómetro 9, Cove, San Andrés"
-
-# Características y servicios especiales
 amenities:
-  pet_friendly: true # From CSV tags
-  "420_friendly": true # Cannabis-friendly establishments
-  vegetarian_options: true # Food establishments
-  wheelchair_accessible: false # Accessibility information
-  wifi_available: false # Internet connectivity
-  parking_available: false # Parking facilities
-  english_speaking_staff: true # Language support
-  accepts_reservations: false # Booking requirements
-
-# Tags y optimización de búsqueda
-tags: ["pet friendly", "opciones veggies", "4-20 friendly", "secret gem", "sunset spot", "local culture"]
-keywords: ["hoyo soplador", "atardecer", "caretear", "buena atención", "cultura isleña", "formación rocosa"]
-search_terms: "Cove Cove Spot" # Auto-generated for SEO
-
-# Control de versiones y metadatos
+  pet_friendly: true
+  "420_friendly": true
+  vegetarian_options: true
+  wheelchair_accessible: false
+  wifi_available: false
+  parking_available: false
+  english_speaking_staff: true
+  accepts_reservations: false
 metadata:
-  status: active # OPTIONS: active|draft|archived|seasonal
-  version: "1.0"
-  menu_info: "" # Menu update frequency
-  last_menu_update: null # For restaurants with menus
-  historical_significance: "Lugar emblemático que lleva el nombre de una mujer nativa que enseñaba gastronomía tradicional isleña" # Cultural/historical importance
-  updated_at: "2025-09-19T00:00:00Z" # ISO format with timezone
-  created_at: "2025-09-19T00:00:00Z" # ISO format with timezone
+  menu_info: ""
+  last_menu_update: null
+  historical_significance: "Lugar emblemático que lleva el nombre de una mujer nativa que enseñaba gastronomía tradicional isleña"
+  updated_at: "2025-09-19T00:00:00Z"
+  created_at: "2025-09-19T00:00:00Z"
 ---
 
 # Big Mama

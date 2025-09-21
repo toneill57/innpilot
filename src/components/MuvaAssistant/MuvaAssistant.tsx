@@ -47,6 +47,22 @@ interface MuvaFilters {
   price_range?: PriceRange
 }
 
+// WELCOME MESSAGE - CONTROL DIRECTO SIN POST-PROCESAMIENTO
+const MUVA_WELCOME_MESSAGE = `¡Hola! 🏝️ Soy **MUVA**, tu asistente turístico especializado en **San Andrés, Providencia y destinos colombianos**.
+
+Te puedo ayudar con:
+
+🍽️ **Restaurantes** - Las mejores opciones gastronómicas
+🎯 **Atracciones** - Lugares imperdibles para visitar
+🏖️ **Playas** - Las playas más hermosas y actividades
+🎪 **Actividades** - Experiencias únicas y aventuras
+🏨 **Hoteles** - Recomendaciones de alojamiento
+🌙 **Vida Nocturna** - Bares, discotecas y entretenimiento
+🛍️ **Compras** - Mercados y tiendas locales
+🚗 **Transporte** - Cómo moverse por la isla
+
+¿En qué te puedo ayudar hoy?`
+
 export default function MuvaAssistant() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState('')
@@ -70,22 +86,9 @@ export default function MuvaAssistant() {
   useEffect(() => {
     if (messages.length === 0) {
       setMessages([{
-        id: '1',
+        id: 'welcome-message',
         type: 'assistant',
-        content: `¡Hola! 🏝️ Soy **MUVA**, tu asistente turístico especializado en **San Andrés, Providencia y destinos colombianos**.
-
-Te puedo ayudar con:
-
-🍽️ **Restaurantes** - Las mejores opciones gastronómicas
-🎯 **Atracciones** - Lugares imperdibles para visitar
-🏖️ **Playas** - Las playas más hermosas y actividades
-🎪 **Actividades** - Experiencias únicas y aventuras
-🏨 **Hoteles** - Recomendaciones de alojamiento
-🌙 **Vida Nocturna** - Bares, discotecas y entretenimiento
-🛍️ **Compras** - Mercados y tiendas locales
-🚗 **Transporte** - Cómo moverse por la isla
-
-¿En qué te puedo ayudar hoy?`,
+        content: MUVA_WELCOME_MESSAGE,
         timestamp: new Date()
       }])
     }
@@ -252,22 +255,9 @@ Te puedo ayudar con:
     // Re-add welcome message
     setTimeout(() => {
       setMessages([{
-        id: '1',
+        id: 'welcome-message',
         type: 'assistant',
-        content: `¡Hola! 🏝️ Soy **MUVA**, tu asistente turístico especializado en **San Andrés, Providencia y destinos colombianos**.
-
-Te puedo ayudar con:
-
-🍽️ **Restaurantes** - Las mejores opciones gastronómicas
-🎯 **Atracciones** - Lugares imperdibles para visitar
-🏖️ **Playas** - Las playas más hermosas y actividades
-🎪 **Actividades** - Experiencias únicas y aventuras
-🏨 **Hoteles** - Recomendaciones de alojamiento
-🌙 **Vida Nocturna** - Bares, discotecas y entretenimiento
-🛍️ **Compras** - Mercados y tiendas locales
-🚗 **Transporte** - Cómo moverse por la isla
-
-¿En qué te puedo ayudar hoy?`,
+        content: MUVA_WELCOME_MESSAGE,
         timestamp: new Date()
       }])
     }, 100)
@@ -573,34 +563,14 @@ Te puedo ayudar con:
   // Enhanced suggested tourism questions with examples
   const suggestions = [
     {
-      text: "¿Cuáles son los mejores restaurantes de San Andrés?",
-      category: "restaurant",
-      description: "Encuentra opciones gastronómicas locales"
-    },
-    {
-      text: "¿Qué playas recomiendas para snorkeling?",
-      category: "beach",
-      description: "Descubre las mejores playas para bucear"
-    },
-    {
-      text: "¿Dónde puedo comprar artesanías locales?",
-      category: "shopping",
-      description: "Mercados y tiendas de souvenirs"
-    },
-    {
-      text: "¿Qué actividades hay para hacer en familia?",
-      category: "activity",
-      description: "Diversión para toda la familia"
-    },
-    {
       text: "smoothies en San Andrés",
       category: "restaurant",
       description: "Ejemplo: búsqueda por nombre directo"
     },
     {
-      text: "lugares pet friendly",
-      category: "activity",
-      description: "Ejemplo: búsqueda por etiquetas/tags"
+      text: "¿Qué playas recomiendas para snorkeling?",
+      category: "beach",
+      description: "Descubre las mejores playas para bucear"
     }
   ]
 
@@ -926,7 +896,11 @@ Te puedo ayudar con:
                       }
                     }}
                   >
-                    {convertInlineListsToVertical(cleanEmojiBulletPoints(message.content))}
+                    {/* BYPASS CRÍTICO: NO post-procesar el mensaje de bienvenida */}
+                    {message.id === 'welcome-message'
+                      ? message.content
+                      : convertInlineListsToVertical(cleanEmojiBulletPoints(message.content))
+                    }
                   </ReactMarkdown>
                 </div>
 

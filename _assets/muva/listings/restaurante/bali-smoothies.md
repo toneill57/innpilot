@@ -1,125 +1,50 @@
 ---
-# Identificación principal
 name: "Bali Smoothies"
 description: "Restaurante especializado en smoothies, bowls y pancakes saludables, libre de gluten y lactosa, ubicado en zona rosa del centro de San Andrés"
-document_type: muva # Fixed for MUVA tourism domain
-business_type: "Restaurante" # OPTIONS: Actividad|Restaurante|Spot|Night Life|Alquiler
-
-# Geolocalización enriquecida
+document_type: muva
+business_type: "Restaurante"
+tags: ["pet friendly", "4-20 friendly", "gluten free", "lactose free", "healthy food"]
+keywords: ["desayuno", "brunch", "comer sano", "sin gluten", "frutas", "smoothies"]
+status: active
+version: "1.0"
+search_terms: "Centro Zona Rosa Restaurante"
 location:
-  zone: "Centro" # OPTIONS: Centro|Loma|San Luis|Cove
+  zone: "Centro"
   zone_description: "Ubicado en el norte de la isla, en el centro encuentras la mayor parte del comercio; hoteles, restaurantes, bares y discotecas, tiendas de ropa, calzado, perfumería, tecnología y mucho más. El centro tiene la mayor concentración de personas de toda la isla y cuenta con la playa principal más extensa llamada spratt bight."
-  subzone: "Zona Rosa" # Validated against zones mapping
   subzone_description: "En esta zona vas a encontrar la mayor aglomeración de bares y discotecas, también encuentras un almacén variado que funciona las 24 horas, algunos hoteles están ubicados en esta zona. De día, encontrarás venta de actividades turísticas y alquileres de motos y mulitas."
-  noise_level: "muy_ruidoso" # muy_tranquilo|tranquilo|moderado|ruidoso|muy_ruidoso|variable
-  security_level: "moderado" # muy_seguro|seguro|moderado|inseguro
-  proximity_to_airport: "CLOSE"
-  raizal_name: "North End" # Traditional Raizal name
-
-# Características de la zona (auto-generadas desde zone-mapping.json)
-zone_features:
+  zone_features:
   - "Zona comercial principal con alta concentración turística"
   - "Mayor aglomeración de bares y discotecas"
   - "Almacén variado que funciona las 24 horas"
-
-# Información contextual automática
-context:
-  ideal_for: ["vida nocturna", "actividades turísticas", "alquileres"] # Based on subzone activities
-  landmarks: ["Almacén 24 horas"] # From subzone data
-  warnings: ["Bastante ruidosa tanto de día como de noche"] # Security or safety warnings if any
-  recommendations: ["Ubicación central ideal para acceso a servicios"] # Practical recommendations
-  noise_notes: "Bastante ruidosa tanto de día como de noche" # Detailed noise level information
-  coastal_features: "" # Beach/rocky coast information
-
-# Segmentación y audiencia objetivo (auto-enriquecida desde market-segments.json)
-target_audience:
-  - "low_cost" # OPTIONS: low_cost|mochilero|aventurero|eco_friendly|soltero|negocios|lujo
-  - "mochilero"
-  - "aventurero"
-  - "eco_friendly"
-  - "soltero"
-  - "negocios"
-  - "lujo"
-
-# Perfiles de audiencia (auto-completados desde market-segments.json)
-audience_profiles:
-  segment_descriptions: [
-    "Viajeros low cost ingeniosos que maximizan experiencia minimizando gastos",
-    "Mochileros aventureros apasionados por cultura local y lugares menos turísticos",
-    "Aventureros audaces que buscan experiencias extremas y actividades al aire libre",
-    "Viajeros eco-friendly conscientes dedicados a reducir impacto ambiental",
-    "Viajeros solteros independientes interesados en explorar y conocer personas",
-    "Viajeros de negocios profesionales que aprovechan tiempo libre para gastronomía local",
-    "Viajeros de lujo exigentes que buscan experiencias exclusivas de alta calidad"
-  ]
-  budget_ranges: [
-    "50.000-150.000 COP diario (low_cost)",
-    "100.000-300.000 COP diario (mochilero)",
-    "200.000-500.000 COP diario (aventurero)",
-    "100.000-250.000 COP diario (eco_friendly)",
-    "150.000-400.000 COP diario (soltero)",
-    "400.000-1.000.000 COP diario (negocios)",
-    "1.000.000-5.000.000 COP diario (lujo)"
-  ]
-  interests_alignment: [
-    "Actividades de bajo costo, comida saludable",
-    "Cultura local, restaurantes locales, comida orgánica",
-    "Experiencias únicas, actividades al aire libre",
-    "Alimentos orgánicos y locales, lugares eco friendly",
-    "Restaurantes sofisticados, experiencias únicas",
-    "Gastronomía local, restaurantes ejecutivos",
-    "Gastronomía de alta gama, experiencias culinarias únicas"
-  ]
-  transport_preferences: [
-    "Bicicleta (low_cost, mochilero, aventurero, eco_friendly)",
-    "Moto (mochilero, aventurero, soltero, negocios, lujo)",
-    "Mulita (aventurero, soltero, negocios, lujo)"
-  ]
-
-# Información práctica de operación
 business_hours:
-  schedule: "7:30 - 11:30 y 15:30 - 19:30" # Specific opening hours
-  seasonal_variations: "" # High/low season changes
-  days_closed: "" # Specific closure days
-
+  schedule: "7:30 - 11:30 y 15:30 - 19:30"
+  days_closed: ""
 pricing:
-  range: "$10,000 - $20,000 COP" # Specific price information from CSV
-  currency: "COP" # Colombian Pesos
-  payment_methods: ["cash", "card", "transfer"] # Accepted payment types
-  commission_info: "" # For tour operators
-
+  range: "$10,000 - $20,000 COP"
+  currency: "COP"
+  payment_methods: ["cash", "card", "transfer"]
+  commission_info: ""
 contact:
   whatsapp: "301 6548965"
   email: ""
   instagram: ""
   website: ""
   physical_address: "Zona Rosa, Centro, San Andrés"
-
-# Características y servicios especiales
 amenities:
-  pet_friendly: true # From CSV tags
-  "420_friendly": true # Cannabis-friendly establishments
-  vegetarian_options: true # Food establishments
-  wheelchair_accessible: false # Accessibility information
-  wifi_available: false # Internet connectivity
-  parking_available: false # Parking facilities
-  english_speaking_staff: false # Language support
-  accepts_reservations: false # Booking requirements
-
-# Tags y optimización de búsqueda
-tags: ["pet friendly", "4-20 friendly", "gluten free", "lactose free", "healthy food"]
-keywords: ["desayuno", "brunch", "comer sano", "sin gluten", "frutas", "smoothies"]
-search_terms: "Centro Zona Rosa Restaurante" # Auto-generated for SEO
-
-# Control de versiones y metadatos
+  pet_friendly: true
+  "420_friendly": true
+  vegetarian_options: true
+  wheelchair_accessible: false
+  wifi_available: false
+  parking_available: false
+  english_speaking_staff: false
+  accepts_reservations: false
 metadata:
-  status: active # OPTIONS: active|draft|archived|seasonal
-  version: "1.0"
-  menu_info: "Cada año" # Menu update frequency
-  last_menu_update: "2024-01-01T00:00:00Z" # For restaurants with menus
-  historical_significance: "Primer restaurante especializado en comida saludable sin gluten y lactosa de la isla" # Cultural/historical importance
-  updated_at: "2025-09-19T00:00:00Z" # ISO format with timezone
-  created_at: "2025-09-19T00:00:00Z" # ISO format with timezone
+  menu_info: "Cada año"
+  last_menu_update: null
+  historical_significance: "Primer restaurante especializado en comida saludable sin gluten y lactosa de la isla"
+  updated_at: "2025-09-19T00:00:00Z"
+  created_at: "2025-09-19T00:00:00Z"
 ---
 
 # Bali Smoothies
