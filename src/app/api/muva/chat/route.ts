@@ -7,7 +7,8 @@ import OpenAI from 'openai'
 import Anthropic from '@anthropic-ai/sdk'
 import { searchMuvaContent, searchByMetadata, isMuvaQuestion, formatMuvaResponse, type MuvaSearchOptions } from '@/lib/muva-utils'
 
-export const runtime = 'edge'
+// Temporarily disable edge runtime for stability testing
+// export const runtime = 'edge'
 
 // Enhanced semantic question groups for intelligent caching (MUVA tourism focus)
 const MUVA_SEMANTIC_GROUPS = {

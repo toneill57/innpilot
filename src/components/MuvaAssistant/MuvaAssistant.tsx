@@ -110,16 +110,25 @@ export default function MuvaAssistant() {
     setIsLoading(true)
 
     try {
+      // Enhanced fetch configuration with timeout and better error handling
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 30000) // 30 second timeout
+
       const response = await fetch('/api/muva/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'x-session-id': userSession,
         },
         body: JSON.stringify({
           question: userMessage.content,
           ...filters
         }),
+        signal: controller.signal,
       })
+
+      clearTimeout(timeoutId)
 
       const data = await response.json()
 
@@ -143,15 +152,40 @@ export default function MuvaAssistant() {
       setMessages(prev => [...prev, assistantMessage])
     } catch (error) {
       console.error('MUVA Error:', error)
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        type: 'assistant',
-        content: `Disculpa, hubo un error procesando tu consulta turística. Por favor intenta nuevamente.
+
+      // Enhanced error handling with specific error types
+      let errorContent = `Disculpa, hubo un error procesando tu consulta turística. Por favor intenta nuevamente.
 
 💡 **Sugerencias para mejorar tu búsqueda:**
 * Sé más específico: "restaurantes de mariscos en San Andrés"
 * Usa palabras clave: "playas para bucear", "hoteles económicos"
-* Pregunta por categorías: "actividades familiares", "vida nocturna"
+* Pregunta por categorías: "actividades familiares", "vida nocturna"`
+
+      // Specific error messages for different types
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          errorContent = `⏱️ **Timeout de Consulta**
+
+La consulta está tomando más tiempo de lo esperado. Esto puede deberse a:
+* Alta demanda del servicio
+* Consulta muy compleja
+
+Por favor intenta con una pregunta más específica o vuelve a intentar en unos momentos.`
+        } else if (error.message.includes('fetch')) {
+          errorContent = `🔌 **Error de Conexión**
+
+No se pudo conectar con el servicio de turismo. Esto puede deberse a:
+* Problemas temporales de conectividad
+* Mantenimiento del servidor
+
+Por favor verifica tu conexión e intenta nuevamente.`
+        }
+      }
+
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        type: 'assistant',
+        content: errorContent + `
 
 ¿Te gustaría probar con una de las preguntas sugeridas?`,
         timestamp: new Date(),
