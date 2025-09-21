@@ -12,7 +12,7 @@ interface PWAState {
 interface PWAActions {
   install: () => Promise<void>
   dismissInstallPrompt: () => void
-  showInstallPrompt: () => void
+  triggerInstallPrompt: () => void
 }
 
 export function usePWA(): PWAState & PWAActions {
@@ -123,7 +123,7 @@ export function usePWA(): PWAState & PWAActions {
     setState(prev => ({ ...prev, showInstallPrompt: false }))
   }
 
-  const showInstallPrompt = () => {
+  const triggerInstallPrompt = () => {
     if (state.isInstallable) {
       setState(prev => ({ ...prev, showInstallPrompt: true }))
     }
@@ -133,7 +133,7 @@ export function usePWA(): PWAState & PWAActions {
     ...state,
     install,
     dismissInstallPrompt,
-    showInstallPrompt
+    triggerInstallPrompt
   }
 }
 

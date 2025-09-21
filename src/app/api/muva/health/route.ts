@@ -213,7 +213,6 @@ async function getTourismStats() {
       .from('muva_embeddings')
       .select('category')
       .not('category', 'is', null)
-      .group('category')
 
     // Get last update
     const { data: lastUpdate } = await supabase
@@ -224,7 +223,7 @@ async function getTourismStats() {
 
     return {
       totalEmbeddings: totalEmbeddings || 0,
-      categoriesAvailable: categories?.map(c => c.category) || [],
+      categoriesAvailable: categories ? [...new Set(categories.map(c => c.category).filter(Boolean))] : [],
       lastDataUpdate: lastUpdate?.[0]?.updated_at || null,
       avgResponseTime: 0 // TODO: Calculate from actual metrics
     }

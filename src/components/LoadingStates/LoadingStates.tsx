@@ -156,8 +156,9 @@ export const ReportsLoadingSkeleton = () => (
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
             <Skeleton
               key={i}
-              className={`w-8 bg-blue-200 animate-pulse`}
-              style={{ height: `${Math.random() * 100 + 50}px` }}
+              className={`w-8 bg-blue-200 animate-pulse ${
+                i % 4 === 0 ? 'h-20' : i % 3 === 0 ? 'h-16' : i % 2 === 0 ? 'h-12' : 'h-8'
+              }`}
             />
           ))}
         </div>

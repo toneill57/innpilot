@@ -147,7 +147,7 @@ export class SemanticChunker {
   /**
    * Enhanced chunking with semantic validation
    */
-  private async chunkWithValidation(content: string): Promise<string[]> {
+  async chunkWithValidation(content: string): Promise<string[]> {
     // Use LangChain's splitter as base
     const doc = new Document({ pageContent: content })
     const langchainChunks = await this.splitter.splitDocuments([doc])

@@ -531,13 +531,13 @@ Por favor verifica tu conexión e intenta nuevamente.`
       .replace(/^(.+?)\s*•\s*(.+)$/gm, (match, prefix, items) => {
         // Check if this looks like an inline list (multiple bullet points)
         if (items.includes('•')) {
-          const allItems = items.split(/\s*•\s*/).filter(item => item.trim())
+          const allItems = items.split(/\s*•\s*/).filter((item: string) => item.trim())
 
           // If prefix looks like a title (has colon or is bold), make it a title
           if (prefix.includes(':') || (prefix.includes('**') && prefix.endsWith('**'))) {
             const cleanTitle = prefix.replace(/[*:]/g, '').trim()
             const itemList = allItems
-              .map(item => `• ${item.trim()}`)
+              .map((item: string) => `• ${item.trim()}`)
               .join('\n')
 
             return `## ${cleanTitle}:\n\n${itemList}`
@@ -557,8 +557,8 @@ Por favor verifica tu conexión e intenta nuevamente.`
       .replace(/(\*\*[^*]+\*\*)\s*:\s*•\s*(.+)/g, (match, title, items) => {
         const itemList = items
           .split(/\s*•\s*/)
-          .filter(item => item.trim())
-          .map(item => `• ${item.trim()}`)
+          .filter((item: string) => item.trim())
+          .map((item: string) => `• ${item.trim()}`)
           .join('\n')
 
         return `${title}:\n\n${itemList}`
