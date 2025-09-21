@@ -954,7 +954,7 @@ R:`
 
     // Determine error type and provide appropriate fallback
     let errorMessage = TOURIST_ERROR_MESSAGES.general_fallback
-    let fallbackAnswer = generateTourismFallback(question)
+    let fallbackAnswer = generateIntelligentTourismFallback(question)
 
     if (error instanceof Error) {
       if (error.message.includes('OpenAI') || error.message.includes('embedding')) {
@@ -962,7 +962,7 @@ R:`
       } else if (error.message.includes('Anthropic') || error.message.includes('Claude')) {
         errorMessage = TOURIST_ERROR_MESSAGES.claude_error
         // Try to provide fallback instead of just error
-        fallbackAnswer = generateTourismFallback(question)
+        fallbackAnswer = generateIntelligentTourismFallback(question)
       } else if (error.message.includes('Supabase') || error.message.includes('database')) {
         errorMessage = TOURIST_ERROR_MESSAGES.service_error
       }
