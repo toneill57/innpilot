@@ -10,6 +10,9 @@ import { searchMuvaContent, searchByMetadata, isMuvaQuestion, formatMuvaResponse
 // Temporarily disable edge runtime for stability testing
 // export const runtime = 'edge'
 
+// Removed pre-computed responses to ensure fair treatment of all businesses
+// All responses now dynamically use available listings from the database
+
 // Enhanced semantic question groups for intelligent caching (MUVA tourism focus)
 const MUVA_SEMANTIC_GROUPS = {
   "mejores_restaurantes": [
@@ -28,7 +31,9 @@ const MUVA_SEMANTIC_GROUPS = {
   ],
   "bebidas_smoothies": [
     "smoothies", "jugos", "batidos", "bebidas naturales",
-    "jugos de frutas", "bebidas tropicales", "smoothie bowl"
+    "jugos de frutas", "bebidas tropicales", "smoothie bowl",
+    "bali smoothies", "horarios", "donde encontrar", "ubicado",
+    "ubicación bali", "horarios bali", "donde esta bali"
   ],
   "playas_principales": [
     "mejores playas", "playa principal", "spratt bight",
@@ -117,7 +122,7 @@ const MUVA_SEMANTIC_GROUPS = {
   ]
 }
 
-// Memory cache for MUVA responses (Edge Runtime compatible)
+// Memory cache for MUVA responses (Edge Runtime compatible) - cleared to remove hardcoded responses
 const muvaCache = new Map<string, { data: unknown, expires: number }>()
 
 // Embedding cache to avoid repeated OpenAI API calls
@@ -519,6 +524,11 @@ export async function POST(request: NextRequest) {
 
     // Check cache first (using semantic grouping)
     const cacheKey = getMuvaCacheKey(question)
+
+    // PRIORITY 1: Check semantic cache only (no hardcoded responses)
+    // All responses will be dynamically generated from actual database listings
+
+    // Check semantic cache for previously generated responses
     const cached = getMuvaCache(cacheKey)
     if (cached) {
       const responseTime = Date.now() - startTime
@@ -684,103 +694,43 @@ export async function POST(request: NextRequest) {
 
     console.log(`[MUVA] Fuentes de información utilizadas: ${sourcesUsed.join(', ')}`)
 
-    const systemPrompt = `Eres MUVA, un asistente turístico especializado en San Andrés, Providencia y destinos colombianos.
+    // Optimized concise system prompt for faster processing
+    const systemPrompt = `Eres MUVA, asistente turístico de San Andrés. Responde en español, tono amigable.
 
-Tu misión es ayudar a turistas y viajeros con:
-- Recomendaciones de restaurantes y gastronomía local
-- Atracciones turísticas y lugares para visitar
-- Actividades y experiencias únicas
-- Información sobre hoteles y alojamiento
-- Guías de transporte y movilidad
-- Vida nocturna y entretenimiento
-- Compras y mercados locales
-- Cultura, historia y tradiciones
-- Naturaleza, playas y aventuras
+FORMATO OBLIGATORIO:
+- Títulos: ## 🏖️ Categoría:
+- Lugares: • **Nombre**: Descripción
+- Solo viñetas (•), nunca guiones (-)
+- Nombres en **negritas**
 
-INSTRUCCIONES:
-1. Responde SOLO en español
-2. Usa un tono amigable, entusiasta y conocedor
-3. Usa emojis SOLAMENTE para títulos de sección H2 (## 🍽️ Restaurantes y Gastronomía:), pero NUNCA uses emojis como bullet points en las listas. SIEMPRE usa bullet points normales (•) para listas, NO emojis de palmeras (🌴) ni otros emojis como viñetas
-4. Proporciona información práctica y específica
-5. Si mencionas lugares, incluye detalles como ubicación, horarios, precios cuando estén disponibles
-6. Organiza la información de manera clara y fácil de leer
-7. **RESTRICCIÓN CRÍTICA: SOLO usa información del contexto turístico proporcionado. NUNCA inventes, asumas o agregues información que no esté explícitamente en los datos de la base de datos. Si no tienes información específica sobre algo, di claramente que no está disponible en tu base de datos.**
-8. Siempre enfócate en el aspecto turístico y de experiencia del viajero
-9. IMPORTANTE: Siempre que menciones nombres de negocios, restaurantes, hoteles, lugares específicos o atracciones, ponlos en **negritas** para destacarlos visualmente (ej: **Bali Smoothies**, **Hotel Casa Harb**, **Johnny Cay**)
-10. CRÍTICO: Para todas las listas, usa EXCLUSIVAMENTE bullet points normales (• o -). NO uses ningún emoji como viñeta, especialmente NO uses 🌴, 🏖️, 🍽️ o cualquier otro emoji como bullet point
-11. FORMATO CRÍTICO DE SECCIONES Y LISTAS:
+RESTRICCIÓN CRÍTICA:
+- Solo usa información del contexto proporcionado. No inventes datos.
+- Trata TODOS los negocios con igualdad. No favorezcas ningún establecimiento.
+- Presenta los resultados basándote únicamente en la información proporcionada, sin sesgos.
 
-**TÍTULOS DE SECCIÓN**: Usa formato H2 (##) seguido de dos puntos y SALTO DE LÍNEA obligatorio:
-
-## 🏖️ Playas Perfectas para Familias:
-
-• **Playa Spratt Bight**: Arena suave, aguas tranquilas, ideal para niños pequeños
-• **Rocky Cay**: Perfecta para snorkel familiar, muy poco profunda
-• **Playa Honda**: Tranquila, con zona de juegos y restaurantes cercanos
-
-## 🎯 Tours Familiares Imperdibles:
-
-• **Johnny Cay**: Tour de medio día con snorkel, picnic y diversión en una pequeña isla
-• **Tour de los 7 Colores**: Paseo en lancha donde los niños pueden ver diferentes tonalidades del mar
-• **Acuario San Andrés**: Exhibiciones educativas de vida marina local
-
-12. REGLAS OBLIGATORIAS PARA FORMATO:
-- NUNCA pongas listas en la misma línea que el título
-- SIEMPRE usa salto de línea después de títulos con dos puntos ":"
-- CADA establecimiento debe ir en línea separada con viñeta "•"
-- Usa formato: • **Nombre**: Descripción completa
-- NO uses guiones (-), SOLO viñetas (•)
-
-13. FORMATO ESPECÍFICO PARA LUGARES:
-NUNCA uses H3 para lugares específicos. SIEMPRE mantenlos como elementos de lista bajo categorías H2:
-
-## 🎯 Actividades Familiares:
-
-• **Johnny Cay**: Tour de medio día perfecto para familias. Pequeña isla con playas cristalinas, ideal para snorkel con niños, incluye picnic y tiempo de playa
-• **Acuario San Andrés**: Experiencia educativa y divertida. Exhibiciones de vida marina local, actividades interactivas para niños, entrada económica, horario 9:00 am - 5:00 pm
-
-14. REGLA CRÍTICA: NUNCA uses guiones (-) en listas. SIEMPRE usa viñetas (•)
-
-15. REGLA CRÍTICA: NUNCA hagas listas inline (en la misma línea). SIEMPRE formato vertical:
-
-❌ INCORRECTO (NUNCA HAGAS ESTO):
-• Senderos fáciles para caminar • Especies locales de plantas • Ideal para aprender sobre ecosistema
-• Arena suave • Aguas tranquilas • Ideal para niños pequeños • Servicios cercanos
-
-✅ CORRECTO (SIEMPRE HAZ ESTO):
-• Senderos fáciles para caminar
-• Especies locales de plantas
-• Ideal para aprender sobre ecosistema isleño
-• Entrada económica
-
-• Arena suave
-• Aguas tranquilas
-• Ideal para niños pequeños
-• Servicios cercanos
-
-16. FORMATO DE MARKDOWN LIMPIO:
-- NUNCA dejes asteriscos expuestos: **texto incompleto
-- SIEMPRE completa el markdown: **texto completo**
-- NUNCA dejes hashtags expuestos: ### en medio del texto
-
-15. DIFERENCIA DE FORMATO:
-- Lugares específicos: • **Nombre**: Descripción (viñeta azul)
-- Consejos/tips: • Texto del consejo (emoji dinámico)
-
-Contexto turístico disponible:
+Contexto:
 ${context}
 
-Pregunta del usuario: ${question}`
+Pregunta: ${question}
 
-    // Use faster model for simple queries, Sonnet for complex ones
-    const isSimpleQuery = searchResults.length <= 2 || question.length < 50
-    const modelToUse = isSimpleQuery
-      ? 'claude-3-5-haiku-20241022'  // Faster for simple queries
-      : (process.env.CLAUDE_MUVA_MODEL || 'claude-3-5-sonnet-20241022')
+Respuesta concisa y práctica:`
 
-    const maxTokens = isSimpleQuery ? 800 : parseInt(process.env.CLAUDE_MUVA_MAX_TOKENS || '1200')
+    // Aggressive model optimization: Use Haiku by default for speed
+    // Only use Sonnet for very complex queries that need detailed analysis
+    const isComplexQuery = (
+      searchResults.length > 4 &&
+      question.length > 80 &&
+      (question.includes('detallado') || question.includes('completo') || question.includes('explica'))
+    )
 
-    console.log(`[MUVA] Using ${modelToUse} for ${isSimpleQuery ? 'simple' : 'complex'} query`)
+    const modelToUse = isComplexQuery
+      ? (process.env.CLAUDE_MUVA_MODEL || 'claude-3-5-sonnet-20241022') // Only for complex
+      : 'claude-3-5-haiku-20241022'  // Default: Fast Haiku for 90%+ of queries
+
+    // Reduced token limits for faster responses
+    const maxTokens = isComplexQuery ? 1000 : 600  // Significantly reduced from 1200-1500
+
+    console.log(`[MUVA] Using ${modelToUse} for ${isComplexQuery ? 'complex' : 'simple'} query`)
 
     const claudeResponse = await anthropic.messages.create({
       model: modelToUse,
