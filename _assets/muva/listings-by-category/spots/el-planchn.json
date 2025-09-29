@@ -1,0 +1,25 @@
+{
+  "id": "el-planchn",
+  "categoria": "Spot",
+  "nombre": "EL PLANCHÓN",
+  "descripcion": "Un lugar escondido en el sur de la isla, conocido por los locales, es un espacio donde se suelen reunir entre amigos a compartir y disfrutar del mar y la vista.",
+  "horario": "Es un espacio abierto, sin horarios.",
+  "historia": "Este sitio era un terreno originalmente de un isleño raizal, que lo vendió a un Europero y este decidió construir allí, pero solo al poner todo el cemento, fue multado fuertemente por las autoridades ambientales de la isla, por esto se fue de isla y se dice que nunca más volvió, quedando este espacio a disposición de la comunidad.",
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero."
+  ],
+  "tipo_spot": "mirador",
+  "mejor_momento_dia": null,
+  "actividades_principales": [],
+  "vistas_disponibles": [
+    "mar",
+    "panorámica de isla"
+  ],
+  "ideal_familias": false,
+  "ideal_parejas": false,
+  "fotografia_permitida": true
+}

@@ -1,0 +1,45 @@
+{
+  "id": "madguana",
+  "categoria": "Spot",
+  "nombre": "MADGUANA",
+  "descripcion": "Madguana es un sitio en la playa de rocky cay, sencillo, de ambiente chill, donde podras sentarte a disfrutar bebidas, frutas y comidas, mientras disfrutas de una maravillosa vista al mar y donde puedes constantemente entrar a nadar, o broncearte.",
+  "horario": "De 10 am a 6pm y los jueves también de 7pm a media noche.",
+  "zona": "San Luis",
+  "subzona": "Rocky Cay",
+  "proximidad_aeropuerto": "FAR",
+  "zona_tipo": "casas isleñas coloridas",
+  "caracteristicas_zona": [
+    "Casas isleñas coloridas",
+    "Zona residencial nativa",
+    "Playas menos concurridas",
+    "Hospedajes turísticos",
+    "Variedad de playas",
+    "Diferentes niveles de oleaje"
+  ],
+  "landmarks_cercanos": [
+    "Barco encallado El Lido",
+    "Cayo Rocky Cay"
+  ],
+  "tipos_negocio_zona": [
+    "actividades",
+    "spots",
+    "restaurantes"
+  ],
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero."
+  ],
+  "_zona_detection_confidence": "high",
+  "tipo_spot": "playa",
+  "mejor_momento_dia": null,
+  "actividades_principales": [],
+  "vistas_disponibles": [
+    "mar"
+  ],
+  "ideal_familias": false,
+  "ideal_parejas": false,
+  "fotografia_permitida": true
+}

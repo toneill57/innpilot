@@ -1,0 +1,28 @@
+{
+  "id": "el-totumasso",
+  "categoria": "Restaurante",
+  "nombre": "EL TOTUMASSO",
+  "descripcion": "El lugar ideal para un almuerzo grande, rico y barato. El totumasso es una joya escondida en las calles del centro de San Andrés que casi nadie visita, un secreto de los locales para ir a almorzar.",
+  "horario": "12:00pm a 3:00pm",
+  "zona": "Centro",
+  "proximidad_aeropuerto": "CLOSE",
+  "zona_tipo": "comercial principal",
+  "caracteristicas_zona": [
+    "Zona comercial principal",
+    "Alta concentración turística",
+    "Vida nocturna y restaurantes",
+    "Playa Spratt Bight",
+    "Mayor concentración de personas"
+  ],
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly."
+  ],
+  "_zona_detection_confidence": "high",
+  "tipo_cocina": null,
+  "rango_precios": "medio",
+  "acepta_reservas": false,
+  "ambiente": "casual"
+}

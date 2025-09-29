@@ -1,0 +1,11 @@
+{
+  "id": "coral-creppes",
+  "categoria": "Restaurante",
+  "nombre": "CORAL CREPPES",
+  "descripcion": "Coral Creppes es un lugar único en la isla, porque son pioneros en ofrecer y dedicarse a los Creppes, tienen opciones dulces, saladas, saludables y sin gluten, aquí, tu mismo eliges que ingredientes ponerle al Creppe que quieres comer.",
+  "horario": "De Jueves a Domingo 6:00pm a 10:30pm",
+  "tipo_cocina": null,
+  "rango_precios": "medio",
+  "acepta_reservas": false,
+  "ambiente": "casual"
+}

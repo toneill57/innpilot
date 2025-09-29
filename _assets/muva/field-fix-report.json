@@ -1,0 +1,470 @@
+{
+  "processed": 42,
+  "fields_fixed": 42,
+  "start_time": "2025-09-22T17:09:19.924Z",
+  "end_time": "2025-09-22T17:09:19.938Z",
+  "listings": [
+    {
+      "id": "allxces",
+      "nombre": "ALLXCES",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "aqua",
+      "nombre": "AQUA",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "arnolds-place",
+      "nombre": "ARNOLD´S PLACE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "bali-smoothies",
+      "nombre": "BALI SMOOTHIES",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "banzai-surf-school-16",
+      "nombre": "BANZAI SURF SCHOOL",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "banzai-surf-school",
+      "nombre": "BANZAI SURF SCHOOL",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "bengues-place-33",
+      "nombre": "BENGUE´S PLACE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "bengues-place",
+      "nombre": "BENGUE´S PLACE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "big-mama",
+      "nombre": "BIG MAMA",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "blue-life-dive",
+      "nombre": "BLUE LIFE DIVE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "bobby-rock",
+      "nombre": "BOBBY ROCK",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "buceo-caribe-azul",
+      "nombre": "BUCEO CARIBE AZUL",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "buconos-diving",
+      "nombre": "BUCONOS DIVING",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "caribbean-nigths",
+      "nombre": "CARIBBEAN NIGTHS",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "caribbean-xperience",
+      "nombre": "CARIBBEAN XPERIENCE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "casa-museo",
+      "nombre": "CASA MUSEO",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "coral-creppes",
+      "nombre": "CORAL CREPPES",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "da-black-almond",
+      "nombre": "DA BLACK ALMOND",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "eco-xtreme-san-andres",
+      "nombre": "ECO XTREME SAN ANDRES",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "el-planchn",
+      "nombre": "EL PLANCHÓN",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "el-totumasso",
+      "nombre": "EL TOTUMASSO",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "hans-dive-shop",
+      "nombre": "HANS DIVE SHOP",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "jardn-botnico",
+      "nombre": "JARDÍN BOTÁNICO",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "laguna-big-pond",
+      "nombre": "LAGUNA BIG POND",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "madguana",
+      "nombre": "MADGUANA",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "maria-raigoza",
+      "nombre": "MARIA RAIGOZA",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "marino-parasail",
+      "nombre": "MARINO PARASAIL",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "masally-antiguo",
+      "nombre": "MASALLY ANTIGUO",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "masally-nuevo",
+      "nombre": "MASALLY NUEVO",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "miss-vivi",
+      "nombre": "MISS VIVI",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "one-love-tom-hooker",
+      "nombre": "ONE LOVE (TOM HOOKER)",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "reggae-roots",
+      "nombre": "REGGAE ROOTS",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "richie-parasail",
+      "nombre": "RICHIE PARASAIL",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "sai-xperience-12",
+      "nombre": "SAI XPERIENCE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "sai-xperience-13",
+      "nombre": "SAI XPERIENCE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "sai-xperience",
+      "nombre": "SAI XPERIENCE",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "seaweed",
+      "nombre": "SEAWEED",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "seawolf-7",
+      "nombre": "SEAWOLF",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "seawolf",
+      "nombre": "SEAWOLF",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "south-beauty",
+      "nombre": "SOUTH BEAUTY",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "tierra-dentro",
+      "nombre": "TIERRA DENTRO",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    },
+    {
+      "id": "yoga-san-andrs",
+      "nombre": "YOGA SAN ANDRÉS",
+      "changes_made": [
+        "segmentacion",
+        "palabras_clave",
+        "tags",
+        "contacto",
+        "menu_info"
+      ]
+    }
+  ]
+}

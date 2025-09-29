@@ -1,0 +1,590 @@
+[
+  {
+    "id": "allxces",
+    "categoria": "Spot",
+    "nombre": "ALLXCES",
+    "descripcion": "El único spot de entrada libre en la playa de rocky cay, aquí encontrarás un lugar lindo frente a la playa con diferentes sitios para sentarse a disfrutar del día mientras disfrutas de diferentes bebidas y las mejores empanadas de camarón de la isla.",
+    "horario": "De 9am a 7pm",
+    "zona": "San Luis",
+    "subzona": "Rocky Cay",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "landmarks_cercanos": [
+      "Barco encallado El Lido",
+      "Cayo Rocky Cay"
+    ],
+    "tipos_negocio_zona": [
+      "actividades",
+      "spots",
+      "restaurantes"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "arnolds-place",
+    "categoria": "Spot",
+    "nombre": "ARNOLD´S PLACE",
+    "descripcion": "Arnold´s place es de los pocos lugares de entrada libre en las playas de El Paraíso, perfecto para pasar un día de descanso entre amigos o familia, aquí encontrarás comida autóctona de la isla y disferentes bebidas a buenos precios",
+    "horario": "De 9am a 6pm",
+    "zona": "San Luis",
+    "subzona": "El Paraíso",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "actividades_disponibles": [
+      "surf principiantes"
+    ],
+    "landmarks_cercanos": [
+      "Calle El Radar"
+    ],
+    "tipos_negocio_zona": [
+      "restaurantes",
+      "clubs de playa privados"
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [
+      "surf principiantes"
+    ],
+    "vistas_disponibles": [
+      "panorámica de isla"
+    ],
+    "ideal_familias": true,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "bengues-place-33",
+    "categoria": "Spot",
+    "nombre": "BENGUE´S PLACE",
+    "descripcion": "Este es el lugar que estas buscando para tomarte un agua de coco fria, frente a la playa de los charquitos, se encuentra el emblematico lugar de Bengue´s y no te lo quieres perder.",
+    "horario": "De 9am a 6pm",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "bengues-place",
+    "categoria": "Spot",
+    "nombre": "BENGUE´S PLACE",
+    "descripcion": "Donde Bengue, podrás disfrutar un agua de coco fria frente al mar en las playas de san luis.",
+    "horario": "De 9am a 6pm",
+    "zona": "San Luis",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "big-mama",
+    "categoria": "Spot",
+    "nombre": "BIG MAMA",
+    "descripcion": "Big Mama es un lugar que sin duda deberias visitar en San Andrés, es la entrada a un excelente punto para caretear y bucear, siempre te recibiran con una linda energia, en big mama te puedes sentar a disfrutar en las casitas construidas artesanalmente frente al mar, a disfrutar de bebidas de todo tipo y comida isleña deliciosa. Además es sin duda el mejor lugar para sentarse a ver el atardecer.",
+    "horario": "De 9am a 7pm.",
+    "historia": "Big Mama le llamaban a una mujer nativa de la isla de muy hermoso corazón, que hace muchos años enseñaba a otros a preparar la gastronomia que forma parte de nuestra cultura. Es por esto que el Capitan Mitchell, decidió llamar así a este lugar, su espacio frente al mar en el brinda alegria a muchos isleños y turistas.",
+    "zona": "Cove",
+    "subzona": "Cove",
+    "proximidad_aeropuerto": "MEDIUM",
+    "zona_tipo": "formación rocosa coralina",
+    "caracteristicas_zona": [
+      "Formación rocosa coralina",
+      "Excelentes puntos de buceo",
+      "Zona de snorkel y apnea",
+      "Mejores atardeceres",
+      "Zona muy tranquila",
+      "Poco ruidosa",
+      "Alojamientos turísticos"
+    ],
+    "actividades_disponibles": [
+      "buceo",
+      "snorkel",
+      "apnea",
+      "atardeceres"
+    ],
+    "landmarks_cercanos": [
+      "Letrero I Love Sai",
+      "Big Mama"
+    ],
+    "tipos_negocio_zona": [
+      "alojamientos campestres",
+      "spots"
+    ],
+    "contacto": "@bigmama_km9",
+    "palabras_clave": [
+      "Hoyo soplador",
+      "atardecer",
+      "caretear",
+      "buena atencion."
+    ],
+    "tags": [
+      "Pet friendly",
+      "opciones veggies",
+      "4-20 friendly",
+      "secret gem."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "medium",
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [
+      "buceo",
+      "snorkel",
+      "apnea",
+      "atardeceres"
+    ],
+    "vistas_disponibles": [
+      "mar"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "bobby-rock",
+    "categoria": "Spot",
+    "nombre": "BOBBY ROCK",
+    "descripcion": "Un lugar maravilloso al sur de la isla, donde tomar diferentes bebidas, comidas de la isla y disfrutar del atardecer.",
+    "horario": "De 9am a 7pm",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "buconos-diving",
+    "categoria": "Spot",
+    "nombre": "BUCONOS DIVING",
+    "descripcion": "Una excelente escuela de buceo con la cual hacer tus certificaciones, con Buconos, te puedes preparar desde meses antes de tu viaje con la parte teórica, para llegar a la isla solamente a aplicar la parte practica en nuestro mar de 7 colores.",
+    "horario": "Atención de 9am a 6pm",
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "casa-museo",
+    "categoria": "Spot",
+    "nombre": "CASA MUSEO",
+    "descripcion": "La casa museo es un sitio para conocer de arquitectura y cultura autóctona de San Andrés isla, aquí vas a encontrar llamativos objetos antiguos al rededor de la casa y vas a conocer de las constumbres antiguas que nos representan.",
+    "horario": "Lunes a Sábado de 09:00 a.m. a 05:00 p.m. y Domingos: de 09:00 a.m. a 06:00 p.m",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "el-planchn",
+    "categoria": "Spot",
+    "nombre": "EL PLANCHÓN",
+    "descripcion": "Un lugar escondido en el sur de la isla, conocido por los locales, es un espacio donde se suelen reunir entre amigos a compartir y disfrutar del mar y la vista.",
+    "horario": "Es un espacio abierto, sin horarios.",
+    "historia": "Este sitio era un terreno originalmente de un isleño raizal, que lo vendió a un Europero y este decidió construir allí, pero solo al poner todo el cemento, fue multado fuertemente por las autoridades ambientales de la isla, por esto se fue de isla y se dice que nunca más volvió, quedando este espacio a disposición de la comunidad.",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "mirador",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "jardn-botnico",
+    "categoria": "Spot",
+    "nombre": "JARDÍN BOTÁNICO",
+    "descripcion": "El Jardín Botánico de San Andrés, es otra forma de ver y conocer la isla. Aquí no solo vas a conocer sobre flores y plantas endémicas sino una visión de la tradición isleña y los beneficios de las plantas locales. Además, desde su mirador de 12 metros, los visitantes disfrutan de una vista panorámica de San Andrés, mientras exploran una reserva de biósfera que conserva especies antiguas como helechos y pinos.",
+    "horario": "Martes a sábados: De 9:00 a.m. a 12:00 m., y de 2:00 a 4:30 p.m. Domingos y festivos: De 10:00 a.m. a 12:00 m., y de 2:00 a 4:30 pm.",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "mirador",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "laguna-big-pond",
+    "categoria": "Spot",
+    "nombre": "LAGUNA BIG POND",
+    "descripcion": "La laguna es un espacio que cuenta con una pequeña formación de agua semisalada, este lugar es un refugio de babillas y muchas otras especies.",
+    "horario": "De 9am a 5pm",
+    "zona": "Loma",
+    "subzona": "Laguna",
+    "proximidad_aeropuerto": "MEDIUM",
+    "zona_tipo": "cultural raizal",
+    "caracteristicas_zona": [
+      "Zona cultural raizal",
+      "Formación montañosa única",
+      "Alta concentración de nativos",
+      "Valor histórico y natural",
+      "Primera Iglesia Bautista",
+      "Laguna Big Pond"
+    ],
+    "landmarks_cercanos": [
+      "Laguna Big Pond"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_spot": "laguna",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": null,
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "madguana",
+    "categoria": "Spot",
+    "nombre": "MADGUANA",
+    "descripcion": "Madguana es un sitio en la playa de rocky cay, sencillo, de ambiente chill, donde podras sentarte a disfrutar bebidas, frutas y comidas, mientras disfrutas de una maravillosa vista al mar y donde puedes constantemente entrar a nadar, o broncearte.",
+    "horario": "De 10 am a 6pm y los jueves también de 7pm a media noche.",
+    "zona": "San Luis",
+    "subzona": "Rocky Cay",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "landmarks_cercanos": [
+      "Barco encallado El Lido",
+      "Cayo Rocky Cay"
+    ],
+    "tipos_negocio_zona": [
+      "actividades",
+      "spots",
+      "restaurantes"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "masally-antiguo",
+    "categoria": "Spot",
+    "nombre": "MASALLY ANTIGUO",
+    "descripcion": "En Masally podrás disfrutar de un espació tranquilo, sencillo y agradable frente al mar, donde podrás caretear y disfrutar de distintas bebidas.",
+    "horario": "De 10 am a 6pm",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "masally-nuevo",
+    "categoria": "Spot",
+    "nombre": "MASALLY NUEVO",
+    "descripcion": "Masally te ofrece un espacio cómodo, lindo y tranquilo frente al mar del lado oeste de la isla, donde podrás disfrutas de distintas bebidas y comidas a distintas horas del día.",
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "miss-vivi",
+    "categoria": "Spot",
+    "nombre": "MISS VIVI",
+    "descripcion": "Emblemático lugar para quienes crecieron en la isla, Miss Vivi es una joya escondida que solo puedes encontrar abierta los domingos, se trata de una heladeria sencilla pero que todos aman.",
+    "horario": "Domingos de 9am a 5pm",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "one-love-tom-hooker",
+    "categoria": "Spot",
+    "nombre": "ONE LOVE (TOM HOOKER)",
+    "descripcion": "One Love es el único lugar en la playa que vas a encontrar para comer tan al sur de la isla, la playa en la que está ubicado es muy tranquila, no es tan apta para entrar a nadar, pero es perfecta para quienes tienen miedo al mar o al oleaje o para niños, ya que se forma una pequeña piscina en que te puedes quedar sentado disfrutando del agua tibia y la hermosa vista. En el lugar encontrarás sillas y sombra para estar cómodo al comer.",
+    "horario": "De 9am a 5pm",
+    "zona": "Cove",
+    "subzona": "Tom hooker",
+    "proximidad_aeropuerto": "MEDIUM",
+    "zona_tipo": "formación rocosa coralina",
+    "caracteristicas_zona": [
+      "Formación rocosa coralina",
+      "Excelentes puntos de buceo",
+      "Zona de snorkel y apnea",
+      "Mejores atardeceres",
+      "Zona muy tranquila",
+      "Poco ruidosa",
+      "Alojamientos turísticos"
+    ],
+    "actividades_disponibles": [
+      "buceo",
+      "snorkel",
+      "apnea",
+      "atardeceres",
+      "snorkeling"
+    ],
+    "tipos_negocio_zona": [
+      "alojamientos",
+      "casas de nativos"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [
+      "buceo",
+      "snorkel",
+      "apnea",
+      "atardeceres",
+      "snorkeling"
+    ],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": true,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "reggae-roots",
+    "categoria": "Spot",
+    "nombre": "REGGAE ROOTS",
+    "descripcion": "Reggae Roots es la entrada más cercana a la estatua subacuática de poseidón, aqui podrás entrara a caretear y luego sentarte a tomar algo mientras disfrutas de un ambiente rasta, con música reggae.",
+    "horario": "De 9am a 7pm",
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero."
+    ],
+    "tipo_spot": "punto de interés",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  },
+  {
+    "id": "south-beauty",
+    "categoria": "Spot",
+    "nombre": "SOUTH BEAUTY",
+    "descripcion": "South Beauty o conocido como \"el spot de surf\" es un lugar perfecto para disfrutar de la playa, tomarse algo, comer y sobre todo, aprender a surfear, las pequeñas olas de este sitio lo vuelven el lugar mas seguro de la isla para aprender.",
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_spot": "playa",
+    "mejor_momento_dia": null,
+    "actividades_principales": [],
+    "vistas_disponibles": [
+      "mar",
+      "panorámica de isla"
+    ],
+    "ideal_familias": false,
+    "ideal_parejas": false,
+    "fotografia_permitida": true
+  }
+]

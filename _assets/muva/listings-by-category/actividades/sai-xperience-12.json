@@ -1,0 +1,36 @@
+{
+  "id": "sai-xperience-12",
+  "categoria": "Actividad",
+  "nombre": "SAI XPERIENCE",
+  "descripcion": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje.",
+  "horario": "Segun se reserve.",
+  "precio": "$200,000",
+  "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+  "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+  "palabras_clave": [
+    "Paddle Board",
+    "actividades",
+    "atardecer",
+    "planes de noche."
+  ],
+  "tags": [
+    "Pet friendly",
+    "4-20 friendly"
+  ],
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_actividad": "experiencia",
+  "duracion": null,
+  "nivel_dificultad": "todos",
+  "edad_minima": null,
+  "equipo_incluido": [],
+  "certificaciones_disponibles": [],
+  "instructor_certificado": false
+}

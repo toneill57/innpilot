@@ -1,0 +1,23 @@
+{
+  "id": "da-black-almond",
+  "categoria": "Alquiler",
+  "nombre": "DA BLACK ALMOND",
+  "descripcion": "Alquiler de carros, motos y pontones.",
+  "horario": "De 8am a 10pm",
+  "periodicidad_menu": "Jaime Herrera",
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "palabras_clave": [
+    "Alquiler",
+    "moto",
+    "carro",
+    "mulitas."
+  ]
+}

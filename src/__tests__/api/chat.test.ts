@@ -7,7 +7,9 @@ jest.mock('@/lib/openai', () => ({
 }))
 
 jest.mock('@/lib/supabase', () => ({
-  searchDocuments: jest.fn()
+  supabase: {
+    rpc: jest.fn()
+  }
 }))
 
 jest.mock('@/lib/claude', () => ({
@@ -16,7 +18,7 @@ jest.mock('@/lib/claude', () => ({
 
 describe('/api/chat', () => {
   const { generateEmbedding } = require('@/lib/openai')
-  const { searchDocuments } = require('@/lib/supabase')
+  const { supabase } = require('@/lib/supabase')
   const { generateChatResponse } = require('@/lib/claude')
 
   beforeEach(() => {
@@ -24,12 +26,15 @@ describe('/api/chat', () => {
 
     // Mock implementations
     generateEmbedding.mockResolvedValue([0.1, 0.2, 0.3])
-    searchDocuments.mockResolvedValue([
-      {
-        content: 'Test document content',
-        metadata: { source: 'test.pdf' }
-      }
-    ])
+    supabase.rpc.mockResolvedValue({
+      data: [
+        {
+          content: 'Test document content',
+          metadata: { source: 'test.pdf' }
+        }
+      ],
+      error: null
+    })
     generateChatResponse.mockResolvedValue('Test response from Claude')
   })
 
@@ -54,11 +59,16 @@ describe('/api/chat', () => {
     expect(data.context_used).toBe(true)
     expect(data.question).toBe(requestBody.question)
 
-    expect(generateEmbedding).toHaveBeenCalledWith(requestBody.question)
-    expect(searchDocuments).toHaveBeenCalledWith([0.1, 0.2, 0.3], 0.3, 3)
+    expect(generateEmbedding).toHaveBeenCalledWith(requestBody.question, 1536)
+    expect(supabase.rpc).toHaveBeenCalledWith('match_sire_documents', {
+      query_embedding: [0.1, 0.2, 0.3],
+      match_threshold: 0.0,
+      match_count: 3
+    })
     expect(generateChatResponse).toHaveBeenCalledWith(
       requestBody.question,
-      'Test document content'
+      'Test document content',
+      'sire'
     )
   })
 
@@ -80,8 +90,8 @@ describe('/api/chat', () => {
     expect(response.status).toBe(200)
     expect(data.context_used).toBe(false)
     expect(generateEmbedding).not.toHaveBeenCalled()
-    expect(searchDocuments).not.toHaveBeenCalled()
-    expect(generateChatResponse).toHaveBeenCalledWith('Test question', '')
+    expect(supabase.rpc).not.toHaveBeenCalled()
+    expect(generateChatResponse).toHaveBeenCalledWith('Test question', '', 'unified')
   })
 
   it('should return 400 for missing question', async () => {

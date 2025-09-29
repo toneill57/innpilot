@@ -45,7 +45,7 @@ async function checkSupabaseHealth(): Promise<ServiceStatus> {
 
   try {
     const { data, error } = await supabase
-      .from('document_embeddings')
+      .from('sire_content')
       .select('id')
       .limit(1)
 

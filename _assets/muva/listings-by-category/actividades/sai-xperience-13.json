@@ -1,0 +1,33 @@
+{
+  "id": "sai-xperience-13",
+  "categoria": "Actividad",
+  "nombre": "SAI XPERIENCE",
+  "descripcion": "El wakeboard es un deporte que puedes lograr si o no en el mismo dia dependiendo de tu capacidad deportiva.",
+  "horario": "Segun se reserve.",
+  "precio": "$280,000",
+  "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+  "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+  "palabras_clave": [
+    "Wake board",
+    "actividades",
+    "mar."
+  ],
+  "tags": [
+    "Pet friendly",
+    "4-20 friendly"
+  ],
+  "segmentacion": [
+    "Aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_actividad": "experiencia",
+  "duracion": null,
+  "nivel_dificultad": "todos",
+  "edad_minima": null,
+  "equipo_incluido": [],
+  "certificaciones_disponibles": [],
+  "instructor_certificado": false
+}

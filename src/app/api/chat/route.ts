@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generateEmbedding } from '@/lib/openai'
-import { searchDocuments } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'  // Use supabase client directly for proper multi-tenant search
 import { generateChatResponse } from '@/lib/claude'
+import { determineOptimalSearch } from '@/lib/search-router'
+import { detectQueryIntent, getSearchConfig, calculateSearchCounts } from '@/lib/query-intent'
 // Note: Vercel KV not implemented - using memory cache only
 
 export const runtime = 'edge'
@@ -97,12 +99,60 @@ export async function POST(request: NextRequest) {
   try {
     console.log(`[${timestamp}] Chat API request started`)
 
-    const { question, use_context = true, max_context_chunks = 4 } = await request.json()
+    // Parse and validate request body
+    let requestBody
+    try {
+      requestBody = await request.json()
+    } catch {
+      console.log(`[${timestamp}] Invalid request: malformed JSON`)
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 }
+      )
+    }
+
+    const { question, use_context = true, max_context_chunks = 4 } = requestBody
+
+    // Validate max_context_chunks
+    if (typeof max_context_chunks !== 'number' || max_context_chunks < 1 || max_context_chunks > 10) {
+      console.log(`[${timestamp}] Invalid request: invalid max_context_chunks (${max_context_chunks})`)
+      return NextResponse.json(
+        {
+          error: 'Invalid max_context_chunks',
+          message: 'Must be a number between 1 and 10'
+        },
+        { status: 400 }
+      )
+    }
 
     if (!question || typeof question !== 'string') {
       console.log(`[${timestamp}] Invalid request: missing or invalid question`)
       return NextResponse.json(
         { error: 'Question is required and must be a string' },
+        { status: 400 }
+      )
+    }
+
+    // Input validation
+    if (question.length > 500) {
+      console.log(`[${timestamp}] Invalid request: question too long (${question.length} characters)`)
+      return NextResponse.json(
+        {
+          error: 'Question too long',
+          message: 'Maximum 500 characters allowed',
+          current_length: question.length
+        },
+        { status: 400 }
+      )
+    }
+
+    if (question.trim().length < 3) {
+      console.log(`[${timestamp}] Invalid request: question too short`)
+      return NextResponse.json(
+        {
+          error: 'Question too short',
+          message: 'Minimum 3 characters required'
+        },
         { status: 400 }
       )
     }
@@ -120,7 +170,7 @@ export async function POST(request: NextRequest) {
       const cachedWithMetrics = {
         ...cached,
         performance: {
-          ...((cached as any).performance || {}),
+          ...((cached as { performance?: Record<string, unknown> }).performance || {}),
           total_time_ms: responseTime,
           cache_hit: true,
           environment: process.env.NODE_ENV || 'unknown',
@@ -140,36 +190,105 @@ export async function POST(request: NextRequest) {
 
     if (use_context) {
       try {
+        // 🤖 Detect query intent to determine search strategy
+        const intentStart = Date.now()
+        console.log(`[${timestamp}] 🤖 Detecting query intent...`)
+
+        const queryIntent = await detectQueryIntent(question)
+        const intentTime = Date.now() - intentStart
+        console.log(`[${timestamp}] ✅ Intent detected: ${queryIntent.type} (confidence: ${queryIntent.confidence}) - Time: ${intentTime}ms`)
+        console.log(`[${timestamp}] 📝 Reasoning: ${queryIntent.reasoning}`)
+
+        const searchConfig = getSearchConfig(queryIntent, false) // No MUVA access for now
+        const searchCounts = calculateSearchCounts(searchConfig, max_context_chunks)
+
         const embeddingStart = Date.now()
-        console.log(`[${timestamp}] 🔍 Generating embedding...`)
+        let allResults: any[] = []
+        let detectedDomain = 'unified'
 
-        // Generar embedding de la pregunta
-        const queryEmbedding = await generateEmbedding(question)
-        const embeddingTime = Date.now() - embeddingStart
-        console.log(`[${timestamp}] ✅ Embedding generated - Time: ${embeddingTime}ms`)
+        // Check if this is an accommodation-related query
+        const isAccommodationQuery = ['inventory_complete', 'specific_unit', 'feature_inquiry', 'pricing_inquiry'].includes(queryIntent.type)
 
-        const searchStart = Date.now()
-        console.log(`[${timestamp}] 🔎 Searching documents...`)
+        if (isAccommodationQuery) {
+          // 🪆 MATRYOSHKA TIER 1 for accommodation units (ultra-fast)
+          const accommodationStrategy = { tier: 1, dimensions: 1024, description: 'Accommodation units (fast)' }
+          console.log(`[${timestamp}] 🪆 Using Tier 1 (1024 dims) for accommodation search`)
+          console.log(`[${timestamp}] 🔍 Generating ${accommodationStrategy.dimensions}-dimensional embedding...`)
 
-        // Buscar documentos relevantes (threshold más bajo para mejor recall)
-        const documents = await searchDocuments(
-          queryEmbedding,
-          0.3, // threshold reducido para mejor búsqueda
-          max_context_chunks
-        )
-        const searchTime = Date.now() - searchStart
-        console.log(`[${timestamp}] ✅ Found ${documents.length} relevant documents - Search time: ${searchTime}ms`)
+          // Generate embedding for accommodation search
+          const queryEmbedding = await generateEmbedding(question, accommodationStrategy.dimensions)
+          const embeddingTime = Date.now() - embeddingStart
+          console.log(`[${timestamp}] ✅ Tier 1 embedding generated - Time: ${embeddingTime}ms, Dimensions: ${accommodationStrategy.dimensions}`)
+
+          const searchStart = Date.now()
+          console.log(`[${timestamp}] 🏨 Searching accommodation units...`)
+
+          // Search accommodation units using fast embeddings
+          const { data: accommodationData, error: accommodationError } = await supabase
+            .rpc('match_accommodation_units_fast', {
+              query_embedding: queryEmbedding,
+              similarity_threshold: 0.0,
+              match_count: searchCounts.tenantCount
+            })
+
+          if (accommodationError) {
+            console.error(`[${timestamp}] ❌ Accommodation search failed:`, accommodationError)
+          } else {
+            allResults.push(...(accommodationData || []))
+            console.log(`[${timestamp}] ✅ Found ${accommodationData?.length || 0} accommodation units`)
+          }
+
+          const searchTime = Date.now() - searchStart
+          console.log(`[${timestamp}] ✅ Accommodation search completed - Time: ${searchTime}ms`)
+          detectedDomain = 'accommodation'
+        }
+
+        // Always search SIRE documents as fallback/additional context
+        if (allResults.length < max_context_chunks) {
+          const sireStrategy = { tier: 2, dimensions: 1536, description: 'SIRE documentation (balanced)' }
+          console.log(`[${timestamp}] 🪆 Also searching SIRE documents with Tier 2 (1536 dims)`)
+
+          const sireEmbedding = await generateEmbedding(question, sireStrategy.dimensions)
+          const remainingCount = max_context_chunks - allResults.length
+
+          const { data: sireData, error: sireError } = await supabase
+            .rpc('match_sire_documents', {
+              query_embedding: sireEmbedding,
+              match_threshold: 0.0,
+              match_count: remainingCount
+            })
+
+          if (sireError) {
+            console.error(`[${timestamp}] ❌ SIRE search failed:`, sireError)
+          } else {
+            allResults.push(...(sireData || []))
+            console.log(`[${timestamp}] ✅ Found ${sireData?.length || 0} SIRE documents`)
+          }
+
+          if (!isAccommodationQuery) {
+            detectedDomain = 'sire'
+          }
+        }
+
+        const searchResult = {
+          results: allResults,
+          detectedDomain,
+          queryIntent: queryIntent.type
+        }
+
+        console.log(`[${timestamp}] ✅ Total results found: ${searchResult.results.length}`)
+        console.log(`[${timestamp}] 🎯 Detected domain: ${searchResult.detectedDomain}`)
 
         // Construir contexto
-        context = documents
+        context = searchResult.results
           .map(doc => doc.content)
           .join('\n\n')
 
         const claudeStart = Date.now()
         console.log(`[${timestamp}] 🤖 Generating Claude response...`)
 
-        // Generar respuesta con Claude (usando el contexto encontrado)
-        response = await generateChatResponse(question, context)
+        // Generar respuesta con Claude (usando el contexto encontrado y dominio detectado)
+        response = await generateChatResponse(question, context, searchResult.detectedDomain)
         const claudeTime = Date.now() - claudeStart
         console.log(`[${timestamp}] ✅ Claude response generated - Time: ${claudeTime}ms`)
 
@@ -179,7 +298,7 @@ export async function POST(request: NextRequest) {
 
         try {
           // Continuar sin contexto si hay error en la búsqueda
-          response = await generateChatResponse(question, '')
+          response = await generateChatResponse(question, '', 'unified')
         } catch (fallbackError) {
           console.error(`[${timestamp}] ❌ Fatal error in fallback response:`, fallbackError)
           throw fallbackError
@@ -187,11 +306,11 @@ export async function POST(request: NextRequest) {
       }
     } else {
       console.log(`[${timestamp}] 🤖 Generating response without context...`)
-      const claudeStart = Date.now()
+      const claudeStartNoContext = Date.now()
 
       // No context needed - generate response immediately
-      response = await generateChatResponse(question, '')
-      const claudeTime = Date.now() - claudeStart
+      response = await generateChatResponse(question, '', 'unified')
+      const claudeTime = Date.now() - claudeStartNoContext
       console.log(`[${timestamp}] ✅ Response generated - Time: ${claudeTime}ms`)
     }
 

@@ -1,0 +1,24 @@
+{
+  "id": "eco-xtreme-san-andres",
+  "categoria": "Alquiler",
+  "nombre": "ECO XTREME SAN ANDRES",
+  "descripcion": "Alquiler de vehículos y botes.",
+  "horario": "De 9am a 6pm",
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "palabras_clave": [
+    "Alquiler",
+    "moto",
+    "carro",
+    "mulitas",
+    "botes",
+    "ponton."
+  ]
+}

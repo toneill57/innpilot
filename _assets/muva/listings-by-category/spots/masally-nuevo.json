@@ -1,0 +1,23 @@
+{
+  "id": "masally-nuevo",
+  "categoria": "Spot",
+  "nombre": "MASALLY NUEVO",
+  "descripcion": "Masally te ofrece un espacio cómodo, lindo y tranquilo frente al mar del lado oeste de la isla, donde podrás disfrutas de distintas bebidas y comidas a distintas horas del día.",
+  "segmentacion": [
+    "Aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_spot": "punto de interés",
+  "mejor_momento_dia": null,
+  "actividades_principales": [],
+  "vistas_disponibles": [
+    "mar",
+    "panorámica de isla"
+  ],
+  "ideal_familias": false,
+  "ideal_parejas": false,
+  "fotografia_permitida": true
+}

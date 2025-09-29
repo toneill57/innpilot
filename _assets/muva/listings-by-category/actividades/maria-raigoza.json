@@ -1,0 +1,32 @@
+{
+  "id": "maria-raigoza",
+  "categoria": "Actividad",
+  "nombre": "MARIA RAIGOZA",
+  "descripcion": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso.",
+  "horario": "Al amanecer.",
+  "precio": "$250,000 1 hora.  $220,000 hora en paquete de 5 horas.",
+  "historia": "Desde el 2011 Maria empezó a dar clases de Kitesurf, viviendo la experiencia de conocer, conectar y trasmitir con distintas personas a través del kite y dando a conocer un spot inigualable y no tan reconocido en este deporte, como San Andrés Isla.",
+  "palabras_clave": [
+    "Kitesurf",
+    "mar",
+    "actividades",
+    "deportes acuáticos."
+  ],
+  "segmentacion": [
+    "Aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_actividad": "surf",
+  "duracion": null,
+  "nivel_dificultad": "todos",
+  "edad_minima": null,
+  "equipo_incluido": [
+    "tabla",
+    "cometa"
+  ],
+  "certificaciones_disponibles": [],
+  "instructor_certificado": false
+}

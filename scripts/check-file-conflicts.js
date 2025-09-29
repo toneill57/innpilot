@@ -59,7 +59,7 @@ class FileConflictChecker {
   }
 
   /**
-   * Verifica el estado de Git para detectar archivos modificados
+   * Verifica archivos que podrían tener buffers sucios en VSCode
    */
   checkGitStatus() {
     try {
@@ -77,19 +77,64 @@ class FileConflictChecker {
             file: line.substring(3)
           }));
 
+        // Solo reportar archivos sin staged que podrían tener buffers sucios
         modifiedFiles.forEach(({ status, file }) => {
-          if (status.includes('M')) {
-            this.conflicts.push({
-              type: 'git_modified',
-              file,
-              message: `Archivo modificado en Git (posible buffer sucio en VSCode)`,
-              severity: 'high'
-            });
+          // Solo archivos modificados pero no staged (posible buffer sucio)
+          if (status === ' M' || status === 'MM') {
+            this.checkFileForDirtyBuffer(file);
+          }
+          // Archivos no trackeados que podrían estar abiertos
+          else if (status === '??') {
+            const ext = path.extname(file);
+            if (CONFIG.EDITABLE_EXTENSIONS.includes(ext)) {
+              this.warnings.push({
+                type: 'untracked_editable',
+                file,
+                message: `Archivo no trackeado que podría estar abierto en VSCode`,
+                severity: 'low'
+              });
+            }
           }
         });
       }
     } catch (error) {
       this.warnings.push('No se pudo verificar el estado de Git');
+    }
+  }
+
+  /**
+   * Verifica si un archivo específico podría tener buffer sucio
+   */
+  checkFileForDirtyBuffer(file) {
+    const filePath = path.join(this.rootPath, file);
+
+    if (!fs.existsSync(filePath)) return;
+
+    try {
+      const stats = fs.statSync(filePath);
+      const now = Date.now();
+      const timeSinceModified = now - stats.mtime.getTime();
+
+      // Si fue modificado hace menos de 2 minutos, podría estar en un buffer sucio
+      if (timeSinceModified < 2 * 60 * 1000) {
+        this.conflicts.push({
+          type: 'potential_dirty_buffer',
+          file,
+          message: `Modificado recientemente (${Math.round(timeSinceModified / 1000)}s) - posible buffer sucio`,
+          severity: 'medium',
+          lastModified: stats.mtime
+        });
+      } else {
+        // Archivo modificado hace más tiempo, probablemente ya guardado
+        this.warnings.push({
+          type: 'staged_changes',
+          file,
+          message: `Archivo con cambios staged - verificar antes de modificar`,
+          severity: 'low'
+        });
+      }
+    } catch (error) {
+      // Ignorar errores de acceso
     }
   }
 
@@ -235,9 +280,9 @@ class FileConflictChecker {
   generateRecommendations() {
     console.log('💡 RECOMENDACIONES:');
 
-    if (this.conflicts.some(c => c.type === 'git_modified')) {
-      console.log('• Cerrar archivos abiertos en VSCode antes de que Claude los modifique');
-      console.log('• Usar Cmd+K Cmd+W para cerrar todos los archivos en VSCode');
+    if (this.conflicts.some(c => c.type === 'potential_dirty_buffer')) {
+      console.log('• Cerrar archivos recientemente modificados en VSCode (Cmd+W)');
+      console.log('• O guardar cambios pendientes (Cmd+S) antes de que Claude los modifique');
     }
 
     if (this.conflicts.some(c => c.type === 'critical_file')) {
@@ -245,12 +290,16 @@ class FileConflictChecker {
       console.log('• Verificar que la configuración del proyecto esté estable');
     }
 
-    if (this.warnings.length > 0) {
-      console.log('• Considerar hacer backup de archivos recientemente modificados');
+    if (this.warnings.some(w => w.type === 'staged_changes')) {
+      console.log('• Revisar archivos con cambios staged antes de permitir modificaciones');
     }
 
-    console.log('• Asegurar que VSCode tenga la configuración auto-refresh activada');
-    console.log('• Usar "files.autoSave": "afterDelay" en settings.json\n');
+    if (this.warnings.some(w => w.type === 'untracked_editable')) {
+      console.log('• Considerar agregar archivos no trackeados a Git si son importantes');
+    }
+
+    console.log('• Asegurar que VSCode tenga auto-save activado ("files.autoSave": "afterDelay")');
+    console.log('• Verificar que auto-refresh esté habilitado en settings.json\n');
   }
 }
 

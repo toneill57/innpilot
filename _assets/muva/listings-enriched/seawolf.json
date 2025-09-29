@@ -1,0 +1,22 @@
+{
+  "id": "seawolf",
+  "categoria": "Actividad",
+  "nombre": "SEAWOLF",
+  "descripcion": "Seawolf es una agencia en la que podrás encontrar diferentes actividades en un solo lugar, siempre con un excelente servicio, en los mejores botes de la isla, te invitamos a conocerla.",
+  "horario": "9:00 a 20:00 h",
+  "precio": "Varia dependiendo de la actividad",
+  "segmentacion": [
+    "Aventurero",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "palabras_clave": [
+    "Actividades",
+    "experiencias",
+    "alquileres",
+    "agencia de turismo",
+    "planes."
+  ],
+  "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953"
+}

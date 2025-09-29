@@ -1,0 +1,1406 @@
+{
+  "metadata": {
+    "total_listings": 42,
+    "generated_at": "2025-09-22T17:22:50.081Z",
+    "categories": {
+      "Restaurante": 6,
+      "Actividad": 14,
+      "Spot": 18,
+      "Alquiler": 3,
+      "Nigth Life": 1
+    }
+  },
+  "listings": [
+    {
+      "id": "aqua",
+      "categoria": "Restaurante",
+      "nombre": "AQUA",
+      "descripcion": "Aqua es un club de playa en la playa de rocky cay, excelente para pasar un dia entero en l aplaya disfrutando de buenas bebidas y excelente comida.",
+      "horario": "10:30 am a 6:00pm",
+      "zona": "San Luis",
+      "subzona": "Rocky Cay",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "landmarks_cercanos": [
+        "Barco encallado El Lido",
+        "Cayo Rocky Cay"
+      ],
+      "tipos_negocio_zona": [
+        "actividades",
+        "spots",
+        "restaurantes"
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_cocina": null,
+      "rango_precios": "medio",
+      "acepta_reservas": false,
+      "ambiente": "casual"
+    },
+    {
+      "id": "bali-smoothies",
+      "categoria": "Restaurante",
+      "nombre": "BALI SMOOTHIES",
+      "descripcion": "El lugar perfecto para quienes quieren salir a comer rico y saludable, Bali, es un lugar de smoothies, bowls, pancakes y otros antojos, libres de gluten, sin lactosa y deliciosos.",
+      "horario": "7:30 - 11:30 y 15:30 - 19:30",
+      "precio": "$10,000 - $20,000",
+      "historia": "Fundado en diciembre del 2022, con la intención de crear una opción para comer saludable en la isla, con opciones accesibles para personas alérgicas al glúten y a la láctosa, en un espacio lindo y a precios accesibles.",
+      "personaje": "Katherine Santamaria",
+      "datos_color": "Este lugar es único en la isla, tiene opciones increíbles a muy buen precio, además el local es muy lindo, agradable y aceptan mascotas en su terraza.",
+      "palabras_clave": [
+        "000.",
+        "No manejan",
+        "40.000 por clase individual",
+        "Desayuno",
+        "brunch",
+        "comer sano",
+        "sin gluten",
+        "frutas",
+        "smoothies."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_cocina": null,
+      "periodicidad_menu": "Whatsapp: 301 6548965",
+      "rango_precios": "medio",
+      "acepta_reservas": false,
+      "ambiente": "casual"
+    },
+    {
+      "id": "coral-creppes",
+      "categoria": "Restaurante",
+      "nombre": "CORAL CREPPES",
+      "descripcion": "Coral Creppes es un lugar único en la isla, porque son pioneros en ofrecer y dedicarse a los Creppes, tienen opciones dulces, saladas, saludables y sin gluten, aquí, tu mismo eliges que ingredientes ponerle al Creppe que quieres comer.",
+      "horario": "De Jueves a Domingo 6:00pm a 10:30pm",
+      "tipo_cocina": null,
+      "rango_precios": "medio",
+      "acepta_reservas": false,
+      "ambiente": "casual"
+    },
+    {
+      "id": "el-totumasso",
+      "categoria": "Restaurante",
+      "nombre": "EL TOTUMASSO",
+      "descripcion": "El lugar ideal para un almuerzo grande, rico y barato. El totumasso es una joya escondida en las calles del centro de San Andrés que casi nadie visita, un secreto de los locales para ir a almorzar.",
+      "horario": "12:00pm a 3:00pm",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "zona_tipo": "comercial principal",
+      "caracteristicas_zona": [
+        "Zona comercial principal",
+        "Alta concentración turística",
+        "Vida nocturna y restaurantes",
+        "Playa Spratt Bight",
+        "Mayor concentración de personas"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_cocina": null,
+      "rango_precios": "medio",
+      "acepta_reservas": false,
+      "ambiente": "casual"
+    },
+    {
+      "id": "seaweed",
+      "categoria": "Restaurante",
+      "nombre": "SEAWEED",
+      "descripcion": "Seaweed es un espacio hermoso lleno de decoración hecha por una artiste de la isla, en temática marina. Tienen diferentes opciones de comida y funcionan en horario de la tarde y la noche.",
+      "horario": "12:30 a 10:30 pm",
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_cocina": "marina",
+      "rango_precios": "medio",
+      "acepta_reservas": false,
+      "ambiente": "casual"
+    },
+    {
+      "id": "tierra-dentro",
+      "categoria": "Restaurante",
+      "nombre": "TIERRA DENTRO",
+      "descripcion": "Un restaurante enfocado en la elaboración de cocina nikkei, en este caso Sushi y cocina Peruana, Tierradentro es un excelente lugar para salir a cenar a un sitio lindo y tranquilo.",
+      "horario": "Lunes a Domingo de 17:00 a 23:00",
+      "precio": "$30,000 - 60,000",
+      "historia": "Nace con la idea de traer otras opciones a la isla, Tierradentro tomò una nueva direcciòn y administraciòn en el 2024, donde decidieron innovar y adaptar el sushi trayendo una experiencia diferente tanto a turistas como residentes.",
+      "personaje": "Ana María Gómez Vanegas",
+      "palabras_clave": [
+        "Sushi",
+        "cena",
+        "comer",
+        "mochis."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "soltero",
+        "negocios."
+      ],
+      "tipo_cocina": null,
+      "periodicidad_menu": "Whatsapp: 321 2662050",
+      "rango_precios": "medio",
+      "acepta_reservas": false,
+      "ambiente": "casual"
+    },
+    {
+      "id": "banzai-surf-school-16",
+      "categoria": "Actividad",
+      "nombre": "BANZAI SURF SCHOOL",
+      "descripcion": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje.",
+      "horario": "Segun se reserve.",
+      "contacto": "@banzaisurfschooladz",
+      "palabras_clave": [
+        "Paddle Board",
+        "actividades",
+        "atardecer",
+        "planes de noche."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "surf",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "banzai-surf-school",
+      "categoria": "Actividad",
+      "nombre": "BANZAI SURF SCHOOL",
+      "descripcion": "El surf en San Andrés Islas ofrece olas variadas que son ideales para principiantes. La playa mas concurrida para aprender es El Paraíso y surfistas mas avanzados también lo practican en playas mas al sur de la isla.",
+      "horario": "Segun se reserve.",
+      "precio": "Clase privada de surf (1 a 2 personas) : 190,000 por persona.",
+      "zona": "San Luis",
+      "subzona": "El Paraíso",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "actividades_disponibles": [
+        "surf principiantes"
+      ],
+      "landmarks_cercanos": [
+        "Calle El Radar"
+      ],
+      "tipos_negocio_zona": [
+        "restaurantes",
+        "clubs de playa privados"
+      ],
+      "contacto": "@banzaisurfschooladz",
+      "palabras_clave": [
+        "Surf",
+        "mar",
+        "actividades."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_actividad": "surf",
+      "duracion": null,
+      "nivel_dificultad": "principiante",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "blue-life-dive",
+      "categoria": "Actividad",
+      "nombre": "BLUE LIFE DIVE",
+      "descripcion": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+      "horario": "Segun se reserve.",
+      "precio": "Minicurso: $230.000. Las certificaciones varian.",
+      "historia": "Blue life es atendido por sus dueños: Eduardo Garcia (fundador) Fabian y Luisa (Hijos de Eduardo). Son uno de los operadores de buceo más antiguos de la isla, contando con experiencia desde hace más de 25 años. Se han dedicado específicamente a la enseñanza de buceo para los niveles básico, profesional y técnico recreativo. Blue life es el único centro de formación y entrenamiento de Instructores PADI en la isla de San Andrés, realizando IDC/IE cada mes, liderado por el Course Director Fabian Garcia.",
+      "datos_color": "Con Blue Life podrás ir a distintos puntos de buceo, ya que cuentan con lanchas a disposicion de la escuela a distintas horas para sus salidas, en especial bucean del lado este de la isla, puntos que no te querrás perder.",
+      "recomendaciones": "pero nunca puedes bucear el mismo día de tu vuelo de regreso.",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "zona_tipo": "comercial principal",
+      "caracteristicas_zona": [
+        "Zona comercial principal",
+        "Alta concentración turística",
+        "Vida nocturna y restaurantes",
+        "Playa Spratt Bight",
+        "Mayor concentración de personas"
+      ],
+      "contacto": "Whatsapp: 317 434 4015 - Correo:  info@bluelifedive.com",
+      "palabras_clave": [
+        "000.",
+        "$25",
+        "Buceo",
+        "actividades",
+        "centro de buceo",
+        "bucear."
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_actividad": "buceo",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": 12,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "buceo-caribe-azul",
+      "categoria": "Actividad",
+      "nombre": "BUCEO CARIBE AZUL",
+      "descripcion": "El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+      "horario": "Todo el dia.",
+      "precio": "Minicurso: $250,000. Las certificaciones varian.",
+      "historia": "Caribe Azul es una escuela de buceo fundada por Hugo Arboleda, activista ambiental e instructor de buceo. Buscando vivir de su pasión y partiendo desde la necesidad de la sensibilización ambiental para promover la conservación de nuestros ecosistemas. Al fallecer el señor Hugo, esta escuela y su misión fue tomada por su hija María José, quien lidera la escuela desde el 2016.",
+      "personaje": "María José Arboleda, es nacida en la isla, con una prefunda pasión por el mar y su conservación, tiene más de 17 años de experiencia buceando, y 7 como instructora de buceo, está certificada en buceo adaptativo, de conservación de tiburones, conservación de tortugas y concientización de la conservación de la barrera de coral.",
+      "datos_color": "Caribe Azul es una escuela de buceo enfocada en la exploración sostenible y la conservación, también es una escuela inclusiva ya que su instructora María José, está especializada en buceo adaptativo, la especialidad de técnicas adaptativas de buceo para personas con discapacidad. (Ceguera parcial o total, discapacidades auditivas, autismo, paraplejías, etc) Tienen actividades de buceo para niños desde los 8 años. Y a los buzos les brindan la posibilidad de ser voluntarios en la iniciativa Ocean Warrior:",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "zona_tipo": "comercial principal",
+      "caracteristicas_zona": [
+        "Zona comercial principal",
+        "Alta concentración turística",
+        "Vida nocturna y restaurantes",
+        "Playa Spratt Bight",
+        "Mayor concentración de personas"
+      ],
+      "contacto": "Whatsapp: 3176359608  Instagram: @buceocaribeazul",
+      "palabras_clave": [
+        "Buceo",
+        "sostenibilidad",
+        "inclusión",
+        "conservación."
+      ],
+      "tags": [
+        "Eco friendly"
+      ],
+      "segmentacion": [
+        "Mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_actividad": "buceo",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": 12,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "caribbean-xperience",
+      "categoria": "Actividad",
+      "nombre": "CARIBBEAN XPERIENCE",
+      "descripcion": "Haciedno wake board con Caribbean Xperience vas a dominar las olas y la fuerza de la embarcación por medio de una cuerda y una tabla q te arrastran hacia el mar puedes realizarlo en la playa de San Luis, en este curso aprenderás a dominar la tabla y a surcar las olas con destreza mientras experimentas libertad y emoción",
+      "horario": "Segun se reserve.",
+      "zona": "San Luis",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "palabras_clave": [
+        "Wake board",
+        "actividades",
+        "mar."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_actividad": "experiencia",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [
+        "tabla"
+      ],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "hans-dive-shop",
+      "categoria": "Actividad",
+      "nombre": "HANS DIVE SHOP",
+      "descripcion": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro y apto para niños desde 8 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+      "horario": "Averiguar",
+      "precio": "Minicurso: $160,000. Las certificaciones varian.",
+      "historia": "No especificó.",
+      "personaje": "En Hans Dive Shop, aunque a cargo de Hans Schenk, te pueden atender distintos instructores de buceo, todos brindan un muy buen servicio y el mismo recorrido por el museo de estauas de Big Mama.",
+      "datos_color": "La escuela de Hans cuenta con un lugar increible para sus minicursos, ya que estan ubicados frente al museo de estatuas que hay bajo el mar, ellos cuidan y mantienen también el estado de estas estatuas, donde vas a tener unas fotos muy lindas.",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "zona_tipo": "comercial principal",
+      "caracteristicas_zona": [
+        "Zona comercial principal",
+        "Alta concentración turística",
+        "Vida nocturna y restaurantes",
+        "Playa Spratt Bight",
+        "Mayor concentración de personas"
+      ],
+      "contacto": "320 926 0935 - 324 560 4878 - hansdiveshop@gmail.com",
+      "palabras_clave": [
+        "Buceo",
+        "actividades",
+        "centro de buceo",
+        "bucear."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_actividad": "buceo",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": 8,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "maria-raigoza",
+      "categoria": "Actividad",
+      "nombre": "MARIA RAIGOZA",
+      "descripcion": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso.",
+      "horario": "Al amanecer.",
+      "precio": "$250,000 1 hora.  $220,000 hora en paquete de 5 horas.",
+      "historia": "Desde el 2011 Maria empezó a dar clases de Kitesurf, viviendo la experiencia de conocer, conectar y trasmitir con distintas personas a través del kite y dando a conocer un spot inigualable y no tan reconocido en este deporte, como San Andrés Isla.",
+      "palabras_clave": [
+        "Kitesurf",
+        "mar",
+        "actividades",
+        "deportes acuáticos."
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "surf",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [
+        "tabla",
+        "cometa"
+      ],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "marino-parasail",
+      "categoria": "Actividad",
+      "nombre": "MARINO PARASAIL",
+      "descripcion": "El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min de vuelo, para un máximo de dos horas de recorrido.",
+      "horario": "Tienen 5 salidas al día: 8:00, 9:00, 11:00, 14:00 y 16:00 h.",
+      "precio": "$230,000 por persona",
+      "historia": "Todo empezó por practicar el deporte de kitesurf y apartir de esto nació el sueño de ofrecer el PARASAIL en nuestra isla para que todos pudieran disfrutar de la grandiosa vista que tenemos desde las alturas, en el 2013 empezaron a hacer algunos vuelos de parasail y poco a poco han conseguido consolidarse como una empresa reconocida por su equipo de trabajo calificado y personal certificado.",
+      "personaje": "Marino, el fundador de esta actividad, es una persona con mucha experiencia en el mar y se mantiene al mando del estado de los botes y equipos, al momento de reservar te van a atender otras personas calificadas en cada area.",
+      "palabras_clave": [
+        "Parasail",
+        "actividades",
+        "aventura",
+        "vista al mar."
+      ],
+      "tags": [
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "parasail",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "richie-parasail",
+      "categoria": "Actividad",
+      "nombre": "RICHIE PARASAIL",
+      "descripcion": "El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min de vuelo, para un máximo de dos horas de recorrido.",
+      "horario": "Tienen 4 salidas al dia: 9:00, 11:00, 14:00 y 16:00 h.",
+      "precio": "$230,000 por persona.",
+      "historia": "Richie Parasail es la empresa pionera del parasail en la isla, fundada hace 10 años por Ricardo Castaño e hijos.",
+      "personaje": "Richie es un visionario que siempre tuvo el sueño de traer el parasail a la isla, su primer bote de Parasail se llamó SunDay.",
+      "datos_color": "Ya han volado más de 50 mil personas. No debes tener ninguna habilidad fisica u experiencia previa para poder realizarlo.",
+      "palabras_clave": [
+        "Parasail",
+        "actividades",
+        "aventura",
+        "vista al mar."
+      ],
+      "segmentacion": [
+        "Mochilero",
+        "aventurero",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "parasail",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "sai-xperience-12",
+      "categoria": "Actividad",
+      "nombre": "SAI XPERIENCE",
+      "descripcion": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje.",
+      "horario": "Segun se reserve.",
+      "precio": "$200,000",
+      "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+      "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+      "palabras_clave": [
+        "Paddle Board",
+        "actividades",
+        "atardecer",
+        "planes de noche."
+      ],
+      "tags": [
+        "Pet friendly",
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "experiencia",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "sai-xperience-13",
+      "categoria": "Actividad",
+      "nombre": "SAI XPERIENCE",
+      "descripcion": "El wakeboard es un deporte que puedes lograr si o no en el mismo dia dependiendo de tu capacidad deportiva.",
+      "horario": "Segun se reserve.",
+      "precio": "$280,000",
+      "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+      "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+      "palabras_clave": [
+        "Wake board",
+        "actividades",
+        "mar."
+      ],
+      "tags": [
+        "Pet friendly",
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "experiencia",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "sai-xperience",
+      "categoria": "Actividad",
+      "nombre": "SAI XPERIENCE",
+      "descripcion": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso.",
+      "horario": "Segun se reserve.",
+      "precio": "$250,000 la hora de clase.",
+      "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+      "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+      "palabras_clave": [
+        "Kitesurf",
+        "clases de kitesurf",
+        "escuela de kitesurf."
+      ],
+      "tags": [
+        "Pet friendly",
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "surf",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [
+        "tabla",
+        "cometa"
+      ],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "seawolf",
+      "categoria": "Actividad",
+      "nombre": "SEAWOLF",
+      "descripcion": "Seawolf es una agencia en la que podrás encontrar diferentes actividades en un solo lugar, siempre con un excelente servicio, en los mejores botes de la isla, te invitamos a conocerla.",
+      "horario": "9:00 a 20:00 h",
+      "precio": "Varia dependiendo de la actividad",
+      "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+      "palabras_clave": [
+        "Actividades",
+        "experiencias",
+        "alquileres",
+        "agencia de turismo",
+        "planes."
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_actividad": "experiencia",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "yoga-san-andrs",
+      "categoria": "Actividad",
+      "nombre": "YOGA SAN ANDRÉS",
+      "descripcion": "El yoga es una actividad con multiples beneficios para cuerpo y mente, realizarlo además frente al mar, lo convierte en una experiencia más enriquecedora, animáte a probarlo!",
+      "horario": "Lunes, miércoles y viernes a las 9:30 h.",
+      "precio": "$90,000",
+      "historia": "Yoga San Andrés es creado por Sara Arango, con el propósito de crear una comunidad de yoga en la isla y brindar una experiencia única y distinta a los turistas.",
+      "personaje": "Sara Arango es una isleña enamorada del mar y del movimiento, practica yoga desde el 2014 y empezó a dar clases desde el 2018. En contra de muchos estereotipos al rededor de esta práctica, Sara, no es una profesora de yoga convencional.",
+      "contacto": "Whatsapp: ---- - Instagram: @yoga.sanandres",
+      "palabras_clave": [
+        "Yoga",
+        "clases de yoga",
+        "acroyoga",
+        "playa",
+        "bienestar",
+        "relajación."
+      ],
+      "tags": [
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "soltero",
+        "negocios."
+      ],
+      "tipo_actividad": "yoga",
+      "duracion": null,
+      "nivel_dificultad": "todos",
+      "edad_minima": null,
+      "equipo_incluido": [],
+      "certificaciones_disponibles": [],
+      "instructor_certificado": false
+    },
+    {
+      "id": "allxces",
+      "categoria": "Spot",
+      "nombre": "ALLXCES",
+      "descripcion": "El único spot de entrada libre en la playa de rocky cay, aquí encontrarás un lugar lindo frente a la playa con diferentes sitios para sentarse a disfrutar del día mientras disfrutas de diferentes bebidas y las mejores empanadas de camarón de la isla.",
+      "horario": "De 9am a 7pm",
+      "zona": "San Luis",
+      "subzona": "Rocky Cay",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "landmarks_cercanos": [
+        "Barco encallado El Lido",
+        "Cayo Rocky Cay"
+      ],
+      "tipos_negocio_zona": [
+        "actividades",
+        "spots",
+        "restaurantes"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "arnolds-place",
+      "categoria": "Spot",
+      "nombre": "ARNOLD´S PLACE",
+      "descripcion": "Arnold´s place es de los pocos lugares de entrada libre en las playas de El Paraíso, perfecto para pasar un día de descanso entre amigos o familia, aquí encontrarás comida autóctona de la isla y disferentes bebidas a buenos precios",
+      "horario": "De 9am a 6pm",
+      "zona": "San Luis",
+      "subzona": "El Paraíso",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "actividades_disponibles": [
+        "surf principiantes"
+      ],
+      "landmarks_cercanos": [
+        "Calle El Radar"
+      ],
+      "tipos_negocio_zona": [
+        "restaurantes",
+        "clubs de playa privados"
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [
+        "surf principiantes"
+      ],
+      "vistas_disponibles": [
+        "panorámica de isla"
+      ],
+      "ideal_familias": true,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "bengues-place-33",
+      "categoria": "Spot",
+      "nombre": "BENGUE´S PLACE",
+      "descripcion": "Este es el lugar que estas buscando para tomarte un agua de coco fria, frente a la playa de los charquitos, se encuentra el emblematico lugar de Bengue´s y no te lo quieres perder.",
+      "horario": "De 9am a 6pm",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "bengues-place",
+      "categoria": "Spot",
+      "nombre": "BENGUE´S PLACE",
+      "descripcion": "Donde Bengue, podrás disfrutar un agua de coco fria frente al mar en las playas de san luis.",
+      "horario": "De 9am a 6pm",
+      "zona": "San Luis",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "big-mama",
+      "categoria": "Spot",
+      "nombre": "BIG MAMA",
+      "descripcion": "Big Mama es un lugar que sin duda deberias visitar en San Andrés, es la entrada a un excelente punto para caretear y bucear, siempre te recibiran con una linda energia, en big mama te puedes sentar a disfrutar en las casitas construidas artesanalmente frente al mar, a disfrutar de bebidas de todo tipo y comida isleña deliciosa. Además es sin duda el mejor lugar para sentarse a ver el atardecer.",
+      "horario": "De 9am a 7pm.",
+      "historia": "Big Mama le llamaban a una mujer nativa de la isla de muy hermoso corazón, que hace muchos años enseñaba a otros a preparar la gastronomia que forma parte de nuestra cultura. Es por esto que el Capitan Mitchell, decidió llamar así a este lugar, su espacio frente al mar en el brinda alegria a muchos isleños y turistas.",
+      "zona": "Cove",
+      "subzona": "Cove",
+      "proximidad_aeropuerto": "MEDIUM",
+      "zona_tipo": "formación rocosa coralina",
+      "caracteristicas_zona": [
+        "Formación rocosa coralina",
+        "Excelentes puntos de buceo",
+        "Zona de snorkel y apnea",
+        "Mejores atardeceres",
+        "Zona muy tranquila",
+        "Poco ruidosa",
+        "Alojamientos turísticos"
+      ],
+      "actividades_disponibles": [
+        "buceo",
+        "snorkel",
+        "apnea",
+        "atardeceres"
+      ],
+      "landmarks_cercanos": [
+        "Letrero I Love Sai",
+        "Big Mama"
+      ],
+      "tipos_negocio_zona": [
+        "alojamientos campestres",
+        "spots"
+      ],
+      "contacto": "@bigmama_km9",
+      "palabras_clave": [
+        "Hoyo soplador",
+        "atardecer",
+        "caretear",
+        "buena atencion."
+      ],
+      "tags": [
+        "Pet friendly",
+        "opciones veggies",
+        "4-20 friendly",
+        "secret gem."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "_zona_detection_confidence": "medium",
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [
+        "buceo",
+        "snorkel",
+        "apnea",
+        "atardeceres"
+      ],
+      "vistas_disponibles": [
+        "mar"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "bobby-rock",
+      "categoria": "Spot",
+      "nombre": "BOBBY ROCK",
+      "descripcion": "Un lugar maravilloso al sur de la isla, donde tomar diferentes bebidas, comidas de la isla y disfrutar del atardecer.",
+      "horario": "De 9am a 7pm",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "buconos-diving",
+      "categoria": "Spot",
+      "nombre": "BUCONOS DIVING",
+      "descripcion": "Una excelente escuela de buceo con la cual hacer tus certificaciones, con Buconos, te puedes preparar desde meses antes de tu viaje con la parte teórica, para llegar a la isla solamente a aplicar la parte practica en nuestro mar de 7 colores.",
+      "horario": "Atención de 9am a 6pm",
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "casa-museo",
+      "categoria": "Spot",
+      "nombre": "CASA MUSEO",
+      "descripcion": "La casa museo es un sitio para conocer de arquitectura y cultura autóctona de San Andrés isla, aquí vas a encontrar llamativos objetos antiguos al rededor de la casa y vas a conocer de las constumbres antiguas que nos representan.",
+      "horario": "Lunes a Sábado de 09:00 a.m. a 05:00 p.m. y Domingos: de 09:00 a.m. a 06:00 p.m",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "el-planchn",
+      "categoria": "Spot",
+      "nombre": "EL PLANCHÓN",
+      "descripcion": "Un lugar escondido en el sur de la isla, conocido por los locales, es un espacio donde se suelen reunir entre amigos a compartir y disfrutar del mar y la vista.",
+      "horario": "Es un espacio abierto, sin horarios.",
+      "historia": "Este sitio era un terreno originalmente de un isleño raizal, que lo vendió a un Europero y este decidió construir allí, pero solo al poner todo el cemento, fue multado fuertemente por las autoridades ambientales de la isla, por esto se fue de isla y se dice que nunca más volvió, quedando este espacio a disposición de la comunidad.",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "mirador",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "jardn-botnico",
+      "categoria": "Spot",
+      "nombre": "JARDÍN BOTÁNICO",
+      "descripcion": "El Jardín Botánico de San Andrés, es otra forma de ver y conocer la isla. Aquí no solo vas a conocer sobre flores y plantas endémicas sino una visión de la tradición isleña y los beneficios de las plantas locales. Además, desde su mirador de 12 metros, los visitantes disfrutan de una vista panorámica de San Andrés, mientras exploran una reserva de biósfera que conserva especies antiguas como helechos y pinos.",
+      "horario": "Martes a sábados: De 9:00 a.m. a 12:00 m., y de 2:00 a 4:30 p.m. Domingos y festivos: De 10:00 a.m. a 12:00 m., y de 2:00 a 4:30 pm.",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "mirador",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "laguna-big-pond",
+      "categoria": "Spot",
+      "nombre": "LAGUNA BIG POND",
+      "descripcion": "La laguna es un espacio que cuenta con una pequeña formación de agua semisalada, este lugar es un refugio de babillas y muchas otras especies.",
+      "horario": "De 9am a 5pm",
+      "zona": "Loma",
+      "subzona": "Laguna",
+      "proximidad_aeropuerto": "MEDIUM",
+      "zona_tipo": "cultural raizal",
+      "caracteristicas_zona": [
+        "Zona cultural raizal",
+        "Formación montañosa única",
+        "Alta concentración de nativos",
+        "Valor histórico y natural",
+        "Primera Iglesia Bautista",
+        "Laguna Big Pond"
+      ],
+      "landmarks_cercanos": [
+        "Laguna Big Pond"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_spot": "laguna",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": null,
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "madguana",
+      "categoria": "Spot",
+      "nombre": "MADGUANA",
+      "descripcion": "Madguana es un sitio en la playa de rocky cay, sencillo, de ambiente chill, donde podras sentarte a disfrutar bebidas, frutas y comidas, mientras disfrutas de una maravillosa vista al mar y donde puedes constantemente entrar a nadar, o broncearte.",
+      "horario": "De 10 am a 6pm y los jueves también de 7pm a media noche.",
+      "zona": "San Luis",
+      "subzona": "Rocky Cay",
+      "proximidad_aeropuerto": "FAR",
+      "zona_tipo": "casas isleñas coloridas",
+      "caracteristicas_zona": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "landmarks_cercanos": [
+        "Barco encallado El Lido",
+        "Cayo Rocky Cay"
+      ],
+      "tipos_negocio_zona": [
+        "actividades",
+        "spots",
+        "restaurantes"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "masally-antiguo",
+      "categoria": "Spot",
+      "nombre": "MASALLY ANTIGUO",
+      "descripcion": "En Masally podrás disfrutar de un espació tranquilo, sencillo y agradable frente al mar, donde podrás caretear y disfrutar de distintas bebidas.",
+      "horario": "De 10 am a 6pm",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "masally-nuevo",
+      "categoria": "Spot",
+      "nombre": "MASALLY NUEVO",
+      "descripcion": "Masally te ofrece un espacio cómodo, lindo y tranquilo frente al mar del lado oeste de la isla, donde podrás disfrutas de distintas bebidas y comidas a distintas horas del día.",
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "miss-vivi",
+      "categoria": "Spot",
+      "nombre": "MISS VIVI",
+      "descripcion": "Emblemático lugar para quienes crecieron en la isla, Miss Vivi es una joya escondida que solo puedes encontrar abierta los domingos, se trata de una heladeria sencilla pero que todos aman.",
+      "horario": "Domingos de 9am a 5pm",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "one-love-tom-hooker",
+      "categoria": "Spot",
+      "nombre": "ONE LOVE (TOM HOOKER)",
+      "descripcion": "One Love es el único lugar en la playa que vas a encontrar para comer tan al sur de la isla, la playa en la que está ubicado es muy tranquila, no es tan apta para entrar a nadar, pero es perfecta para quienes tienen miedo al mar o al oleaje o para niños, ya que se forma una pequeña piscina en que te puedes quedar sentado disfrutando del agua tibia y la hermosa vista. En el lugar encontrarás sillas y sombra para estar cómodo al comer.",
+      "horario": "De 9am a 5pm",
+      "zona": "Cove",
+      "subzona": "Tom hooker",
+      "proximidad_aeropuerto": "MEDIUM",
+      "zona_tipo": "formación rocosa coralina",
+      "caracteristicas_zona": [
+        "Formación rocosa coralina",
+        "Excelentes puntos de buceo",
+        "Zona de snorkel y apnea",
+        "Mejores atardeceres",
+        "Zona muy tranquila",
+        "Poco ruidosa",
+        "Alojamientos turísticos"
+      ],
+      "actividades_disponibles": [
+        "buceo",
+        "snorkel",
+        "apnea",
+        "atardeceres",
+        "snorkeling"
+      ],
+      "tipos_negocio_zona": [
+        "alojamientos",
+        "casas de nativos"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "_zona_detection_confidence": "high",
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [
+        "buceo",
+        "snorkel",
+        "apnea",
+        "atardeceres",
+        "snorkeling"
+      ],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": true,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "reggae-roots",
+      "categoria": "Spot",
+      "nombre": "REGGAE ROOTS",
+      "descripcion": "Reggae Roots es la entrada más cercana a la estatua subacuática de poseidón, aqui podrás entrara a caretear y luego sentarte a tomar algo mientras disfrutas de un ambiente rasta, con música reggae.",
+      "horario": "De 9am a 7pm",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_spot": "punto de interés",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "south-beauty",
+      "categoria": "Spot",
+      "nombre": "SOUTH BEAUTY",
+      "descripcion": "South Beauty o conocido como \"el spot de surf\" es un lugar perfecto para disfrutar de la playa, tomarse algo, comer y sobre todo, aprender a surfear, las pequeñas olas de este sitio lo vuelven el lugar mas seguro de la isla para aprender.",
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_spot": "playa",
+      "mejor_momento_dia": null,
+      "actividades_principales": [],
+      "vistas_disponibles": [
+        "mar",
+        "panorámica de isla"
+      ],
+      "ideal_familias": false,
+      "ideal_parejas": false,
+      "fotografia_permitida": true
+    },
+    {
+      "id": "da-black-almond",
+      "categoria": "Alquiler",
+      "nombre": "DA BLACK ALMOND",
+      "descripcion": "Alquiler de carros, motos y pontones.",
+      "horario": "De 8am a 10pm",
+      "palabras_clave": [
+        "Alquiler",
+        "moto",
+        "carro",
+        "mulitas."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_alquiler": "scooter",
+      "modalidades_alquiler": [
+        "por día"
+      ],
+      "duracion_minima": null,
+      "deposito_requerido": null,
+      "documentos_requeridos": null,
+      "seguro_incluido": false
+    },
+    {
+      "id": "eco-xtreme-san-andres",
+      "categoria": "Alquiler",
+      "nombre": "ECO XTREME SAN ANDRES",
+      "descripcion": "Alquiler de vehículos y botes.",
+      "horario": "De 9am a 6pm",
+      "palabras_clave": [
+        "Alquiler",
+        "moto",
+        "carro",
+        "mulitas",
+        "botes",
+        "ponton."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_alquiler": "servicio",
+      "modalidades_alquiler": [
+        "por día"
+      ],
+      "duracion_minima": null,
+      "deposito_requerido": null,
+      "documentos_requeridos": null,
+      "seguro_incluido": false
+    },
+    {
+      "id": "seawolf-7",
+      "categoria": "Alquiler",
+      "nombre": "SEAWOLF",
+      "descripcion": "Seawolf es una agencia en la que podrás encontrar diferentes alquileres en un solo lugar, siempre con un excelente servicio, te invitamos a conocerla.",
+      "horario": "9:00 a 20:00 h",
+      "precio": "Varia dependiendo del vehículo",
+      "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+      "palabras_clave": [
+        "Actividades",
+        "experiencias",
+        "alquileres",
+        "agencia de turismo",
+        "planes."
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "tipo_alquiler": "servicio",
+      "modalidades_alquiler": [
+        "por día"
+      ],
+      "duracion_minima": null,
+      "deposito_requerido": null,
+      "documentos_requeridos": null,
+      "seguro_incluido": false
+    },
+    {
+      "id": "caribbean-nigths",
+      "categoria": "Nigth Life",
+      "nombre": "CARIBBEAN NIGTHS",
+      "descripcion": "Un templo de la cultura caribe, las caribbean nigths son organizadas por el cantante isleño Job Saas en su propia casa, aquí se apoya a los artistas isleños conocidos y emergentes, un lugar con una energia increíble, donde puedes conocer y conectarte con la musica de la isla.",
+      "horario": "Viernes 9pm.",
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ],
+      "tipo_nightlife": "bar",
+      "horarios_nocturnos": "Viernes 9pm.",
+      "genero_musical": [],
+      "cover_charge": null,
+      "bebidas_especiales": [],
+      "ambiente_principal": "casual"
+    }
+  ]
+}

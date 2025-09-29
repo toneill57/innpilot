@@ -1,0 +1,55 @@
+{
+  "id": "one-love-tom-hooker",
+  "categoria": "Spot",
+  "nombre": "ONE LOVE (TOM HOOKER)",
+  "descripcion": "One Love es el único lugar en la playa que vas a encontrar para comer tan al sur de la isla, la playa en la que está ubicado es muy tranquila, no es tan apta para entrar a nadar, pero es perfecta para quienes tienen miedo al mar o al oleaje o para niños, ya que se forma una pequeña piscina en que te puedes quedar sentado disfrutando del agua tibia y la hermosa vista. En el lugar encontrarás sillas y sombra para estar cómodo al comer.",
+  "horario": "De 9am a 5pm",
+  "zona": "Cove",
+  "subzona": "Tom hooker",
+  "proximidad_aeropuerto": "MEDIUM",
+  "zona_tipo": "formación rocosa coralina",
+  "caracteristicas_zona": [
+    "Formación rocosa coralina",
+    "Excelentes puntos de buceo",
+    "Zona de snorkel y apnea",
+    "Mejores atardeceres",
+    "Zona muy tranquila",
+    "Poco ruidosa",
+    "Alojamientos turísticos"
+  ],
+  "actividades_disponibles": [
+    "buceo",
+    "snorkel",
+    "apnea",
+    "atardeceres",
+    "snorkeling"
+  ],
+  "tipos_negocio_zona": [
+    "alojamientos",
+    "casas de nativos"
+  ],
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero."
+  ],
+  "_zona_detection_confidence": "high",
+  "tipo_spot": "playa",
+  "mejor_momento_dia": null,
+  "actividades_principales": [
+    "buceo",
+    "snorkel",
+    "apnea",
+    "atardeceres",
+    "snorkeling"
+  ],
+  "vistas_disponibles": [
+    "mar",
+    "panorámica de isla"
+  ],
+  "ideal_familias": true,
+  "ideal_parejas": false,
+  "fotografia_permitida": true
+}

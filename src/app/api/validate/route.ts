@@ -15,12 +15,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validar tipo de archivo
-    if (!file.name.toLowerCase().endsWith('.txt')) {
+    // Validar tipo de archivo (ahora soporta .txt y .csv)
+    const fileName = file.name.toLowerCase()
+    if (!fileName.endsWith('.txt') && !fileName.endsWith('.csv')) {
       return NextResponse.json(
         {
           error: 'Invalid file type',
-          message: 'Only .txt files are allowed'
+          message: 'Only .txt and .csv files are allowed'
         },
         { status: 400 }
       )
@@ -48,14 +49,20 @@ export async function POST(request: NextRequest) {
       fileSize: file.size,
       isValid: validation.isValid,
       lineCount: validation.lineCount,
+      format: validation.format,
       errors: validation.errors,
+      detailedErrors: validation.detailedErrors,
+      preview: validation.preview,
+      fieldValidation: validation.fieldValidation,
       timestamp: new Date().toISOString()
     }
 
     // Log para debugging
     console.log(`File validation result for ${file.name}:`, {
       isValid: validation.isValid,
+      format: validation.format,
       errorCount: validation.errors.length,
+      detailedErrorCount: validation.detailedErrors.length,
       lineCount: validation.lineCount
     })
 
@@ -78,18 +85,20 @@ export async function POST(request: NextRequest) {
 export async function GET() {
   return NextResponse.json({
     message: 'File validation API endpoint - Use POST method',
-    description: 'Upload a .txt file to validate SIRE format',
+    description: 'Upload a .txt or .csv file to validate SIRE format',
     requirements: {
       method: 'POST',
       contentType: 'multipart/form-data',
       field: 'file',
       maxSize: '10MB',
-      allowedTypes: ['.txt']
+      allowedTypes: ['.txt', '.csv']
     },
     validation: {
       fields: 13,
-      separator: 'TAB',
-      validDocTypes: ['3', '5', '46', '10']
+      separators: ['TAB', 'CSV'],
+      validDocTypes: ['3', '5', '46', '10'],
+      autoDetectFormat: true,
+      detailedErrorReporting: true
     }
   })
 }

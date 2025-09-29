@@ -1,0 +1,14 @@
+{
+  "id": "madguana",
+  "categoria": "Spot",
+  "nombre": "MADGUANA",
+  "descripcion": "Madguana es un sitio en la playa de rocky cay, sencillo, de ambiente chill, donde podras sentarte a disfrutar bebidas, frutas y comidas, mientras disfrutas de una maravillosa vista al mar y donde puedes constantemente entrar a nadar, o broncearte.",
+  "horario": "De 10 am a 6pm y los jueves también de 7pm a media noche.",
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero."
+  ]
+}

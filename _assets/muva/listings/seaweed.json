@@ -1,0 +1,22 @@
+{
+  "id": "seaweed",
+  "categoria": "Restaurante",
+  "nombre": "SEAWEED",
+  "descripcion": "Seaweed es un espacio hermoso lleno de decoración hecha por una artiste de la isla, en temática marina. Tienen diferentes opciones de comida y funcionan en horario de la tarde y la noche.",
+  "horario": "12:30 a 10:30 pm",
+  "precio": null,
+  "historia": null,
+  "personaje": null,
+  "datos_color": null,
+  "recomendaciones": null,
+  "menu_info": "Aventurero, eco friendly, soltero, negocios, lujo.",
+  "periodicidad_menu": null,
+  "ultima_actualizacion_menu": null,
+  "zona": null,
+  "subzona": null,
+  "segmentacion": [],
+  "contacto": null,
+  "palabras_clave": [],
+  "tags": [],
+  "comisiones": null
+}

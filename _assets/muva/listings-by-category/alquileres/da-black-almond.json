@@ -1,0 +1,30 @@
+{
+  "id": "da-black-almond",
+  "categoria": "Alquiler",
+  "nombre": "DA BLACK ALMOND",
+  "descripcion": "Alquiler de carros, motos y pontones.",
+  "horario": "De 8am a 10pm",
+  "palabras_clave": [
+    "Alquiler",
+    "moto",
+    "carro",
+    "mulitas."
+  ],
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_alquiler": "scooter",
+  "modalidades_alquiler": [
+    "por día"
+  ],
+  "duracion_minima": null,
+  "deposito_requerido": null,
+  "documentos_requeridos": null,
+  "seguro_incluido": false
+}

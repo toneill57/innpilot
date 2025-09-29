@@ -1,0 +1,30 @@
+{
+  "id": "seawolf-7",
+  "categoria": "Alquiler",
+  "nombre": "SEAWOLF",
+  "descripcion": "Seawolf es una agencia en la que podrás encontrar diferentes alquileres en un solo lugar, siempre con un excelente servicio, te invitamos a conocerla.",
+  "horario": "9:00 a 20:00 h",
+  "precio": "Varia dependiendo del vehículo",
+  "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+  "palabras_clave": [
+    "Actividades",
+    "experiencias",
+    "alquileres",
+    "agencia de turismo",
+    "planes."
+  ],
+  "segmentacion": [
+    "Aventurero",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_alquiler": "servicio",
+  "modalidades_alquiler": [
+    "por día"
+  ],
+  "duracion_minima": null,
+  "deposito_requerido": null,
+  "documentos_requeridos": null,
+  "seguro_incluido": false
+}

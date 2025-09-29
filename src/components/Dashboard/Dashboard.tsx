@@ -4,10 +4,15 @@ import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { FileUploader } from "@/components/FileUploader/FileUploader"
 import { ChatAssistant } from "@/components/ChatAssistant/ChatAssistant"
+import { ChatTypeSelector, ChatType } from "@/components/ChatTypeSelector/ChatTypeSelector"
+import { BusinessListingsInterface } from "@/components/BusinessListings/BusinessListingsInterface"
+import { TourismInterface } from "@/components/Tourism/TourismInterface"
+import { EnhancedChatAssistant } from "@/components/ChatAssistant/EnhancedChatAssistant"
 import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users } from "lucide-react"
 
 export function Dashboard() {
   const [activeTab, setActiveTab] = useState<'upload' | 'chat' | 'reports'>('upload')
+  const [activeChatType, setActiveChatType] = useState<ChatType>('sire')
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -136,12 +141,36 @@ export function Dashboard() {
           {activeTab === 'chat' && (
             <div className="p-6">
               <div className="mb-4">
-                <h2 className="text-lg font-medium text-gray-900">Asistente SIRE</h2>
+                <h2 className="text-lg font-medium text-gray-900">Asistentes Inteligentes</h2>
                 <p className="text-sm text-gray-500">
-                  Consulta dudas sobre procedimientos, validaciones y compliance del SIRE
+                  Selecciona el tipo de asistente según tus necesidades: SIRE compliance, turismo o información empresarial
                 </p>
               </div>
-              <ChatAssistant />
+
+              {/* Chat Type Selector */}
+              <ChatTypeSelector
+                activeType={activeChatType}
+                onTypeChange={setActiveChatType}
+              />
+
+              {/* Dynamic Chat Interface based on selected type */}
+              {activeChatType === 'sire' && (
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <MessageCircle className="h-5 w-5 text-blue-600" />
+                    <h3 className="text-lg font-medium text-gray-900">Asistente SIRE</h3>
+                  </div>
+                  <EnhancedChatAssistant chatType="sire" />
+                </div>
+              )}
+
+              {activeChatType === 'tourism' && (
+                <TourismInterface />
+              )}
+
+              {activeChatType === 'business' && (
+                <BusinessListingsInterface />
+              )}
             </div>
           )}
 

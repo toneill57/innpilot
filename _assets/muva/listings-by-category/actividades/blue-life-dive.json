@@ -1,0 +1,45 @@
+{
+  "id": "blue-life-dive",
+  "categoria": "Actividad",
+  "nombre": "BLUE LIFE DIVE",
+  "descripcion": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+  "horario": "Segun se reserve.",
+  "precio": "Minicurso: $230.000. Las certificaciones varian.",
+  "historia": "Blue life es atendido por sus dueños: Eduardo Garcia (fundador) Fabian y Luisa (Hijos de Eduardo). Son uno de los operadores de buceo más antiguos de la isla, contando con experiencia desde hace más de 25 años. Se han dedicado específicamente a la enseñanza de buceo para los niveles básico, profesional y técnico recreativo. Blue life es el único centro de formación y entrenamiento de Instructores PADI en la isla de San Andrés, realizando IDC/IE cada mes, liderado por el Course Director Fabian Garcia.",
+  "datos_color": "Con Blue Life podrás ir a distintos puntos de buceo, ya que cuentan con lanchas a disposicion de la escuela a distintas horas para sus salidas, en especial bucean del lado este de la isla, puntos que no te querrás perder.",
+  "recomendaciones": "pero nunca puedes bucear el mismo día de tu vuelo de regreso.",
+  "zona": "Centro",
+  "proximidad_aeropuerto": "CLOSE",
+  "zona_tipo": "comercial principal",
+  "caracteristicas_zona": [
+    "Zona comercial principal",
+    "Alta concentración turística",
+    "Vida nocturna y restaurantes",
+    "Playa Spratt Bight",
+    "Mayor concentración de personas"
+  ],
+  "contacto": "Whatsapp: 317 434 4015 - Correo:  info@bluelifedive.com",
+  "palabras_clave": [
+    "000.",
+    "$25",
+    "Buceo",
+    "actividades",
+    "centro de buceo",
+    "bucear."
+  ],
+  "segmentacion": [
+    "Aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "_zona_detection_confidence": "high",
+  "tipo_actividad": "buceo",
+  "duracion": null,
+  "nivel_dificultad": "todos",
+  "edad_minima": 12,
+  "equipo_incluido": [],
+  "certificaciones_disponibles": [],
+  "instructor_certificado": false
+}

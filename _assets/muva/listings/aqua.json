@@ -1,0 +1,22 @@
+{
+  "id": "aqua",
+  "categoria": "Restaurante",
+  "nombre": "AQUA",
+  "descripcion": "Aqua es un club de playa en la playa de rocky cay, excelente para pasar un dia entero en l aplaya disfrutando de buenas bebidas y excelente comida.",
+  "horario": "10:30 am a 6:00pm",
+  "precio": null,
+  "historia": null,
+  "personaje": null,
+  "datos_color": null,
+  "recomendaciones": null,
+  "menu_info": "Aventurero, eco friendly, soltero, negocios, lujo.",
+  "periodicidad_menu": null,
+  "ultima_actualizacion_menu": null,
+  "zona": null,
+  "subzona": null,
+  "segmentacion": [],
+  "contacto": null,
+  "palabras_clave": [],
+  "tags": [],
+  "comisiones": null
+}

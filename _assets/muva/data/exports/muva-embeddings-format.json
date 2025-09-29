@@ -1,0 +1,815 @@
+[
+  {
+    "id": "aqua",
+    "categoria": "Restaurante",
+    "title": "AQUA",
+    "content": "AQUA Aqua es un club de playa en la playa de rocky cay, excelente para pasar un dia entero en l aplaya disfrutando de buenas bebidas y excelente comida. San Luis Rocky Cay Aventurero eco friendly soltero negocios lujo. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Restaurante",
+      "zona": "San Luis",
+      "subzona": "Rocky Cay",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    },
+    "zona": "San Luis",
+    "subzona": "Rocky Cay"
+  },
+  {
+    "id": "bali-smoothies",
+    "categoria": "Restaurante",
+    "title": "BALI SMOOTHIES",
+    "content": "BALI SMOOTHIES El lugar perfecto para quienes quieren salir a comer rico y saludable, Bali, es un lugar de smoothies, bowls, pancakes y otros antojos, libres de gluten, sin lactosa y deliciosos. Fundado en diciembre del 2022, con la intención de crear una opción para comer saludable en la isla, con opciones accesibles para personas alérgicas al glúten y a la láctosa, en un espacio lindo y a precios accesibles. Este lugar es único en la isla, tiene opciones increíbles a muy buen precio, además el local es muy lindo, agradable y aceptan mascotas en su terraza. 000. No manejan 40.000 por clase individual Desayuno brunch comer sano sin gluten frutas smoothies. Low cost mochilero aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Restaurante",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$10,000 - $20,000"
+    }
+  },
+  {
+    "id": "coral-creppes",
+    "categoria": "Restaurante",
+    "title": "CORAL CREPPES",
+    "content": "CORAL CREPPES Coral Creppes es un lugar único en la isla, porque son pioneros en ofrecer y dedicarse a los Creppes, tienen opciones dulces, saladas, saludables y sin gluten, aquí, tu mismo eliges que ingredientes ponerle al Creppe que quieres comer.",
+    "metadata": {
+      "categoria": "Restaurante",
+      "tags": [],
+      "segmentacion": []
+    }
+  },
+  {
+    "id": "el-totumasso",
+    "categoria": "Restaurante",
+    "title": "EL TOTUMASSO",
+    "content": "EL TOTUMASSO El lugar ideal para un almuerzo grande, rico y barato. El totumasso es una joya escondida en las calles del centro de San Andrés que casi nadie visita, un secreto de los locales para ir a almorzar. Centro Low cost mochilero aventurero eco friendly. Zona comercial principal Alta concentración turística Vida nocturna y restaurantes Playa Spratt Bight Mayor concentración de personas",
+    "metadata": {
+      "categoria": "Restaurante",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly."
+      ]
+    },
+    "zona": "Centro"
+  },
+  {
+    "id": "seaweed",
+    "categoria": "Restaurante",
+    "title": "SEAWEED",
+    "content": "SEAWEED Seaweed es un espacio hermoso lleno de decoración hecha por una artiste de la isla, en temática marina. Tienen diferentes opciones de comida y funcionan en horario de la tarde y la noche. Aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Restaurante",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    }
+  },
+  {
+    "id": "tierra-dentro",
+    "categoria": "Restaurante",
+    "title": "TIERRA DENTRO",
+    "content": "TIERRA DENTRO Un restaurante enfocado en la elaboración de cocina nikkei, en este caso Sushi y cocina Peruana, Tierradentro es un excelente lugar para salir a cenar a un sitio lindo y tranquilo. Nace con la idea de traer otras opciones a la isla, Tierradentro tomò una nueva direcciòn y administraciòn en el 2024, donde decidieron innovar y adaptar el sushi trayendo una experiencia diferente tanto a turistas como residentes. Sushi cena comer mochis. Low cost mochilero aventurero soltero negocios.",
+    "metadata": {
+      "categoria": "Restaurante",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "soltero",
+        "negocios."
+      ],
+      "precio": "$30,000 - 60,000"
+    }
+  },
+  {
+    "id": "banzai-surf-school-16",
+    "categoria": "Actividad",
+    "title": "BANZAI SURF SCHOOL",
+    "content": "BANZAI SURF SCHOOL El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje. Paddle Board actividades atardecer planes de noche. Low cost mochilero aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    }
+  },
+  {
+    "id": "banzai-surf-school",
+    "categoria": "Actividad",
+    "title": "BANZAI SURF SCHOOL",
+    "content": "BANZAI SURF SCHOOL El surf en San Andrés Islas ofrece olas variadas que son ideales para principiantes. La playa mas concurrida para aprender es El Paraíso y surfistas mas avanzados también lo practican en playas mas al sur de la isla. San Luis El Paraíso Surf mar actividades. Low cost mochilero aventurero eco friendly soltero negocios lujo. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Actividad",
+      "zona": "San Luis",
+      "subzona": "El Paraíso",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "Clase privada de surf (1 a 2 personas) : 190,000 por persona."
+    },
+    "zona": "San Luis",
+    "subzona": "El Paraíso"
+  },
+  {
+    "id": "blue-life-dive",
+    "categoria": "Actividad",
+    "title": "BLUE LIFE DIVE",
+    "content": "BLUE LIFE DIVE El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo. Blue life es atendido por sus dueños: Eduardo Garcia (fundador) Fabian y Luisa (Hijos de Eduardo). Son uno de los operadores de buceo más antiguos de la isla, contando con experiencia desde hace más de 25 años. Se han dedicado específicamente a la enseñanza de buceo para los niveles básico, profesional y técnico recreativo. Blue life es el único centro de formación y entrenamiento de Instructores PADI en la isla de San Andrés, realizando IDC/IE cada mes, liderado por el Course Director Fabian Garcia. Con Blue Life podrás ir a distintos puntos de buceo, ya que cuentan con lanchas a disposicion de la escuela a distintas horas para sus salidas, en especial bucean del lado este de la isla, puntos que no te querrás perder. pero nunca puedes bucear el mismo día de tu vuelo de regreso. Centro 000. $25 Buceo actividades centro de buceo bucear. Aventurero eco friendly soltero negocios lujo. Zona comercial principal Alta concentración turística Vida nocturna y restaurantes Playa Spratt Bight Mayor concentración de personas",
+    "metadata": {
+      "categoria": "Actividad",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "Minicurso: $230.000. Las certificaciones varian."
+    },
+    "zona": "Centro"
+  },
+  {
+    "id": "buceo-caribe-azul",
+    "categoria": "Actividad",
+    "title": "BUCEO CARIBE AZUL",
+    "content": "BUCEO CARIBE AZUL El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo. Caribe Azul es una escuela de buceo fundada por Hugo Arboleda, activista ambiental e instructor de buceo. Buscando vivir de su pasión y partiendo desde la necesidad de la sensibilización ambiental para promover la conservación de nuestros ecosistemas. Al fallecer el señor Hugo, esta escuela y su misión fue tomada por su hija María José, quien lidera la escuela desde el 2016. Caribe Azul es una escuela de buceo enfocada en la exploración sostenible y la conservación, también es una escuela inclusiva ya que su instructora María José, está especializada en buceo adaptativo, la especialidad de técnicas adaptativas de buceo para personas con discapacidad. (Ceguera parcial o total, discapacidades auditivas, autismo, paraplejías, etc) Tienen actividades de buceo para niños desde los 8 años. Y a los buzos les brindan la posibilidad de ser voluntarios en la iniciativa Ocean Warrior: Centro Buceo sostenibilidad inclusión conservación. Eco friendly Mochilero aventurero eco friendly soltero negocios lujo. Zona comercial principal Alta concentración turística Vida nocturna y restaurantes Playa Spratt Bight Mayor concentración de personas",
+    "metadata": {
+      "categoria": "Actividad",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "tags": [
+        "Eco friendly"
+      ],
+      "segmentacion": [
+        "Mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "Minicurso: $250,000. Las certificaciones varian."
+    },
+    "zona": "Centro"
+  },
+  {
+    "id": "caribbean-xperience",
+    "categoria": "Actividad",
+    "title": "CARIBBEAN XPERIENCE",
+    "content": "CARIBBEAN XPERIENCE Haciedno wake board con Caribbean Xperience vas a dominar las olas y la fuerza de la embarcación por medio de una cuerda y una tabla q te arrastran hacia el mar puedes realizarlo en la playa de San Luis, en este curso aprenderás a dominar la tabla y a surcar las olas con destreza mientras experimentas libertad y emoción San Luis Wake board actividades mar. Low cost mochilero aventurero eco friendly soltero negocios lujo. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Actividad",
+      "zona": "San Luis",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    },
+    "zona": "San Luis"
+  },
+  {
+    "id": "hans-dive-shop",
+    "categoria": "Actividad",
+    "title": "HANS DIVE SHOP",
+    "content": "HANS DIVE SHOP El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro y apto para niños desde 8 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo. No especificó. La escuela de Hans cuenta con un lugar increible para sus minicursos, ya que estan ubicados frente al museo de estatuas que hay bajo el mar, ellos cuidan y mantienen también el estado de estas estatuas, donde vas a tener unas fotos muy lindas. Centro Buceo actividades centro de buceo bucear. Low cost mochilero aventurero eco friendly soltero negocios lujo. Zona comercial principal Alta concentración turística Vida nocturna y restaurantes Playa Spratt Bight Mayor concentración de personas",
+    "metadata": {
+      "categoria": "Actividad",
+      "zona": "Centro",
+      "proximidad_aeropuerto": "CLOSE",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "Minicurso: $160,000. Las certificaciones varian."
+    },
+    "zona": "Centro"
+  },
+  {
+    "id": "maria-raigoza",
+    "categoria": "Actividad",
+    "title": "MARIA RAIGOZA",
+    "content": "MARIA RAIGOZA El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso. Desde el 2011 Maria empezó a dar clases de Kitesurf, viviendo la experiencia de conocer, conectar y trasmitir con distintas personas a través del kite y dando a conocer un spot inigualable y no tan reconocido en este deporte, como San Andrés Isla. Kitesurf mar actividades deportes acuáticos. Aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$250,000 1 hora.  $220,000 hora en paquete de 5 horas."
+    }
+  },
+  {
+    "id": "marino-parasail",
+    "categoria": "Actividad",
+    "title": "MARINO PARASAIL",
+    "content": "MARINO PARASAIL El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min de vuelo, para un máximo de dos horas de recorrido. Todo empezó por practicar el deporte de kitesurf y apartir de esto nació el sueño de ofrecer el PARASAIL en nuestra isla para que todos pudieran disfrutar de la grandiosa vista que tenemos desde las alturas, en el 2013 empezaron a hacer algunos vuelos de parasail y poco a poco han conseguido consolidarse como una empresa reconocida por su equipo de trabajo calificado y personal certificado. Parasail actividades aventura vista al mar. 4-20 friendly Low cost mochilero aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$230,000 por persona"
+    }
+  },
+  {
+    "id": "richie-parasail",
+    "categoria": "Actividad",
+    "title": "RICHIE PARASAIL",
+    "content": "RICHIE PARASAIL El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min de vuelo, para un máximo de dos horas de recorrido. Richie Parasail es la empresa pionera del parasail en la isla, fundada hace 10 años por Ricardo Castaño e hijos. Ya han volado más de 50 mil personas. No debes tener ninguna habilidad fisica u experiencia previa para poder realizarlo. Parasail actividades aventura vista al mar. Mochilero aventurero soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [],
+      "segmentacion": [
+        "Mochilero",
+        "aventurero",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$230,000 por persona."
+    }
+  },
+  {
+    "id": "sai-xperience-12",
+    "categoria": "Actividad",
+    "title": "SAI XPERIENCE",
+    "content": "SAI XPERIENCE El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje. Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades. Paddle Board actividades atardecer planes de noche. Pet friendly 4-20 friendly Low cost mochilero aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [
+        "Pet friendly",
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$200,000"
+    }
+  },
+  {
+    "id": "sai-xperience-13",
+    "categoria": "Actividad",
+    "title": "SAI XPERIENCE",
+    "content": "SAI XPERIENCE El wakeboard es un deporte que puedes lograr si o no en el mismo dia dependiendo de tu capacidad deportiva. Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades. Wake board actividades mar. Pet friendly 4-20 friendly Aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [
+        "Pet friendly",
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$280,000"
+    }
+  },
+  {
+    "id": "sai-xperience",
+    "categoria": "Actividad",
+    "title": "SAI XPERIENCE",
+    "content": "SAI XPERIENCE El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso. Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades. Kitesurf clases de kitesurf escuela de kitesurf. Pet friendly 4-20 friendly Aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [
+        "Pet friendly",
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "$250,000 la hora de clase."
+    }
+  },
+  {
+    "id": "seawolf",
+    "categoria": "Actividad",
+    "title": "SEAWOLF",
+    "content": "SEAWOLF Seawolf es una agencia en la que podrás encontrar diferentes actividades en un solo lugar, siempre con un excelente servicio, en los mejores botes de la isla, te invitamos a conocerla. Actividades experiencias alquileres agencia de turismo planes. Aventurero soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "Varia dependiendo de la actividad"
+    }
+  },
+  {
+    "id": "yoga-san-andrs",
+    "categoria": "Actividad",
+    "title": "YOGA SAN ANDRÉS",
+    "content": "YOGA SAN ANDRÉS El yoga es una actividad con multiples beneficios para cuerpo y mente, realizarlo además frente al mar, lo convierte en una experiencia más enriquecedora, animáte a probarlo! Yoga San Andrés es creado por Sara Arango, con el propósito de crear una comunidad de yoga en la isla y brindar una experiencia única y distinta a los turistas. Yoga clases de yoga acroyoga playa bienestar relajación. 4-20 friendly Low cost mochilero aventurero soltero negocios.",
+    "metadata": {
+      "categoria": "Actividad",
+      "tags": [
+        "4-20 friendly"
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "soltero",
+        "negocios."
+      ],
+      "precio": "$90,000"
+    }
+  },
+  {
+    "id": "allxces",
+    "categoria": "Spot",
+    "title": "ALLXCES",
+    "content": "ALLXCES El único spot de entrada libre en la playa de rocky cay, aquí encontrarás un lugar lindo frente a la playa con diferentes sitios para sentarse a disfrutar del día mientras disfrutas de diferentes bebidas y las mejores empanadas de camarón de la isla. San Luis Rocky Cay Low cost mochilero aventurero eco friendly soltero. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "San Luis",
+      "subzona": "Rocky Cay",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    },
+    "zona": "San Luis",
+    "subzona": "Rocky Cay"
+  },
+  {
+    "id": "arnolds-place",
+    "categoria": "Spot",
+    "title": "ARNOLD´S PLACE",
+    "content": "ARNOLD´S PLACE Arnold´s place es de los pocos lugares de entrada libre en las playas de El Paraíso, perfecto para pasar un día de descanso entre amigos o familia, aquí encontrarás comida autóctona de la isla y disferentes bebidas a buenos precios San Luis El Paraíso Aventurero eco friendly soltero negocios lujo. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "San Luis",
+      "subzona": "El Paraíso",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    },
+    "zona": "San Luis",
+    "subzona": "El Paraíso"
+  },
+  {
+    "id": "bengues-place-33",
+    "categoria": "Spot",
+    "title": "BENGUE´S PLACE",
+    "content": "BENGUE´S PLACE Este es el lugar que estas buscando para tomarte un agua de coco fria, frente a la playa de los charquitos, se encuentra el emblematico lugar de Bengue´s y no te lo quieres perder. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "bengues-place",
+    "categoria": "Spot",
+    "title": "BENGUE´S PLACE",
+    "content": "BENGUE´S PLACE Donde Bengue, podrás disfrutar un agua de coco fria frente al mar en las playas de san luis. San Luis Low cost mochilero aventurero eco friendly soltero. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "San Luis",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    },
+    "zona": "San Luis"
+  },
+  {
+    "id": "big-mama",
+    "categoria": "Spot",
+    "title": "BIG MAMA",
+    "content": "BIG MAMA Big Mama es un lugar que sin duda deberias visitar en San Andrés, es la entrada a un excelente punto para caretear y bucear, siempre te recibiran con una linda energia, en big mama te puedes sentar a disfrutar en las casitas construidas artesanalmente frente al mar, a disfrutar de bebidas de todo tipo y comida isleña deliciosa. Además es sin duda el mejor lugar para sentarse a ver el atardecer. Big Mama le llamaban a una mujer nativa de la isla de muy hermoso corazón, que hace muchos años enseñaba a otros a preparar la gastronomia que forma parte de nuestra cultura. Es por esto que el Capitan Mitchell, decidió llamar así a este lugar, su espacio frente al mar en el brinda alegria a muchos isleños y turistas. Cove Cove Hoyo soplador atardecer caretear buena atencion. Pet friendly opciones veggies 4-20 friendly secret gem. Low cost mochilero aventurero eco friendly soltero negocios lujo. Formación rocosa coralina Excelentes puntos de buceo Zona de snorkel y apnea Mejores atardeceres Zona muy tranquila Poco ruidosa Alojamientos turísticos",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "Cove",
+      "subzona": "Cove",
+      "proximidad_aeropuerto": "MEDIUM",
+      "tags": [
+        "Pet friendly",
+        "opciones veggies",
+        "4-20 friendly",
+        "secret gem."
+      ],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    },
+    "zona": "Cove",
+    "subzona": "Cove"
+  },
+  {
+    "id": "bobby-rock",
+    "categoria": "Spot",
+    "title": "BOBBY ROCK",
+    "content": "BOBBY ROCK Un lugar maravilloso al sur de la isla, donde tomar diferentes bebidas, comidas de la isla y disfrutar del atardecer. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "buconos-diving",
+    "categoria": "Spot",
+    "title": "BUCONOS DIVING",
+    "content": "BUCONOS DIVING Una excelente escuela de buceo con la cual hacer tus certificaciones, con Buconos, te puedes preparar desde meses antes de tu viaje con la parte teórica, para llegar a la isla solamente a aplicar la parte practica en nuestro mar de 7 colores.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": []
+    }
+  },
+  {
+    "id": "casa-museo",
+    "categoria": "Spot",
+    "title": "CASA MUSEO",
+    "content": "CASA MUSEO La casa museo es un sitio para conocer de arquitectura y cultura autóctona de San Andrés isla, aquí vas a encontrar llamativos objetos antiguos al rededor de la casa y vas a conocer de las constumbres antiguas que nos representan. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "el-planchn",
+    "categoria": "Spot",
+    "title": "EL PLANCHÓN",
+    "content": "EL PLANCHÓN Un lugar escondido en el sur de la isla, conocido por los locales, es un espacio donde se suelen reunir entre amigos a compartir y disfrutar del mar y la vista. Este sitio era un terreno originalmente de un isleño raizal, que lo vendió a un Europero y este decidió construir allí, pero solo al poner todo el cemento, fue multado fuertemente por las autoridades ambientales de la isla, por esto se fue de isla y se dice que nunca más volvió, quedando este espacio a disposición de la comunidad. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "jardn-botnico",
+    "categoria": "Spot",
+    "title": "JARDÍN BOTÁNICO",
+    "content": "JARDÍN BOTÁNICO El Jardín Botánico de San Andrés, es otra forma de ver y conocer la isla. Aquí no solo vas a conocer sobre flores y plantas endémicas sino una visión de la tradición isleña y los beneficios de las plantas locales. Además, desde su mirador de 12 metros, los visitantes disfrutan de una vista panorámica de San Andrés, mientras exploran una reserva de biósfera que conserva especies antiguas como helechos y pinos. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "laguna-big-pond",
+    "categoria": "Spot",
+    "title": "LAGUNA BIG POND",
+    "content": "LAGUNA BIG POND La laguna es un espacio que cuenta con una pequeña formación de agua semisalada, este lugar es un refugio de babillas y muchas otras especies. Loma Laguna Low cost mochilero aventurero eco friendly soltero. Zona cultural raizal Formación montañosa única Alta concentración de nativos Valor histórico y natural Primera Iglesia Bautista Laguna Big Pond",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "Loma",
+      "subzona": "Laguna",
+      "proximidad_aeropuerto": "MEDIUM",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    },
+    "zona": "Loma",
+    "subzona": "Laguna"
+  },
+  {
+    "id": "madguana",
+    "categoria": "Spot",
+    "title": "MADGUANA",
+    "content": "MADGUANA Madguana es un sitio en la playa de rocky cay, sencillo, de ambiente chill, donde podras sentarte a disfrutar bebidas, frutas y comidas, mientras disfrutas de una maravillosa vista al mar y donde puedes constantemente entrar a nadar, o broncearte. San Luis Rocky Cay Low cost mochilero aventurero eco friendly soltero. Casas isleñas coloridas Zona residencial nativa Playas menos concurridas Hospedajes turísticos Variedad de playas Diferentes niveles de oleaje",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "San Luis",
+      "subzona": "Rocky Cay",
+      "proximidad_aeropuerto": "FAR",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    },
+    "zona": "San Luis",
+    "subzona": "Rocky Cay"
+  },
+  {
+    "id": "masally-antiguo",
+    "categoria": "Spot",
+    "title": "MASALLY ANTIGUO",
+    "content": "MASALLY ANTIGUO En Masally podrás disfrutar de un espació tranquilo, sencillo y agradable frente al mar, donde podrás caretear y disfrutar de distintas bebidas. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "masally-nuevo",
+    "categoria": "Spot",
+    "title": "MASALLY NUEVO",
+    "content": "MASALLY NUEVO Masally te ofrece un espacio cómodo, lindo y tranquilo frente al mar del lado oeste de la isla, donde podrás disfrutas de distintas bebidas y comidas a distintas horas del día. Aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    }
+  },
+  {
+    "id": "miss-vivi",
+    "categoria": "Spot",
+    "title": "MISS VIVI",
+    "content": "MISS VIVI Emblemático lugar para quienes crecieron en la isla, Miss Vivi es una joya escondida que solo puedes encontrar abierta los domingos, se trata de una heladeria sencilla pero que todos aman. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "one-love-tom-hooker",
+    "categoria": "Spot",
+    "title": "ONE LOVE (TOM HOOKER)",
+    "content": "ONE LOVE (TOM HOOKER) One Love es el único lugar en la playa que vas a encontrar para comer tan al sur de la isla, la playa en la que está ubicado es muy tranquila, no es tan apta para entrar a nadar, pero es perfecta para quienes tienen miedo al mar o al oleaje o para niños, ya que se forma una pequeña piscina en que te puedes quedar sentado disfrutando del agua tibia y la hermosa vista. En el lugar encontrarás sillas y sombra para estar cómodo al comer. Cove Tom hooker Low cost mochilero aventurero eco friendly soltero. Formación rocosa coralina Excelentes puntos de buceo Zona de snorkel y apnea Mejores atardeceres Zona muy tranquila Poco ruidosa Alojamientos turísticos",
+    "metadata": {
+      "categoria": "Spot",
+      "zona": "Cove",
+      "subzona": "Tom hooker",
+      "proximidad_aeropuerto": "MEDIUM",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    },
+    "zona": "Cove",
+    "subzona": "Tom hooker"
+  },
+  {
+    "id": "reggae-roots",
+    "categoria": "Spot",
+    "title": "REGGAE ROOTS",
+    "content": "REGGAE ROOTS Reggae Roots es la entrada más cercana a la estatua subacuática de poseidón, aqui podrás entrara a caretear y luego sentarte a tomar algo mientras disfrutas de un ambiente rasta, con música reggae. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  },
+  {
+    "id": "south-beauty",
+    "categoria": "Spot",
+    "title": "SOUTH BEAUTY",
+    "content": "SOUTH BEAUTY South Beauty o conocido como \"el spot de surf\" es un lugar perfecto para disfrutar de la playa, tomarse algo, comer y sobre todo, aprender a surfear, las pequeñas olas de este sitio lo vuelven el lugar mas seguro de la isla para aprender. Aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Spot",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    }
+  },
+  {
+    "id": "da-black-almond",
+    "categoria": "Alquiler",
+    "title": "DA BLACK ALMOND",
+    "content": "DA BLACK ALMOND Alquiler de carros, motos y pontones. Alquiler moto carro mulitas. Low cost mochilero aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Alquiler",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    }
+  },
+  {
+    "id": "eco-xtreme-san-andres",
+    "categoria": "Alquiler",
+    "title": "ECO XTREME SAN ANDRES",
+    "content": "ECO XTREME SAN ANDRES Alquiler de vehículos y botes. Alquiler moto carro mulitas botes ponton. Low cost mochilero aventurero eco friendly soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Alquiler",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero",
+        "negocios",
+        "lujo."
+      ]
+    }
+  },
+  {
+    "id": "seawolf-7",
+    "categoria": "Alquiler",
+    "title": "SEAWOLF",
+    "content": "SEAWOLF Seawolf es una agencia en la que podrás encontrar diferentes alquileres en un solo lugar, siempre con un excelente servicio, te invitamos a conocerla. Actividades experiencias alquileres agencia de turismo planes. Aventurero soltero negocios lujo.",
+    "metadata": {
+      "categoria": "Alquiler",
+      "tags": [],
+      "segmentacion": [
+        "Aventurero",
+        "soltero",
+        "negocios",
+        "lujo."
+      ],
+      "precio": "Varia dependiendo del vehículo"
+    }
+  },
+  {
+    "id": "caribbean-nigths",
+    "categoria": "Nigth Life",
+    "title": "CARIBBEAN NIGTHS",
+    "content": "CARIBBEAN NIGTHS Un templo de la cultura caribe, las caribbean nigths son organizadas por el cantante isleño Job Saas en su propia casa, aquí se apoya a los artistas isleños conocidos y emergentes, un lugar con una energia increíble, donde puedes conocer y conectarte con la musica de la isla. Low cost mochilero aventurero eco friendly soltero.",
+    "metadata": {
+      "categoria": "Nigth Life",
+      "tags": [],
+      "segmentacion": [
+        "Low cost",
+        "mochilero",
+        "aventurero",
+        "eco friendly",
+        "soltero."
+      ]
+    }
+  }
+]

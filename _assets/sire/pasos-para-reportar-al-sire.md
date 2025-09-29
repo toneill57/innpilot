@@ -1,12 +1,19 @@
 ---
-title: "Pasos para Reportar al SIRE mediante Archivo"
-description: "Guía oficial para el proceso de reporte de huéspedes extranjeros al Sistema SIRE mediante archivo TXT delimitado por tabulaciones"
-category: regulatory
-status: production-ready
 version: "1.0"
-last_updated: "2025-09-13"
-tags: [sire, regulatory, hotel_reporting, colombia]
-keywords: ["SIRE", "reporte huéspedes", "archivo TXT", "extranjeros", "hoteles Colombia"]
+type: sire
+destination:
+  schema: public
+  table: sire_content
+document:
+  title: "Pasos para Reportar al SIRE"
+  description: "Guía completa de procedimientos para reportar huéspedes extranjeros al Sistema de Información y Registro de Extranjeros (SIRE)"
+  category: sire_regulatory
+  subcategory: procedimiento
+  language: es
+  version: "1.0"
+  status: active
+  tags: [sire, registro, extranjeros, procedimiento, compliance]
+  keywords: [sire, huespedes, extranjeros, registro, formulario, campos, obligatorio, validacion]
 ---
 
 # Pasos para Reportar al SIRE mediante Archivo

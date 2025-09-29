@@ -1,0 +1,26 @@
+{
+  "id": "banzai-surf-school",
+  "categoria": "Actividad",
+  "nombre": "BANZAI SURF SCHOOL",
+  "descripcion": "El surf en San Andrés Islas ofrece olas variadas que son ideales para principiantes. La playa mas concurrida para aprender es El Paraíso y surfistas mas avanzados también lo practican en playas mas al sur de la isla.",
+  "horario": "Segun se reserve.",
+  "precio": "Clase privada de surf (1 a 2 personas) : 190,000 por persona.",
+  "historia": null,
+  "personaje": null,
+  "datos_color": null,
+  "recomendaciones": null,
+  "menu_info": "Low cost, mochilero, aventurero, eco friendly, soltero, negocios, lujo.",
+  "periodicidad_menu": "@banzaisurfschooladz",
+  "ultima_actualizacion_menu": null,
+  "zona": null,
+  "subzona": null,
+  "segmentacion": [
+    "Surf",
+    "mar",
+    "actividades."
+  ],
+  "contacto": null,
+  "palabras_clave": [],
+  "tags": [],
+  "comisiones": null
+}

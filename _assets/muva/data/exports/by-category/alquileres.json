@@ -1,0 +1,94 @@
+[
+  {
+    "id": "da-black-almond",
+    "categoria": "Alquiler",
+    "nombre": "DA BLACK ALMOND",
+    "descripcion": "Alquiler de carros, motos y pontones.",
+    "horario": "De 8am a 10pm",
+    "palabras_clave": [
+      "Alquiler",
+      "moto",
+      "carro",
+      "mulitas."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_alquiler": "scooter",
+    "modalidades_alquiler": [
+      "por día"
+    ],
+    "duracion_minima": null,
+    "deposito_requerido": null,
+    "documentos_requeridos": null,
+    "seguro_incluido": false
+  },
+  {
+    "id": "eco-xtreme-san-andres",
+    "categoria": "Alquiler",
+    "nombre": "ECO XTREME SAN ANDRES",
+    "descripcion": "Alquiler de vehículos y botes.",
+    "horario": "De 9am a 6pm",
+    "palabras_clave": [
+      "Alquiler",
+      "moto",
+      "carro",
+      "mulitas",
+      "botes",
+      "ponton."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_alquiler": "servicio",
+    "modalidades_alquiler": [
+      "por día"
+    ],
+    "duracion_minima": null,
+    "deposito_requerido": null,
+    "documentos_requeridos": null,
+    "seguro_incluido": false
+  },
+  {
+    "id": "seawolf-7",
+    "categoria": "Alquiler",
+    "nombre": "SEAWOLF",
+    "descripcion": "Seawolf es una agencia en la que podrás encontrar diferentes alquileres en un solo lugar, siempre con un excelente servicio, te invitamos a conocerla.",
+    "horario": "9:00 a 20:00 h",
+    "precio": "Varia dependiendo del vehículo",
+    "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+    "palabras_clave": [
+      "Actividades",
+      "experiencias",
+      "alquileres",
+      "agencia de turismo",
+      "planes."
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_alquiler": "servicio",
+    "modalidades_alquiler": [
+      "por día"
+    ],
+    "duracion_minima": null,
+    "deposito_requerido": null,
+    "documentos_requeridos": null,
+    "seguro_incluido": false
+  }
+]

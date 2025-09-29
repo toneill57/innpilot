@@ -1,0 +1,488 @@
+{
+  "zones": {
+    "Centro": {
+      "name": "Centro",
+      "raizal_name": "North End",
+      "description": "Ubicado en el norte de la isla, en el centro encuentras la mayor parte del comercio; hoteles, restaurantes, bares y discotecas, tiendas de ropa, calzado, perfumería, tecnología y mucho más. El centro tiene la mayor concentración de personas de toda la isla y cuenta con la playa principal más extensa llamada spratt bight.",
+      "characteristics": [
+        "Zona comercial principal",
+        "Alta concentración turística",
+        "Vida nocturna y restaurantes",
+        "Playa Spratt Bight",
+        "Mayor concentración de personas"
+      ],
+      "general_noise_level": "moderado_alto",
+      "transport": "Fácil acceso en taxi, bus o moto",
+      "proximity_to_airport": "CLOSE",
+      "subzones": {
+        "Sarie Bay": {
+          "description": "En el norte de la isla, Sarie Bay es un barrio residencial y de distintos hospedajes turísticos, conocido por ser un barrio seguro, en él, se encuentra el aeropuerto Gustavo Rojas Pinilla, el pescadero, distintas tiendas, restaurantes, la posada Simmer Down y otros distintos hospedajes turísticos.",
+          "noise_level": "moderado",
+          "noise_notes": "Algunas partes son más tranquilas que otras con respecto al ruido",
+          "security_level": "seguro",
+          "landmarks": ["Aeropuerto Gustavo Rojas Pinilla", "El Pescadero", "Posada Simmer Down"],
+          "business_types": ["hospedajes", "tiendas", "restaurantes"]
+        },
+        "Cabañas": {
+          "description": "Ubicado en la zona noroeste de la isla, Cabañas es una gran ubicación para quienes planean bucear o hacer apnea en la isla, ya que queda cerca de distintas zonas de buceo, un barrio seguro que cuenta con distintos hospedajes turísticos y también residencias locales.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Una zona muy tranquila y alejada del ruido",
+          "security_level": "seguro",
+          "ideal_for": ["buceo", "apnea"],
+          "landmarks": ["Zonas de buceo cercanas"],
+          "business_types": ["hospedajes", "residencias"]
+        },
+        "La rocosa": {
+          "description": "En el oeste de la isla, en el barrio La Rocosa realmente no encuentras mucho más que casas residenciales y algunos hospedajes turísticos, como In Di House Of Reggae. Este barrio también está en su mayoría ubicado frente al mar y cercano a distintas zonas de buceo, esta parte de la isla no cuenta con arena, sino con una formación de roca coralina en la entrada al mar.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Muy tranquilo y alejado del ruido",
+          "security_level": "seguro",
+          "coastal_features": "Formación de roca coralina, sin arena",
+          "landmarks": ["In Di House Of Reggae"],
+          "ideal_for": ["buceo", "snorkeling"],
+          "business_types": ["hospedajes", "residencias"]
+        },
+        "Spratt Bigth": {
+          "description": "Desde el icónico letrero de I LOVE SAI junto al aeropuerto, hasta el restaurante El Corral, Spratt Bight la playa principal y más extensa de la isla, con 450 metros de largo de playa, es conocida por estar acompañada de la peatonal en toda su extensión, cuenta con numerosos hoteles de distintas categorías, restaurantes y variedad de negocios.",
+          "noise_level": "muy_ruidoso",
+          "noise_notes": "Un lugar bastante ruidoso tanto de día como de noche",
+          "security_level": "seguro",
+          "length": "450 metros",
+          "landmarks": ["Letrero I LOVE SAI", "El Corral", "Peatonal"],
+          "business_types": ["hoteles", "restaurantes", "comercio"]
+        },
+        "Zona Rosa": {
+          "description": "En esta zona vas a encontrar la mayor aglomeración de bares y discotecas, también encuentras un almacén variado que funciona las 24 horas, algunos hoteles están ubicados en esta zona. De día, encontrarás venta de actividades turísticas y alquileres de motos y mulitas.",
+          "noise_level": "muy_ruidoso",
+          "noise_notes": "Bastante ruidosa tanto de día como de noche",
+          "security_level": "moderado",
+          "business_hours": "24 horas",
+          "business_types": ["bares", "discotecas", "hoteles", "alquileres", "actividades_turisticas"],
+          "landmarks": ["Almacén 24 horas"]
+        },
+        "Zona rosa": {
+          "description": "En esta zona vas a encontrar la mayor aglomeración de bares y discotecas, también encuentras un almacén variado que funciona las 24 horas, algunos hoteles están ubicados en esta zona. De día, encontrarás venta de actividades turísticas y alquileres de motos y mulitas.",
+          "noise_level": "muy_ruidoso",
+          "noise_notes": "Bastante ruidosa tanto de día como de noche",
+          "security_level": "moderado",
+          "business_hours": "24 horas",
+          "business_types": ["bares", "discotecas", "hoteles", "alquileres", "actividades_turisticas"],
+          "landmarks": ["Almacén 24 horas"]
+        },
+        "La 20 de Julio": {
+          "description": "En la Avenida 20 de Julio, encuentras diferentes negocios y servicios, quizá no muy turísticos, son más para el beneficio de los residentes, también aquí se ubican distintos hospedajes, no está frente al mar.",
+          "noise_level": "ruidoso",
+          "noise_notes": "Una zona generalmente ruidosa y activa",
+          "security_level": "moderado",
+          "target_audience": "residentes",
+          "coastal_access": false,
+          "business_types": ["servicios", "hospedajes", "comercio_local"]
+        },
+        "Newball": {
+          "description": "La Avenida Francisco Newball, tiene una larga extensión que conecta el comercio de la isla con el barrio los almendros y el barrio obrero, es al borde del mar, un gran lugar para ver amaneceres, aquí vas a encontrar algunos hoteles, bares y restaurantes, también el muelle de Toninos Marina y el muelle de la policía.",
+          "noise_level": "moderado",
+          "noise_notes": "Un lugar tranquilo aunque ligeramente ruidoso",
+          "security_level": "seguro",
+          "coastal_access": true,
+          "ideal_for": ["amaneceres"],
+          "landmarks": ["Muelle Toninos Marina", "Muelle de la Policía"],
+          "business_types": ["hoteles", "bares", "restaurantes"]
+        },
+        "Almendros": {
+          "description": "El barrio los almendros, cercano al mar, es una zona pequeña, que cuenta con algunos alojamientos turísticos y tiendas.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin ruido",
+          "security_level": "seguro",
+          "coastal_access": true,
+          "business_types": ["alojamientos", "tiendas"]
+        },
+        "Barrio obrero": {
+          "description": "Entre los almendros y las calles que te conectan con la loma, queda el barrio obrero, en su mayoría de casas de residentes, no encontrarás atracciones turísticas aquí, pero si la Clínica Villareal, el Hospital Clarence Lynd Newball, los bomberos y la cruz roja.",
+          "noise_level": "ruidoso",
+          "noise_notes": "Un lugar ruidoso y poco tranquilo",
+          "security_level": "moderado",
+          "target_audience": "residentes",
+          "landmarks": ["Clínica Villareal", "Hospital Clarence Lynd Newball", "Bomberos", "Cruz Roja"],
+          "business_types": ["servicios_medicos", "servicios_emergencia"]
+        }
+      }
+    },
+    "Loma": {
+      "name": "Loma",
+      "description": "Geográficamente en el centro de la isla, se encuentra La Loma, la única formación montañosa con la que cuenta San Andrés, en La Loma vive la mayor concentración de Raizales de la isla, una zona de mucho valor cultural y natural, aquí encontrarás La Primera Iglesia Bautista, la Laguna Big Pond y diferentes calles que te conectan con el resto de la isla.",
+      "characteristics": [
+        "Zona cultural raizal",
+        "Formación montañosa única",
+        "Alta concentración de nativos",
+        "Valor histórico y natural",
+        "Primera Iglesia Bautista",
+        "Laguna Big Pond"
+      ],
+      "general_noise_level": "moderado",
+      "transport": "Acceso moderado, requiere transporte",
+      "proximity_to_airport": "MEDIUM",
+      "cultural_significance": "Alta concentración de población raizal",
+      "subzones": {
+        "Orange Hill": {
+          "description": "La calle que conecta La Loma con San Luis, antes de la entrada a esta calle encuentras El Manglar Old Point, y al subir la loma, te encuentras a la izquierda La Primera Iglesia Bautista. Un lugar en el que recomendamos manejar despacio ya que constantemente se encuentran animalitos locales cruzando esta calle.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Tranquilo y sin ruido",
+          "security_level": "seguro",
+          "driving_notes": "Manejar despacio por animalitos locales",
+          "landmarks": ["El Manglar Old Point", "Primera Iglesia Bautista"],
+          "connects": ["La Loma", "San Luis"]
+        },
+        "Bolivariano": {
+          "description": "Conecta La 20 de Julio y el barrio obrero con La Loma, aquí encuentras en su mayoría tiendas, casas residenciales y algunos hospedajes turísticos.",
+          "noise_level": "moderado",
+          "noise_notes": "Un lugar tranquilo y medianamente ruidoso dependiendo de la hora",
+          "security_level": "seguro",
+          "connects": ["20 de Julio", "Barrio Obrero", "La Loma"],
+          "business_types": ["tiendas", "hospedajes", "residencias"]
+        },
+        "Back Road": {
+          "description": "Recomendamos saltarse esta zona, debido a inundaciones y seguridad, lo mejor es tomar otros caminos.",
+          "noise_level": "variable",
+          "security_level": "inseguro",
+          "warnings": ["inundaciones", "problemas_seguridad"],
+          "recommendation": "Evitar esta zona"
+        },
+        "Barrack": {
+          "description": "Una larga calle que conecta La Loma con una zona al sur de San Luis, de casas de familias Raizales y muchos árboles, aquí encontrarás una de las entradas a La Laguna Big Pond.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Tranquilo y sin ruido dependiendo de la hora",
+          "security_level": "seguro",
+          "landscape": "Muchos árboles",
+          "population": "Familias Raizales",
+          "landmarks": ["Entrada a Laguna Big Pond"],
+          "connects": ["La Loma", "Sur de San Luis"]
+        },
+        "Lynball cove": {
+          "description": "Una larga calle que conecta La Loma con El Cove, de casas de familias Raizales y muchos árboles, aquí encontrarás una de las entradas a La Laguna Big Pond, la calle que lleva a La Cueva de Morgan, y otra larga calle donde al final se encuentra una base militar.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Tranquilo y sin ruido",
+          "security_level": "seguro",
+          "landscape": "Muchos árboles",
+          "population": "Familias Raizales",
+          "landmarks": ["Entrada a Laguna Big Pond", "Cueva de Morgan", "Base Militar"],
+          "connects": ["La Loma", "El Cove"]
+        },
+        "Laguna": {
+          "description": "Zona que incluye la Laguna Big Pond, importante atractivo natural y cultural de la isla.",
+          "noise_level": "muy_tranquilo",
+          "security_level": "seguro",
+          "landmarks": ["Laguna Big Pond"],
+          "natural_features": "Laguna de agua dulce"
+        }
+      }
+    },
+    "San Luis": {
+      "name": "San Luis",
+      "description": "Una amplia zona en el suroriente de la isla, San Luis es conocido por sus coloridas casas isleñas en las que habitan en su mayoría nativos, pero también encontrarás hospedajes turísticos, en esta zona, las playas y actividades son menos concurridas que en el centro, las playas tienen diferentes dimensiones de arena y diferente distancia de la barrera coralina, lo que hace que en unas pueda formarse más oleaje que en otras.",
+      "characteristics": [
+        "Casas isleñas coloridas",
+        "Zona residencial nativa",
+        "Playas menos concurridas",
+        "Hospedajes turísticos",
+        "Variedad de playas",
+        "Diferentes niveles de oleaje"
+      ],
+      "general_noise_level": "tranquilo",
+      "transport": "Requiere moto o taxi, distancias mayores",
+      "proximity_to_airport": "FAR",
+      "subzones": {
+        "Chameys": {
+          "description": "Después de la entrada de Orange Hill a La Loma, encontrarás una base militar y después de esta, empieza la playa de Chamey, una playa corta, adornada por algunas viejas tablas de surf y con palmeras y manglares al borde de la playa, visitada por pescadores locales, kite surfers y turistas que van a realizar las actividades que allí se ofrecen.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin mucho ruido",
+          "security_level": "seguro",
+          "beach_features": "Playa corta con palmeras y manglares",
+          "visitors": ["pescadores locales", "kite surfers", "turistas"],
+          "landmarks": ["Base militar", "Tablas de surf viejas"],
+          "ideal_for": ["kitesurf", "actividades acuáticas"]
+        },
+        "Chamey": {
+          "description": "Después de la entrada de Orange Hill a La Loma, encontrarás una base militar y después de esta, empieza la playa de Chamey, una playa corta, adornada por algunas viejas tablas de surf y con palmeras y manglares al borde de la playa, visitada por pescadores locales, kite surfers y turistas que van a realizar las actividades que allí se ofrecen.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin mucho ruido",
+          "security_level": "seguro",
+          "beach_features": "Playa corta con palmeras y manglares",
+          "visitors": ["pescadores locales", "kite surfers", "turistas"],
+          "landmarks": ["Base militar", "Tablas de surf viejas"],
+          "ideal_for": ["kitesurf", "actividades acuáticas"]
+        },
+        "Rocky Cay": {
+          "description": "Esta famosa playa, es conocida por el icónico barco encallado que solía llamarse El Lido, los restos de este barco están detrás del cayo Rocky Cay, y se ha convertido en una atracción turística en sí mismo. En esta playa encontrarás distintas actividades, spots y restaurantes.",
+          "noise_level": "moderado",
+          "noise_notes": "Un lugar activo y ruidoso dependiendo de la hora",
+          "security_level": "seguro",
+          "landmarks": ["Barco encallado El Lido", "Cayo Rocky Cay"],
+          "business_types": ["actividades", "spots", "restaurantes"],
+          "attractions": "Barco encallado como atracción turística"
+        },
+        "Sound bay": {
+          "description": "Al suroriente de la isla, se encuentra esta amplia zona que cuenta con otra peatonal, mucho menos concurrida, la peatonal termina en el coliseo de San Luis, el lugar donde se llevan a cabo los encuentros de baloncesto de los equipos locales de la isla y equipos visitantes, en Sound Bay encontrarás en su mayoría casas raizales, pero también cuenta con distintos alojamientos turísticos y restaurantes de comida típica de la isla.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Tranquilo y sin ruido por lo general",
+          "security_level": "seguro",
+          "features": ["Peatonal menos concurrida"],
+          "landmarks": ["Coliseo de San Luis"],
+          "population": "Casas raizales",
+          "business_types": ["alojamientos", "restaurantes típicos"],
+          "events": "Encuentros de baloncesto"
+        },
+        "El Paraíso": {
+          "description": "La conocida playa El Paraíso, cuenta con distintos restaurantes y clubs de playa privados, pero además es uno de los puntos más concurridos por surfers, sobre todo principiantes, gracias a su formación de olas sutiles (dependiendo de la época), frente a esta playa encontrarás una calle que conecta San Luis con El Cove, llamada El Radar.",
+          "noise_level": "moderado",
+          "noise_notes": "Un lugar activo y ruidoso dependiendo de la hora",
+          "security_level": "seguro",
+          "ideal_for": ["surf principiantes"],
+          "wave_conditions": "Olas sutiles (dependiendo de la época)",
+          "business_types": ["restaurantes", "clubs de playa privados"],
+          "landmarks": ["Calle El Radar"],
+          "connects": ["San Luis", "El Cove"]
+        },
+        "El paraíso": {
+          "description": "La conocida playa El Paraíso, cuenta con distintos restaurantes y clubs de playa privados, pero además es uno de los puntos más concurridos por surfers, sobre todo principiantes, gracias a su formación de olas sutiles (dependiendo de la época), frente a esta playa encontrarás una calle que conecta San Luis con El Cove, llamada El Radar.",
+          "noise_level": "moderado",
+          "noise_notes": "Un lugar activo y ruidoso dependiendo de la hora",
+          "security_level": "seguro",
+          "ideal_for": ["surf principiantes"],
+          "wave_conditions": "Olas sutiles (dependiendo de la época)",
+          "business_types": ["restaurantes", "clubs de playa privados"],
+          "landmarks": ["Calle El Radar"],
+          "connects": ["San Luis", "El Cove"]
+        },
+        "Toom Hooker": {
+          "description": "Tom Hooker es una calle que atraviesa por completo desde el Oriente hasta el Oeste del sur de la isla, en su entrada por el lado oriente, es decir San Luis, encontrarás una playa poco concurrida y muy tranquila, iniciando la calle encuentras una tienda, algunos alojamientos turísticos y distintas casas de nativos.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin ruido",
+          "security_level": "seguro",
+          "beach_features": "Playa poco concurrida y muy tranquila",
+          "business_types": ["tienda", "alojamientos", "casas de nativos"],
+          "spans": "Oriente a Oeste del sur de la isla"
+        },
+        "Punta sur": {
+          "description": "El sur de la isla, la parte final de nuestro hermoso mapa, aquí no encontrarás muchas atracciones, pero si la icónica calle de las palmeras en la que aman tomarse fotos tanto turistas como residentes. Esta zona aunque tranquila y libre de ruido, quizá no es muy segura, te recomendamos ir con compañía y estar siempre atentos de sus artículos personales.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Tranquila y libre de ruido",
+          "security_level": "inseguro",
+          "warnings": ["No es muy segura"],
+          "recommendations": ["Ir con compañía", "Estar atentos a artículos personales"],
+          "landmarks": ["Calle de las palmeras"],
+          "attractions": "Lugar fotográfico"
+        }
+      }
+    },
+    "Cove": {
+      "name": "Cove",
+      "description": "El Cove es toda la zona sur occidente de San Andrés, aquí, no encuentras playas, sino una hermosa formación rocosa coralina antes de las entradas al mar, las cuales son más conocidas por ser excelentes puntos de buceo y apnea. Al ser el occidente de la isla, aquí verás esconderse el sol entre el mar cada tarde, encuentras distintas casas de residentes, e igualmente es una zona con distintas atracciones y alojamientos turísticos, muy tranquila y poco ruidosa.",
+      "characteristics": [
+        "Formación rocosa coralina",
+        "Excelentes puntos de buceo",
+        "Zona de snorkel y apnea",
+        "Mejores atardeceres",
+        "Zona muy tranquila",
+        "Poco ruidosa",
+        "Alojamientos turísticos"
+      ],
+      "general_noise_level": "muy_tranquilo",
+      "transport": "Acceso moderado a difícil, mejor en moto",
+      "proximity_to_airport": "MEDIUM",
+      "coastal_features": "Formación rocosa coralina, sin playas de arena",
+      "ideal_for": ["buceo", "snorkel", "apnea", "atardeceres"],
+      "subzones": {
+        "Morris Landing": {
+          "description": "Justo después de la parte de atrás de la pista del aeropuerto, encuentras el barrio Morris Landing, donde no hay mucho más que la vista al mar e ir de paso a otras zonas, aquí, te podrías sentar a esperar ver aterrizar un avión, sin embargo, no es un lugar muy seguro, recomendamos no quedarse en ningún alojamiento que quede en esta zona.",
+          "noise_level": "moderado",
+          "security_level": "inseguro",
+          "warnings": ["No es un lugar muy seguro"],
+          "recommendations": ["No alojarse en esta zona"],
+          "landmarks": ["Pista del aeropuerto"],
+          "features": ["Vista al mar", "Zona de paso"],
+          "attractions": "Ver aterrizar aviones"
+        },
+        "Brooks Bottom": {
+          "description": "Carretera al lado del mar rocoso, donde no hay atracciones turísticas más allá que la vista al mar, es un lugar de paso para llegar a otras zonas.",
+          "noise_level": "tranquilo",
+          "security_level": "moderado",
+          "coastal_features": "Mar rocoso",
+          "features": ["Vista al mar", "Zona de paso"],
+          "business_types": []
+        },
+        "Magic Garden": {
+          "description": "Esta calle lleva el nombre por el basurero de la isla, Magic Garden, que se encuentra en esta zona subiendo la loma por esta calle, en este punto encuentras una tienda y algunas sillas para sentarse a tomar algo frente al mar.",
+          "noise_level": "tranquilo",
+          "security_level": "moderado",
+          "landmarks": ["Basurero Magic Garden"],
+          "business_types": ["tienda"],
+          "features": ["Sillas frente al mar"]
+        },
+        "Schooner Bight": {
+          "description": "Desde esta zona empiezas a encontrar escuelas y puntos de buceo, como el conocido punto para buzos avanzados donde se encuentra el naufragio Blue Diamond. En este barrio también encuentras la gasolinera del cove.",
+          "noise_level": "tranquilo",
+          "security_level": "seguro",
+          "ideal_for": ["buceo avanzado"],
+          "landmarks": ["Naufragio Blue Diamond", "Gasolinera del Cove"],
+          "business_types": ["escuelas de buceo", "gasolinera"]
+        },
+        "Sukie Bay": {
+          "description": "En esta zona hay algunas atracciones turísticas culturales, una zona de viviendas de residentes, pero también alojamientos turísticos.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin ruidos",
+          "security_level": "seguro",
+          "business_types": ["atracciones culturales", "alojamientos"],
+          "population": "Viviendas de residentes"
+        },
+        "Sukie bay": {
+          "description": "En esta zona hay algunas atracciones turísticas culturales, una zona de viviendas de residentes, pero también alojamientos turísticos.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin ruidos",
+          "security_level": "seguro",
+          "business_types": ["atracciones culturales", "alojamientos"],
+          "population": "Viviendas de residentes"
+        },
+        "Cove": {
+          "description": "En el kilómetro 9 de la isla, encuentras esta hermosa zona, donde se ubica el icónico letrero de I Love Sai con vista al atardecer, un lugar de viviendas raizales, pero también de muchos alojamientos turísticos campestres, aquí encuentras spots de la isla como Big Mama.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar muy tranquilo, seguro y sin ruido",
+          "security_level": "muy_seguro",
+          "landmarks": ["Letrero I Love Sai", "Big Mama"],
+          "population": "Viviendas raizales",
+          "business_types": ["alojamientos campestres", "spots"],
+          "ideal_for": ["atardeceres"],
+          "kilometer": 9
+        },
+        "Ensenada": {
+          "description": "Después de la base militar, encuentras esta zona de una gran curva cerrada, una calle rodeada de árboles nativos, aquí se realizan algunas actividades turísticas como el paddle nocturno.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin ruido",
+          "security_level": "seguro",
+          "landscape": "Calle rodeada de árboles nativos",
+          "features": ["Gran curva cerrada"],
+          "activities": ["paddle nocturno"],
+          "landmarks": ["Base militar"]
+        },
+        "West View": {
+          "description": "En esta zona encuentras diferentes atracciones turísticas frente al mar, excelentes para hacer snorkeling, buceo y ver el atardecer.",
+          "noise_level": "variable",
+          "noise_notes": "Un lugar activo y ruidoso de día, aunque muy solitario y sin ruido de noche",
+          "security_level": "moderado",
+          "ideal_for": ["snorkeling", "buceo", "atardeceres"],
+          "business_types": ["atracciones turísticas"],
+          "time_variations": {
+            "day": "activo y ruidoso",
+            "night": "solitario y sin ruido"
+          }
+        },
+        "Tom hooker": {
+          "description": "Tom Hooker es una calle que atraviesa por completo desde el Oriente hasta el Oeste del sur de la isla, en su entrada por el lado occidente, es decir El Cove, encontrarás un punto de formación rocosa, con mar profundo, apto para hacer snorkeling y buceo, en esta calle se encuentran algunos alojamientos turísticos y distintas casas de nativos.",
+          "noise_level": "muy_tranquilo",
+          "noise_notes": "Un lugar tranquilo y sin ruido",
+          "security_level": "seguro",
+          "coastal_features": "Formación rocosa con mar profundo",
+          "ideal_for": ["snorkeling", "buceo"],
+          "business_types": ["alojamientos", "casas de nativos"],
+          "spans": "Oriente a Oeste del sur de la isla"
+        },
+        "Punta sur": {
+          "description": "El sur de la isla, la parte final de nuestro hermoso mapa, aquí no encontrarás muchas atracciones, excepto claro por el hoyo soplador el cual no recomendamos visitar, por malas atenciones, y mala representación de la verdadera cultura raizal. Esta zona del lado de San Luis puede ser tranquila, sin embargo, en el cove es bastante ruidosa, recomendamos estar siempre atentos a sus artículos personales.",
+          "noise_level": "ruidoso",
+          "noise_notes": "En el cove es bastante ruidosa",
+          "security_level": "inseguro",
+          "warnings": ["Bastante ruidosa en el cove"],
+          "recommendations": ["Estar atentos a artículos personales"],
+          "landmarks": ["Hoyo soplador"],
+          "not_recommended": ["Hoyo soplador por malas atenciones y mala representación cultural"]
+        },
+        "Punta Sur": {
+          "description": "El sur de la isla, la parte final de nuestro hermoso mapa, aquí no encontrarás muchas atracciones, excepto claro por el hoyo soplador el cual no recomendamos visitar, por malas atenciones, y mala representación de la verdadera cultura raizal. Esta zona del lado de San Luis puede ser tranquila, sin embargo, en el cove es bastante ruidosa, recomendamos estar siempre atentos a sus artículos personales.",
+          "noise_level": "ruidoso",
+          "noise_notes": "En el cove es bastante ruidosa",
+          "security_level": "inseguro",
+          "warnings": ["Bastante ruidosa en el cove"],
+          "recommendations": ["Estar atentos a artículos personales"],
+          "landmarks": ["Hoyo soplador"],
+          "not_recommended": ["Hoyo soplador por malas atenciones y mala representación cultural"]
+        },
+        "Masally Green": {
+          "description": "Zona en el Cove utilizada para actividades de buceo y hospedajes.",
+          "noise_level": "tranquilo",
+          "security_level": "seguro",
+          "ideal_for": ["buceo"],
+          "business_types": ["hospedajes", "actividades de buceo"]
+        }
+      }
+    }
+  },
+  "noise_levels": {
+    "muy_tranquilo": {
+      "description": "Zona muy silenciosa, ideal para descanso",
+      "level": 1
+    },
+    "tranquilo": {
+      "description": "Zona silenciosa con ruido mínimo ocasional",
+      "level": 2
+    },
+    "moderado": {
+      "description": "Ruido moderado, varía según la hora",
+      "level": 3
+    },
+    "ruidoso": {
+      "description": "Zona activa con ruido constante",
+      "level": 4
+    },
+    "muy_ruidoso": {
+      "description": "Zona muy activa, ruidosa día y noche",
+      "level": 5
+    },
+    "variable": {
+      "description": "Nivel de ruido cambia significativamente según hora",
+      "level": 3
+    }
+  },
+  "security_levels": {
+    "muy_seguro": {
+      "description": "Zona muy segura, recomendada",
+      "level": 5
+    },
+    "seguro": {
+      "description": "Zona segura para turistas",
+      "level": 4
+    },
+    "moderado": {
+      "description": "Seguridad normal, precauciones básicas",
+      "level": 3
+    },
+    "inseguro": {
+      "description": "Zona con problemas de seguridad, precaución extra",
+      "level": 2
+    }
+  },
+  "validation_rules": {
+    "zone_required": true,
+    "subzone_optional": false,
+    "case_sensitive": false,
+    "allow_variations": true
+  },
+  "common_variations": {
+    "Tom Hooker": ["Toom Hooker", "Tom hooker"],
+    "Spratt Bight": ["Spratt Bigth"],
+    "Rocky Cay": ["Rocky Key"],
+    "La 20 de Julio": ["20 de Julio", "Veinte de Julio"],
+    "Zona Rosa": ["Zona rosa"]
+  },
+  "overlapping_subzones": {
+    "Tom Hooker": ["San Luis", "Cove"],
+    "Punta sur": ["San Luis", "Cove"],
+    "Back Road": ["Centro", "Loma"]
+  },
+  "unmapped_subzones_found_in_listings": [],
+  "notes": {
+    "data_source": ["zonas_y_subzonas.csv", "Zonas.txt"],
+    "created_date": "2025-09-19",
+    "updated_date": "2025-09-19",
+    "purpose": "Validation and auto-completion for MUVA listings with enriched zone data",
+    "enrichment": "Added detailed descriptions, noise levels, security levels, landmarks, and recommendations"
+  }
+}

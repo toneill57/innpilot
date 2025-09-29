@@ -1,0 +1,532 @@
+[
+  {
+    "id": "banzai-surf-school-16",
+    "categoria": "Actividad",
+    "nombre": "BANZAI SURF SCHOOL",
+    "descripcion": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje.",
+    "horario": "Segun se reserve.",
+    "contacto": "@banzaisurfschooladz",
+    "palabras_clave": [
+      "Paddle Board",
+      "actividades",
+      "atardecer",
+      "planes de noche."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "surf",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "banzai-surf-school",
+    "categoria": "Actividad",
+    "nombre": "BANZAI SURF SCHOOL",
+    "descripcion": "El surf en San Andrés Islas ofrece olas variadas que son ideales para principiantes. La playa mas concurrida para aprender es El Paraíso y surfistas mas avanzados también lo practican en playas mas al sur de la isla.",
+    "horario": "Segun se reserve.",
+    "precio": "Clase privada de surf (1 a 2 personas) : 190,000 por persona.",
+    "zona": "San Luis",
+    "subzona": "El Paraíso",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "actividades_disponibles": [
+      "surf principiantes"
+    ],
+    "landmarks_cercanos": [
+      "Calle El Radar"
+    ],
+    "tipos_negocio_zona": [
+      "restaurantes",
+      "clubs de playa privados"
+    ],
+    "contacto": "@banzaisurfschooladz",
+    "palabras_clave": [
+      "Surf",
+      "mar",
+      "actividades."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_actividad": "surf",
+    "duracion": null,
+    "nivel_dificultad": "principiante",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "blue-life-dive",
+    "categoria": "Actividad",
+    "nombre": "BLUE LIFE DIVE",
+    "descripcion": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+    "horario": "Segun se reserve.",
+    "precio": "Minicurso: $230.000. Las certificaciones varian.",
+    "historia": "Blue life es atendido por sus dueños: Eduardo Garcia (fundador) Fabian y Luisa (Hijos de Eduardo). Son uno de los operadores de buceo más antiguos de la isla, contando con experiencia desde hace más de 25 años. Se han dedicado específicamente a la enseñanza de buceo para los niveles básico, profesional y técnico recreativo. Blue life es el único centro de formación y entrenamiento de Instructores PADI en la isla de San Andrés, realizando IDC/IE cada mes, liderado por el Course Director Fabian Garcia.",
+    "datos_color": "Con Blue Life podrás ir a distintos puntos de buceo, ya que cuentan con lanchas a disposicion de la escuela a distintas horas para sus salidas, en especial bucean del lado este de la isla, puntos que no te querrás perder.",
+    "recomendaciones": "pero nunca puedes bucear el mismo día de tu vuelo de regreso.",
+    "zona": "Centro",
+    "proximidad_aeropuerto": "CLOSE",
+    "zona_tipo": "comercial principal",
+    "caracteristicas_zona": [
+      "Zona comercial principal",
+      "Alta concentración turística",
+      "Vida nocturna y restaurantes",
+      "Playa Spratt Bight",
+      "Mayor concentración de personas"
+    ],
+    "contacto": "Whatsapp: 317 434 4015 - Correo:  info@bluelifedive.com",
+    "palabras_clave": [
+      "000.",
+      "$25",
+      "Buceo",
+      "actividades",
+      "centro de buceo",
+      "bucear."
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_actividad": "buceo",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": 12,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "buceo-caribe-azul",
+    "categoria": "Actividad",
+    "nombre": "BUCEO CARIBE AZUL",
+    "descripcion": "El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+    "horario": "Todo el dia.",
+    "precio": "Minicurso: $250,000. Las certificaciones varian.",
+    "historia": "Caribe Azul es una escuela de buceo fundada por Hugo Arboleda, activista ambiental e instructor de buceo. Buscando vivir de su pasión y partiendo desde la necesidad de la sensibilización ambiental para promover la conservación de nuestros ecosistemas. Al fallecer el señor Hugo, esta escuela y su misión fue tomada por su hija María José, quien lidera la escuela desde el 2016.",
+    "personaje": "María José Arboleda, es nacida en la isla, con una prefunda pasión por el mar y su conservación, tiene más de 17 años de experiencia buceando, y 7 como instructora de buceo, está certificada en buceo adaptativo, de conservación de tiburones, conservación de tortugas y concientización de la conservación de la barrera de coral.",
+    "datos_color": "Caribe Azul es una escuela de buceo enfocada en la exploración sostenible y la conservación, también es una escuela inclusiva ya que su instructora María José, está especializada en buceo adaptativo, la especialidad de técnicas adaptativas de buceo para personas con discapacidad. (Ceguera parcial o total, discapacidades auditivas, autismo, paraplejías, etc) Tienen actividades de buceo para niños desde los 8 años. Y a los buzos les brindan la posibilidad de ser voluntarios en la iniciativa Ocean Warrior:",
+    "zona": "Centro",
+    "proximidad_aeropuerto": "CLOSE",
+    "zona_tipo": "comercial principal",
+    "caracteristicas_zona": [
+      "Zona comercial principal",
+      "Alta concentración turística",
+      "Vida nocturna y restaurantes",
+      "Playa Spratt Bight",
+      "Mayor concentración de personas"
+    ],
+    "contacto": "Whatsapp: 3176359608  Instagram: @buceocaribeazul",
+    "palabras_clave": [
+      "Buceo",
+      "sostenibilidad",
+      "inclusión",
+      "conservación."
+    ],
+    "tags": [
+      "Eco friendly"
+    ],
+    "segmentacion": [
+      "Mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_actividad": "buceo",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": 12,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "caribbean-xperience",
+    "categoria": "Actividad",
+    "nombre": "CARIBBEAN XPERIENCE",
+    "descripcion": "Haciedno wake board con Caribbean Xperience vas a dominar las olas y la fuerza de la embarcación por medio de una cuerda y una tabla q te arrastran hacia el mar puedes realizarlo en la playa de San Luis, en este curso aprenderás a dominar la tabla y a surcar las olas con destreza mientras experimentas libertad y emoción",
+    "horario": "Segun se reserve.",
+    "zona": "San Luis",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "palabras_clave": [
+      "Wake board",
+      "actividades",
+      "mar."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_actividad": "experiencia",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [
+      "tabla"
+    ],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "hans-dive-shop",
+    "categoria": "Actividad",
+    "nombre": "HANS DIVE SHOP",
+    "descripcion": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en el caribe. El buceo es una actividad que no exige mayor esfuerzo físico, es seguro y apto para niños desde 8 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas y respiratorias, las cuales explican en los centros de buceo.",
+    "horario": "Averiguar",
+    "precio": "Minicurso: $160,000. Las certificaciones varian.",
+    "historia": "No especificó.",
+    "personaje": "En Hans Dive Shop, aunque a cargo de Hans Schenk, te pueden atender distintos instructores de buceo, todos brindan un muy buen servicio y el mismo recorrido por el museo de estauas de Big Mama.",
+    "datos_color": "La escuela de Hans cuenta con un lugar increible para sus minicursos, ya que estan ubicados frente al museo de estatuas que hay bajo el mar, ellos cuidan y mantienen también el estado de estas estatuas, donde vas a tener unas fotos muy lindas.",
+    "zona": "Centro",
+    "proximidad_aeropuerto": "CLOSE",
+    "zona_tipo": "comercial principal",
+    "caracteristicas_zona": [
+      "Zona comercial principal",
+      "Alta concentración turística",
+      "Vida nocturna y restaurantes",
+      "Playa Spratt Bight",
+      "Mayor concentración de personas"
+    ],
+    "contacto": "320 926 0935 - 324 560 4878 - hansdiveshop@gmail.com",
+    "palabras_clave": [
+      "Buceo",
+      "actividades",
+      "centro de buceo",
+      "bucear."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_actividad": "buceo",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": 8,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "maria-raigoza",
+    "categoria": "Actividad",
+    "nombre": "MARIA RAIGOZA",
+    "descripcion": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso.",
+    "horario": "Al amanecer.",
+    "precio": "$250,000 1 hora.  $220,000 hora en paquete de 5 horas.",
+    "historia": "Desde el 2011 Maria empezó a dar clases de Kitesurf, viviendo la experiencia de conocer, conectar y trasmitir con distintas personas a través del kite y dando a conocer un spot inigualable y no tan reconocido en este deporte, como San Andrés Isla.",
+    "palabras_clave": [
+      "Kitesurf",
+      "mar",
+      "actividades",
+      "deportes acuáticos."
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "surf",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [
+      "tabla",
+      "cometa"
+    ],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "marino-parasail",
+    "categoria": "Actividad",
+    "nombre": "MARINO PARASAIL",
+    "descripcion": "El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min de vuelo, para un máximo de dos horas de recorrido.",
+    "horario": "Tienen 5 salidas al día: 8:00, 9:00, 11:00, 14:00 y 16:00 h.",
+    "precio": "$230,000 por persona",
+    "historia": "Todo empezó por practicar el deporte de kitesurf y apartir de esto nació el sueño de ofrecer el PARASAIL en nuestra isla para que todos pudieran disfrutar de la grandiosa vista que tenemos desde las alturas, en el 2013 empezaron a hacer algunos vuelos de parasail y poco a poco han conseguido consolidarse como una empresa reconocida por su equipo de trabajo calificado y personal certificado.",
+    "personaje": "Marino, el fundador de esta actividad, es una persona con mucha experiencia en el mar y se mantiene al mando del estado de los botes y equipos, al momento de reservar te van a atender otras personas calificadas en cada area.",
+    "palabras_clave": [
+      "Parasail",
+      "actividades",
+      "aventura",
+      "vista al mar."
+    ],
+    "tags": [
+      "4-20 friendly"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "parasail",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "richie-parasail",
+    "categoria": "Actividad",
+    "nombre": "RICHIE PARASAIL",
+    "descripcion": "El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min de vuelo, para un máximo de dos horas de recorrido.",
+    "horario": "Tienen 4 salidas al dia: 9:00, 11:00, 14:00 y 16:00 h.",
+    "precio": "$230,000 por persona.",
+    "historia": "Richie Parasail es la empresa pionera del parasail en la isla, fundada hace 10 años por Ricardo Castaño e hijos.",
+    "personaje": "Richie es un visionario que siempre tuvo el sueño de traer el parasail a la isla, su primer bote de Parasail se llamó SunDay.",
+    "datos_color": "Ya han volado más de 50 mil personas. No debes tener ninguna habilidad fisica u experiencia previa para poder realizarlo.",
+    "palabras_clave": [
+      "Parasail",
+      "actividades",
+      "aventura",
+      "vista al mar."
+    ],
+    "segmentacion": [
+      "Mochilero",
+      "aventurero",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "parasail",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "sai-xperience-12",
+    "categoria": "Actividad",
+    "nombre": "SAI XPERIENCE",
+    "descripcion": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje.",
+    "horario": "Segun se reserve.",
+    "precio": "$200,000",
+    "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+    "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+    "palabras_clave": [
+      "Paddle Board",
+      "actividades",
+      "atardecer",
+      "planes de noche."
+    ],
+    "tags": [
+      "Pet friendly",
+      "4-20 friendly"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "experiencia",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "sai-xperience-13",
+    "categoria": "Actividad",
+    "nombre": "SAI XPERIENCE",
+    "descripcion": "El wakeboard es un deporte que puedes lograr si o no en el mismo dia dependiendo de tu capacidad deportiva.",
+    "horario": "Segun se reserve.",
+    "precio": "$280,000",
+    "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+    "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+    "palabras_clave": [
+      "Wake board",
+      "actividades",
+      "mar."
+    ],
+    "tags": [
+      "Pet friendly",
+      "4-20 friendly"
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "experiencia",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "sai-xperience",
+    "categoria": "Actividad",
+    "nombre": "SAI XPERIENCE",
+    "descripcion": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso.",
+    "horario": "Segun se reserve.",
+    "precio": "$250,000 la hora de clase.",
+    "historia": "Sai xperience tiene mas de 5 años de experiencia , personalizan y gestionan tu experiencia segun tus necesidades.",
+    "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+    "palabras_clave": [
+      "Kitesurf",
+      "clases de kitesurf",
+      "escuela de kitesurf."
+    ],
+    "tags": [
+      "Pet friendly",
+      "4-20 friendly"
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "surf",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [
+      "tabla",
+      "cometa"
+    ],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "seawolf",
+    "categoria": "Actividad",
+    "nombre": "SEAWOLF",
+    "descripcion": "Seawolf es una agencia en la que podrás encontrar diferentes actividades en un solo lugar, siempre con un excelente servicio, en los mejores botes de la isla, te invitamos a conocerla.",
+    "horario": "9:00 a 20:00 h",
+    "precio": "Varia dependiendo de la actividad",
+    "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+    "palabras_clave": [
+      "Actividades",
+      "experiencias",
+      "alquileres",
+      "agencia de turismo",
+      "planes."
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_actividad": "experiencia",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  },
+  {
+    "id": "yoga-san-andrs",
+    "categoria": "Actividad",
+    "nombre": "YOGA SAN ANDRÉS",
+    "descripcion": "El yoga es una actividad con multiples beneficios para cuerpo y mente, realizarlo además frente al mar, lo convierte en una experiencia más enriquecedora, animáte a probarlo!",
+    "horario": "Lunes, miércoles y viernes a las 9:30 h.",
+    "precio": "$90,000",
+    "historia": "Yoga San Andrés es creado por Sara Arango, con el propósito de crear una comunidad de yoga en la isla y brindar una experiencia única y distinta a los turistas.",
+    "personaje": "Sara Arango es una isleña enamorada del mar y del movimiento, practica yoga desde el 2014 y empezó a dar clases desde el 2018. En contra de muchos estereotipos al rededor de esta práctica, Sara, no es una profesora de yoga convencional.",
+    "contacto": "Whatsapp: ---- - Instagram: @yoga.sanandres",
+    "palabras_clave": [
+      "Yoga",
+      "clases de yoga",
+      "acroyoga",
+      "playa",
+      "bienestar",
+      "relajación."
+    ],
+    "tags": [
+      "4-20 friendly"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "soltero",
+      "negocios."
+    ],
+    "tipo_actividad": "yoga",
+    "duracion": null,
+    "nivel_dificultad": "todos",
+    "edad_minima": null,
+    "equipo_incluido": [],
+    "certificaciones_disponibles": [],
+    "instructor_certificado": false
+  }
+]

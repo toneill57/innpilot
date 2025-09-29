@@ -1,0 +1,23 @@
+{
+  "id": "banzai-surf-school-16",
+  "categoria": "Actividad",
+  "nombre": "BANZAI SURF SCHOOL",
+  "descripcion": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje.",
+  "horario": "Segun se reserve.",
+  "periodicidad_menu": "@banzaisurfschooladz",
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "palabras_clave": [
+    "Paddle Board",
+    "actividades",
+    "atardecer",
+    "planes de noche."
+  ]
+}

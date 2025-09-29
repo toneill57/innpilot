@@ -1,0 +1,46 @@
+{
+  "id": "allxces",
+  "categoria": "Spot",
+  "nombre": "ALLXCES",
+  "descripcion": "El único spot de entrada libre en la playa de rocky cay, aquí encontrarás un lugar lindo frente a la playa con diferentes sitios para sentarse a disfrutar del día mientras disfrutas de diferentes bebidas y las mejores empanadas de camarón de la isla.",
+  "horario": "De 9am a 7pm",
+  "zona": "San Luis",
+  "subzona": "Rocky Cay",
+  "proximidad_aeropuerto": "FAR",
+  "zona_tipo": "casas isleñas coloridas",
+  "caracteristicas_zona": [
+    "Casas isleñas coloridas",
+    "Zona residencial nativa",
+    "Playas menos concurridas",
+    "Hospedajes turísticos",
+    "Variedad de playas",
+    "Diferentes niveles de oleaje"
+  ],
+  "landmarks_cercanos": [
+    "Barco encallado El Lido",
+    "Cayo Rocky Cay"
+  ],
+  "tipos_negocio_zona": [
+    "actividades",
+    "spots",
+    "restaurantes"
+  ],
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero."
+  ],
+  "_zona_detection_confidence": "high",
+  "tipo_spot": "playa",
+  "mejor_momento_dia": null,
+  "actividades_principales": [],
+  "vistas_disponibles": [
+    "mar",
+    "panorámica de isla"
+  ],
+  "ideal_familias": false,
+  "ideal_parejas": false,
+  "fotografia_permitida": true
+}

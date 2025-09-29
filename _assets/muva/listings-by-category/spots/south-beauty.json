@@ -1,0 +1,23 @@
+{
+  "id": "south-beauty",
+  "categoria": "Spot",
+  "nombre": "SOUTH BEAUTY",
+  "descripcion": "South Beauty o conocido como \"el spot de surf\" es un lugar perfecto para disfrutar de la playa, tomarse algo, comer y sobre todo, aprender a surfear, las pequeñas olas de este sitio lo vuelven el lugar mas seguro de la isla para aprender.",
+  "segmentacion": [
+    "Aventurero",
+    "eco friendly",
+    "soltero",
+    "negocios",
+    "lujo."
+  ],
+  "tipo_spot": "playa",
+  "mejor_momento_dia": null,
+  "actividades_principales": [],
+  "vistas_disponibles": [
+    "mar",
+    "panorámica de isla"
+  ],
+  "ideal_familias": false,
+  "ideal_parejas": false,
+  "fotografia_permitida": true
+}

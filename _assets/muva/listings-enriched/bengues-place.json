@@ -1,0 +1,26 @@
+{
+  "id": "bengues-place",
+  "categoria": "Spot",
+  "nombre": "BENGUE´S PLACE",
+  "descripcion": "Donde Bengue, podrás disfrutar un agua de coco fria frente al mar en las playas de san luis.",
+  "horario": "De 9am a 6pm",
+  "segmentacion": [
+    "Low cost",
+    "mochilero",
+    "aventurero",
+    "eco friendly",
+    "soltero."
+  ],
+  "zona": "San Luis",
+  "_zona_detection_confidence": "high",
+  "proximidad_aeropuerto": "FAR",
+  "zona_tipo": "casas isleñas coloridas",
+  "caracteristicas_zona": [
+    "Casas isleñas coloridas",
+    "Zona residencial nativa",
+    "Playas menos concurridas",
+    "Hospedajes turísticos",
+    "Variedad de playas",
+    "Diferentes niveles de oleaje"
+  ]
+}

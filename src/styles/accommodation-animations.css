@@ -1,0 +1,233 @@
+/* Accommodation System Custom Animations and Styles */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.6);
+  }
+}
+
+/* Custom Animation Classes */
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.animate-glowPulse {
+  animation: glowPulse 2s infinite;
+}
+
+/* Tab Content Animations */
+.tab-content-animation {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Hover Effects for Cards */
+.accommodation-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accommodation-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Performance Indicator Styles */
+.performance-excellent {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+  border-left: 4px solid #22c55e;
+}
+
+.performance-good {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-left: 4px solid #f59e0b;
+}
+
+.performance-poor {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-left: 4px solid #ef4444;
+}
+
+/* Search Type Buttons */
+.search-type-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.search-type-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.search-type-button:hover::before {
+  left: 100%;
+}
+
+/* Theme-based Card Variations */
+.bob-marley-theme {
+  background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #86efac 100%);
+  border-left: 6px solid #22c55e;
+}
+
+.jimmy-buffett-theme {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+  border-left: 6px solid #3b82f6;
+}
+
+.natural-mystic-theme {
+  background: linear-gradient(135deg, #e9d5ff 0%, #ddd6fe 50%, #c4b5fd 100%);
+  border-left: 6px solid #8b5cf6;
+}
+
+/* Responsive Design Enhancements */
+@media (max-width: 768px) {
+  .accommodation-card {
+    transform: none;
+  }
+
+  .accommodation-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .tab-content-animation {
+    animation: fadeIn 0.2s ease-out;
+  }
+}
+
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Status Indicators */
+.status-active {
+  position: relative;
+}
+
+.status-active::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: glowPulse 2s infinite;
+}
+
+/* Enhanced Gradient Backgrounds */
+.tropical-gradient {
+  background: linear-gradient(135deg,
+    #06b6d4 0%,
+    #0891b2 25%,
+    #0e7490 50%,
+    #155e75 75%,
+    #164e63 100%
+  );
+}
+
+.reggae-gradient {
+  background: linear-gradient(135deg,
+    #22c55e 0%,
+    #16a34a 25%,
+    #15803d 50%,
+    #166534 75%,
+    #14532d 100%
+  );
+}
+
+.mystic-gradient {
+  background: linear-gradient(135deg,
+    #8b5cf6 0%,
+    #7c3aed 25%,
+    #6d28d9 50%,
+    #5b21b6 75%,
+    #4c1d95 100%
+  );
+}
+
+/* Button Enhancements */
+.enhanced-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.enhanced-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.enhanced-button:hover::before {
+  left: 100%;
+}
+
+.enhanced-button:active {
+  transform: scale(0.98);
+}

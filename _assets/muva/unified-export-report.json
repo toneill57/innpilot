@@ -1,0 +1,21 @@
+{
+  "categories_processed": 5,
+  "total_listings": 42,
+  "files_generated": 9,
+  "start_time": "2025-09-22T17:22:50.074Z",
+  "end_time": "2025-09-22T17:22:50.084Z",
+  "category_distribution": {
+    "Restaurante": 6,
+    "Actividad": 14,
+    "Spot": 18,
+    "Alquiler": 3,
+    "Nigth Life": 1
+  },
+  "generated_files": {
+    "complete": "_assets/muva/data/unified/muva-listings-complete.json",
+    "embeddings": "_assets/muva/data/exports/muva-embeddings-format.json",
+    "search_index": "_assets/muva/data/exports/muva-search-index.json",
+    "csv_export": "_assets/muva/data/exports/muva-listings.csv",
+    "by_category": "5 files"
+  }
+}

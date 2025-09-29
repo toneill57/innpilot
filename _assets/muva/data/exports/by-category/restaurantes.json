@@ -1,0 +1,163 @@
+[
+  {
+    "id": "aqua",
+    "categoria": "Restaurante",
+    "nombre": "AQUA",
+    "descripcion": "Aqua es un club de playa en la playa de rocky cay, excelente para pasar un dia entero en l aplaya disfrutando de buenas bebidas y excelente comida.",
+    "horario": "10:30 am a 6:00pm",
+    "zona": "San Luis",
+    "subzona": "Rocky Cay",
+    "proximidad_aeropuerto": "FAR",
+    "zona_tipo": "casas isleñas coloridas",
+    "caracteristicas_zona": [
+      "Casas isleñas coloridas",
+      "Zona residencial nativa",
+      "Playas menos concurridas",
+      "Hospedajes turísticos",
+      "Variedad de playas",
+      "Diferentes niveles de oleaje"
+    ],
+    "landmarks_cercanos": [
+      "Barco encallado El Lido",
+      "Cayo Rocky Cay"
+    ],
+    "tipos_negocio_zona": [
+      "actividades",
+      "spots",
+      "restaurantes"
+    ],
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_cocina": null,
+    "rango_precios": "medio",
+    "acepta_reservas": false,
+    "ambiente": "casual"
+  },
+  {
+    "id": "bali-smoothies",
+    "categoria": "Restaurante",
+    "nombre": "BALI SMOOTHIES",
+    "descripcion": "El lugar perfecto para quienes quieren salir a comer rico y saludable, Bali, es un lugar de smoothies, bowls, pancakes y otros antojos, libres de gluten, sin lactosa y deliciosos.",
+    "horario": "7:30 - 11:30 y 15:30 - 19:30",
+    "precio": "$10,000 - $20,000",
+    "historia": "Fundado en diciembre del 2022, con la intención de crear una opción para comer saludable en la isla, con opciones accesibles para personas alérgicas al glúten y a la láctosa, en un espacio lindo y a precios accesibles.",
+    "personaje": "Katherine Santamaria",
+    "datos_color": "Este lugar es único en la isla, tiene opciones increíbles a muy buen precio, además el local es muy lindo, agradable y aceptan mascotas en su terraza.",
+    "palabras_clave": [
+      "000.",
+      "No manejan",
+      "40.000 por clase individual",
+      "Desayuno",
+      "brunch",
+      "comer sano",
+      "sin gluten",
+      "frutas",
+      "smoothies."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_cocina": null,
+    "periodicidad_menu": "Whatsapp: 301 6548965",
+    "rango_precios": "medio",
+    "acepta_reservas": false,
+    "ambiente": "casual"
+  },
+  {
+    "id": "coral-creppes",
+    "categoria": "Restaurante",
+    "nombre": "CORAL CREPPES",
+    "descripcion": "Coral Creppes es un lugar único en la isla, porque son pioneros en ofrecer y dedicarse a los Creppes, tienen opciones dulces, saladas, saludables y sin gluten, aquí, tu mismo eliges que ingredientes ponerle al Creppe que quieres comer.",
+    "horario": "De Jueves a Domingo 6:00pm a 10:30pm",
+    "tipo_cocina": null,
+    "rango_precios": "medio",
+    "acepta_reservas": false,
+    "ambiente": "casual"
+  },
+  {
+    "id": "el-totumasso",
+    "categoria": "Restaurante",
+    "nombre": "EL TOTUMASSO",
+    "descripcion": "El lugar ideal para un almuerzo grande, rico y barato. El totumasso es una joya escondida en las calles del centro de San Andrés que casi nadie visita, un secreto de los locales para ir a almorzar.",
+    "horario": "12:00pm a 3:00pm",
+    "zona": "Centro",
+    "proximidad_aeropuerto": "CLOSE",
+    "zona_tipo": "comercial principal",
+    "caracteristicas_zona": [
+      "Zona comercial principal",
+      "Alta concentración turística",
+      "Vida nocturna y restaurantes",
+      "Playa Spratt Bight",
+      "Mayor concentración de personas"
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "eco friendly."
+    ],
+    "_zona_detection_confidence": "high",
+    "tipo_cocina": null,
+    "rango_precios": "medio",
+    "acepta_reservas": false,
+    "ambiente": "casual"
+  },
+  {
+    "id": "seaweed",
+    "categoria": "Restaurante",
+    "nombre": "SEAWEED",
+    "descripcion": "Seaweed es un espacio hermoso lleno de decoración hecha por una artiste de la isla, en temática marina. Tienen diferentes opciones de comida y funcionan en horario de la tarde y la noche.",
+    "horario": "12:30 a 10:30 pm",
+    "segmentacion": [
+      "Aventurero",
+      "eco friendly",
+      "soltero",
+      "negocios",
+      "lujo."
+    ],
+    "tipo_cocina": "marina",
+    "rango_precios": "medio",
+    "acepta_reservas": false,
+    "ambiente": "casual"
+  },
+  {
+    "id": "tierra-dentro",
+    "categoria": "Restaurante",
+    "nombre": "TIERRA DENTRO",
+    "descripcion": "Un restaurante enfocado en la elaboración de cocina nikkei, en este caso Sushi y cocina Peruana, Tierradentro es un excelente lugar para salir a cenar a un sitio lindo y tranquilo.",
+    "horario": "Lunes a Domingo de 17:00 a 23:00",
+    "precio": "$30,000 - 60,000",
+    "historia": "Nace con la idea de traer otras opciones a la isla, Tierradentro tomò una nueva direcciòn y administraciòn en el 2024, donde decidieron innovar y adaptar el sushi trayendo una experiencia diferente tanto a turistas como residentes.",
+    "personaje": "Ana María Gómez Vanegas",
+    "palabras_clave": [
+      "Sushi",
+      "cena",
+      "comer",
+      "mochis."
+    ],
+    "segmentacion": [
+      "Low cost",
+      "mochilero",
+      "aventurero",
+      "soltero",
+      "negocios."
+    ],
+    "tipo_cocina": null,
+    "periodicidad_menu": "Whatsapp: 321 2662050",
+    "rango_precios": "medio",
+    "acepta_reservas": false,
+    "ambiente": "casual"
+  }
+]

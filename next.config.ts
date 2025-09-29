@@ -9,17 +9,10 @@ const nextConfig: NextConfig = {
     // Only run TypeScript checking for production files
     ignoreBuildErrors: false,
   },
+  // Performance optimizations for development
+  productionBrowserSourceMaps: false,
   // Development optimizations
   ...(process.env.NODE_ENV === 'development' && {
-    // Faster builds in development
-    swcMinify: false,
-    // Optimize chunk loading
-    experimental: {
-      turbo: {
-        // Enable Turbopack optimizations
-        memoryLimit: 4096,
-      },
-    },
     // Compiler optimizations for development
     compiler: {
       // Disable some heavy optimizations in dev
@@ -28,7 +21,6 @@ const nextConfig: NextConfig = {
   }),
   // Production optimizations
   ...(process.env.NODE_ENV === 'production' && {
-    swcMinify: true,
     compiler: {
       removeConsole: {
         exclude: ['error', 'warn'],

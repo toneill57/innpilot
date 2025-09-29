@@ -1,0 +1,365 @@
+[
+  {
+    "id": "aqua",
+    "nombre": "AQUA",
+    "categoria": "Restaurante",
+    "zona": "San Luis",
+    "subzona": "Rocky Cay",
+    "descripcion_corta": "Aqua es un club de playa en la playa de rocky cay, excelente para pasar un dia entero en l aplaya disfrutando de buenas bebidas y excelente comida....",
+    "tags": []
+  },
+  {
+    "id": "bali-smoothies",
+    "nombre": "BALI SMOOTHIES",
+    "categoria": "Restaurante",
+    "descripcion_corta": "El lugar perfecto para quienes quieren salir a comer rico y saludable, Bali, es un lugar de smoothies, bowls, pancakes y otros antojos, libres de gluten, sin lactosa y deliciosos....",
+    "precio": "$10,000 - $20,000",
+    "tags": []
+  },
+  {
+    "id": "coral-creppes",
+    "nombre": "CORAL CREPPES",
+    "categoria": "Restaurante",
+    "descripcion_corta": "Coral Creppes es un lugar único en la isla, porque son pioneros en ofrecer y dedicarse a los Creppes, tienen opciones dulces, saladas, saludables y sin gluten, aquí, tu mismo eliges que ingredientes p...",
+    "tags": []
+  },
+  {
+    "id": "el-totumasso",
+    "nombre": "EL TOTUMASSO",
+    "categoria": "Restaurante",
+    "zona": "Centro",
+    "descripcion_corta": "El lugar ideal para un almuerzo grande, rico y barato. El totumasso es una joya escondida en las calles del centro de San Andrés que casi nadie visita, un secreto de los locales para ir a almorzar....",
+    "tags": []
+  },
+  {
+    "id": "seaweed",
+    "nombre": "SEAWEED",
+    "categoria": "Restaurante",
+    "descripcion_corta": "Seaweed es un espacio hermoso lleno de decoración hecha por una artiste de la isla, en temática marina. Tienen diferentes opciones de comida y funcionan en horario de la tarde y la noche....",
+    "tags": []
+  },
+  {
+    "id": "tierra-dentro",
+    "nombre": "TIERRA DENTRO",
+    "categoria": "Restaurante",
+    "descripcion_corta": "Un restaurante enfocado en la elaboración de cocina nikkei, en este caso Sushi y cocina Peruana, Tierradentro es un excelente lugar para salir a cenar a un sitio lindo y tranquilo....",
+    "precio": "$30,000 - 60,000",
+    "tags": []
+  },
+  {
+    "id": "banzai-surf-school-16",
+    "nombre": "BANZAI SURF SCHOOL",
+    "categoria": "Actividad",
+    "descripcion_corta": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje....",
+    "contacto": "@banzaisurfschooladz",
+    "tags": []
+  },
+  {
+    "id": "banzai-surf-school",
+    "nombre": "BANZAI SURF SCHOOL",
+    "categoria": "Actividad",
+    "zona": "San Luis",
+    "subzona": "El Paraíso",
+    "descripcion_corta": "El surf en San Andrés Islas ofrece olas variadas que son ideales para principiantes. La playa mas concurrida para aprender es El Paraíso y surfistas mas avanzados también lo practican en playas mas al...",
+    "precio": "Clase privada de surf (1 a 2 personas) : 190,000 por persona.",
+    "contacto": "@banzaisurfschooladz",
+    "tags": []
+  },
+  {
+    "id": "blue-life-dive",
+    "nombre": "BLUE LIFE DIVE",
+    "categoria": "Actividad",
+    "zona": "Centro",
+    "descripcion_corta": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en...",
+    "precio": "Minicurso: $230.000. Las certificaciones varian.",
+    "contacto": "Whatsapp: 317 434 4015 - Correo:  info@bluelifedive.com",
+    "tags": []
+  },
+  {
+    "id": "buceo-caribe-azul",
+    "nombre": "BUCEO CARIBE AZUL",
+    "categoria": "Actividad",
+    "zona": "Centro",
+    "descripcion_corta": "El buceo es una actividad que no exige mayor esfuerzo físico, es seguro, este centro de buceo recibe niños desde 12 años en adelante, únicamente se prohíbe a personas con ciertas afecciones cardíacas ...",
+    "precio": "Minicurso: $250,000. Las certificaciones varian.",
+    "contacto": "Whatsapp: 3176359608  Instagram: @buceocaribeazul",
+    "tags": [
+      "Eco friendly"
+    ]
+  },
+  {
+    "id": "caribbean-xperience",
+    "nombre": "CARIBBEAN XPERIENCE",
+    "categoria": "Actividad",
+    "zona": "San Luis",
+    "descripcion_corta": "Haciedno wake board con Caribbean Xperience vas a dominar las olas y la fuerza de la embarcación por medio de una cuerda y una tabla q te arrastran hacia el mar puedes realizarlo en la playa de San Lu...",
+    "tags": []
+  },
+  {
+    "id": "hans-dive-shop",
+    "nombre": "HANS DIVE SHOP",
+    "categoria": "Actividad",
+    "zona": "Centro",
+    "descripcion_corta": "El buceo es una actividad excelente para venir a practicar a la isla de San Andrés, ya que aquí contamos con aguas cristalinas, arrecifes, variedad de especies y uno de los mejores precios de buceo en...",
+    "precio": "Minicurso: $160,000. Las certificaciones varian.",
+    "contacto": "320 926 0935 - 324 560 4878 - hansdiveshop@gmail.com",
+    "tags": []
+  },
+  {
+    "id": "maria-raigoza",
+    "nombre": "MARIA RAIGOZA",
+    "categoria": "Actividad",
+    "descripcion_corta": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso....",
+    "precio": "$250,000 1 hora.  $220,000 hora en paquete de 5 horas.",
+    "tags": []
+  },
+  {
+    "id": "marino-parasail",
+    "nombre": "MARINO PARASAIL",
+    "categoria": "Actividad",
+    "descripcion_corta": "El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min...",
+    "precio": "$230,000 por persona",
+    "tags": [
+      "4-20 friendly"
+    ]
+  },
+  {
+    "id": "richie-parasail",
+    "nombre": "RICHIE PARASAIL",
+    "categoria": "Actividad",
+    "descripcion_corta": "El parasail es una experiencia única que no te deberias perder, consiste en un vuelo elevado a 100 metros de altura, donde disfrutarán de una magnifica vista sobre la bahia, cada pasajero tendrá 15min...",
+    "precio": "$230,000 por persona.",
+    "tags": []
+  },
+  {
+    "id": "sai-xperience-12",
+    "nombre": "SAI XPERIENCE",
+    "categoria": "Actividad",
+    "descripcion_corta": "El paddle board es una actividad tranquila, excelente para disfrutar de un paseo por las aguas cristalinas de la isla y disfrutar el paisaje....",
+    "precio": "$200,000",
+    "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+    "tags": [
+      "Pet friendly",
+      "4-20 friendly"
+    ]
+  },
+  {
+    "id": "sai-xperience-13",
+    "nombre": "SAI XPERIENCE",
+    "categoria": "Actividad",
+    "descripcion_corta": "El wakeboard es un deporte que puedes lograr si o no en el mismo dia dependiendo de tu capacidad deportiva....",
+    "precio": "$280,000",
+    "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+    "tags": [
+      "Pet friendly",
+      "4-20 friendly"
+    ]
+  },
+  {
+    "id": "sai-xperience",
+    "nombre": "SAI XPERIENCE",
+    "categoria": "Actividad",
+    "descripcion_corta": "El kitesurf es un deporte en el que navegas sobre una tabla, manejando una cometa, debes tener preparación para lograr realizarlo, es por eso que es necesario realizar un curso....",
+    "precio": "$250,000 la hora de clase.",
+    "contacto": "Whatsapp: 317 522 44 51 Instagram: @saixperiencecol",
+    "tags": [
+      "Pet friendly",
+      "4-20 friendly"
+    ]
+  },
+  {
+    "id": "seawolf",
+    "nombre": "SEAWOLF",
+    "categoria": "Actividad",
+    "descripcion_corta": "Seawolf es una agencia en la que podrás encontrar diferentes actividades en un solo lugar, siempre con un excelente servicio, en los mejores botes de la isla, te invitamos a conocerla....",
+    "precio": "Varia dependiendo de la actividad",
+    "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+    "tags": []
+  },
+  {
+    "id": "yoga-san-andrs",
+    "nombre": "YOGA SAN ANDRÉS",
+    "categoria": "Actividad",
+    "descripcion_corta": "El yoga es una actividad con multiples beneficios para cuerpo y mente, realizarlo además frente al mar, lo convierte en una experiencia más enriquecedora, animáte a probarlo!...",
+    "precio": "$90,000",
+    "contacto": "Whatsapp: ---- - Instagram: @yoga.sanandres",
+    "tags": [
+      "4-20 friendly"
+    ]
+  },
+  {
+    "id": "allxces",
+    "nombre": "ALLXCES",
+    "categoria": "Spot",
+    "zona": "San Luis",
+    "subzona": "Rocky Cay",
+    "descripcion_corta": "El único spot de entrada libre en la playa de rocky cay, aquí encontrarás un lugar lindo frente a la playa con diferentes sitios para sentarse a disfrutar del día mientras disfrutas de diferentes bebi...",
+    "tags": []
+  },
+  {
+    "id": "arnolds-place",
+    "nombre": "ARNOLD´S PLACE",
+    "categoria": "Spot",
+    "zona": "San Luis",
+    "subzona": "El Paraíso",
+    "descripcion_corta": "Arnold´s place es de los pocos lugares de entrada libre en las playas de El Paraíso, perfecto para pasar un día de descanso entre amigos o familia, aquí encontrarás comida autóctona de la isla y disfe...",
+    "tags": []
+  },
+  {
+    "id": "bengues-place-33",
+    "nombre": "BENGUE´S PLACE",
+    "categoria": "Spot",
+    "descripcion_corta": "Este es el lugar que estas buscando para tomarte un agua de coco fria, frente a la playa de los charquitos, se encuentra el emblematico lugar de Bengue´s y no te lo quieres perder....",
+    "tags": []
+  },
+  {
+    "id": "bengues-place",
+    "nombre": "BENGUE´S PLACE",
+    "categoria": "Spot",
+    "zona": "San Luis",
+    "descripcion_corta": "Donde Bengue, podrás disfrutar un agua de coco fria frente al mar en las playas de san luis....",
+    "tags": []
+  },
+  {
+    "id": "big-mama",
+    "nombre": "BIG MAMA",
+    "categoria": "Spot",
+    "zona": "Cove",
+    "subzona": "Cove",
+    "descripcion_corta": "Big Mama es un lugar que sin duda deberias visitar en San Andrés, es la entrada a un excelente punto para caretear y bucear, siempre te recibiran con una linda energia, en big mama te puedes sentar a ...",
+    "contacto": "@bigmama_km9",
+    "tags": [
+      "Pet friendly",
+      "opciones veggies",
+      "4-20 friendly",
+      "secret gem."
+    ]
+  },
+  {
+    "id": "bobby-rock",
+    "nombre": "BOBBY ROCK",
+    "categoria": "Spot",
+    "descripcion_corta": "Un lugar maravilloso al sur de la isla, donde tomar diferentes bebidas, comidas de la isla y disfrutar del atardecer....",
+    "tags": []
+  },
+  {
+    "id": "buconos-diving",
+    "nombre": "BUCONOS DIVING",
+    "categoria": "Spot",
+    "descripcion_corta": "Una excelente escuela de buceo con la cual hacer tus certificaciones, con Buconos, te puedes preparar desde meses antes de tu viaje con la parte teórica, para llegar a la isla solamente a aplicar la p...",
+    "tags": []
+  },
+  {
+    "id": "casa-museo",
+    "nombre": "CASA MUSEO",
+    "categoria": "Spot",
+    "descripcion_corta": "La casa museo es un sitio para conocer de arquitectura y cultura autóctona de San Andrés isla, aquí vas a encontrar llamativos objetos antiguos al rededor de la casa y vas a conocer de las constumbres...",
+    "tags": []
+  },
+  {
+    "id": "el-planchn",
+    "nombre": "EL PLANCHÓN",
+    "categoria": "Spot",
+    "descripcion_corta": "Un lugar escondido en el sur de la isla, conocido por los locales, es un espacio donde se suelen reunir entre amigos a compartir y disfrutar del mar y la vista....",
+    "tags": []
+  },
+  {
+    "id": "jardn-botnico",
+    "nombre": "JARDÍN BOTÁNICO",
+    "categoria": "Spot",
+    "descripcion_corta": "El Jardín Botánico de San Andrés, es otra forma de ver y conocer la isla. Aquí no solo vas a conocer sobre flores y plantas endémicas sino una visión de la tradición isleña y los beneficios de las pla...",
+    "tags": []
+  },
+  {
+    "id": "laguna-big-pond",
+    "nombre": "LAGUNA BIG POND",
+    "categoria": "Spot",
+    "zona": "Loma",
+    "subzona": "Laguna",
+    "descripcion_corta": "La laguna es un espacio que cuenta con una pequeña formación de agua semisalada, este lugar es un refugio de babillas y muchas otras especies....",
+    "tags": []
+  },
+  {
+    "id": "madguana",
+    "nombre": "MADGUANA",
+    "categoria": "Spot",
+    "zona": "San Luis",
+    "subzona": "Rocky Cay",
+    "descripcion_corta": "Madguana es un sitio en la playa de rocky cay, sencillo, de ambiente chill, donde podras sentarte a disfrutar bebidas, frutas y comidas, mientras disfrutas de una maravillosa vista al mar y donde pued...",
+    "tags": []
+  },
+  {
+    "id": "masally-antiguo",
+    "nombre": "MASALLY ANTIGUO",
+    "categoria": "Spot",
+    "descripcion_corta": "En Masally podrás disfrutar de un espació tranquilo, sencillo y agradable frente al mar, donde podrás caretear y disfrutar de distintas bebidas....",
+    "tags": []
+  },
+  {
+    "id": "masally-nuevo",
+    "nombre": "MASALLY NUEVO",
+    "categoria": "Spot",
+    "descripcion_corta": "Masally te ofrece un espacio cómodo, lindo y tranquilo frente al mar del lado oeste de la isla, donde podrás disfrutas de distintas bebidas y comidas a distintas horas del día....",
+    "tags": []
+  },
+  {
+    "id": "miss-vivi",
+    "nombre": "MISS VIVI",
+    "categoria": "Spot",
+    "descripcion_corta": "Emblemático lugar para quienes crecieron en la isla, Miss Vivi es una joya escondida que solo puedes encontrar abierta los domingos, se trata de una heladeria sencilla pero que todos aman....",
+    "tags": []
+  },
+  {
+    "id": "one-love-tom-hooker",
+    "nombre": "ONE LOVE (TOM HOOKER)",
+    "categoria": "Spot",
+    "zona": "Cove",
+    "subzona": "Tom hooker",
+    "descripcion_corta": "One Love es el único lugar en la playa que vas a encontrar para comer tan al sur de la isla, la playa en la que está ubicado es muy tranquila, no es tan apta para entrar a nadar, pero es perfecta para...",
+    "tags": []
+  },
+  {
+    "id": "reggae-roots",
+    "nombre": "REGGAE ROOTS",
+    "categoria": "Spot",
+    "descripcion_corta": "Reggae Roots es la entrada más cercana a la estatua subacuática de poseidón, aqui podrás entrara a caretear y luego sentarte a tomar algo mientras disfrutas de un ambiente rasta, con música reggae....",
+    "tags": []
+  },
+  {
+    "id": "south-beauty",
+    "nombre": "SOUTH BEAUTY",
+    "categoria": "Spot",
+    "descripcion_corta": "South Beauty o conocido como \"el spot de surf\" es un lugar perfecto para disfrutar de la playa, tomarse algo, comer y sobre todo, aprender a surfear, las pequeñas olas de este sitio lo vuelven el luga...",
+    "tags": []
+  },
+  {
+    "id": "da-black-almond",
+    "nombre": "DA BLACK ALMOND",
+    "categoria": "Alquiler",
+    "descripcion_corta": "Alquiler de carros, motos y pontones....",
+    "tags": []
+  },
+  {
+    "id": "eco-xtreme-san-andres",
+    "nombre": "ECO XTREME SAN ANDRES",
+    "categoria": "Alquiler",
+    "descripcion_corta": "Alquiler de vehículos y botes....",
+    "tags": []
+  },
+  {
+    "id": "seawolf-7",
+    "nombre": "SEAWOLF",
+    "categoria": "Alquiler",
+    "descripcion_corta": "Seawolf es una agencia en la que podrás encontrar diferentes alquileres en un solo lugar, siempre con un excelente servicio, te invitamos a conocerla....",
+    "precio": "Varia dependiendo del vehículo",
+    "contacto": "Instagram: @seawolfsai Whatsapp: 310 7691953",
+    "tags": []
+  },
+  {
+    "id": "caribbean-nigths",
+    "nombre": "CARIBBEAN NIGTHS",
+    "categoria": "Nigth Life",
+    "descripcion_corta": "Un templo de la cultura caribe, las caribbean nigths son organizadas por el cantante isleño Job Saas en su propia casa, aquí se apoya a los artistas isleños conocidos y emergentes, un lugar con una en...",
+    "tags": []
+  }
+]
