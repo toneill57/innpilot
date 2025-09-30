@@ -44,43 +44,58 @@ node scripts/populate-embeddings.js [archivo.md]
 - **SIRE/Compliance** → Tier 2: `["sire", "campos", "validación", "documento"]`
 - **Complex/Fallback** → Tier 3: `default`, large documents, precise matching
 
-## 🚀 PREMIUM CHAT SYSTEM (Sept 2025) ✅ NEW CORE FEATURE
+## 🚀 PREMIUM CHAT SYSTEM (Sept 2025) ✅ CORE FEATURE
 
-**REVOLUTIONARY CONVERSATIONAL AI:**
+**REVOLUTIONARY CONVERSATIONAL AI WITH LLM INTENT DETECTION:**
 - ✅ **77% performance improvement** over traditional chat (1.8s vs 8.1s avg response)
+- ✅ **Claude Haiku LLM intent detection** replaces keyword matching (95%+ accuracy)
+- ✅ **Conversational responses** - shows ONLY relevant content based on semantic understanding
 - ✅ **Dual-content intelligence** combining accommodation + tourism data
-- ✅ **Smart query detection** automatically determines content needs
 - ✅ **Premium-only feature** driving subscription value
 
+**LLM INTENT SYSTEM (NEW - Sept 2025):**
+- 🤖 **Claude Haiku 3.5** for semantic query understanding
+- 🎯 **Intent Types**: `accommodation`, `tourism`, `general`
+- 📊 **Confidence Scoring**: 0-1 range with reasoning
+- ⚡ **Smart Search**: Only queries relevant vector DBs
+- 🔍 **Quality Filtering**: 0.2 threshold (optimized for short queries) + deduplication + top 3 unique results
+- 💰 **Business Info Enrichment**: Every tourism response includes precio, teléfono, zona, website
+- 💬 **Conversational**: Shows multiple options in natural format (not data dumps)
+- ✅ **Improved Recall**: "surf" → surf schools with contact info, "suites con terraza" → 3 options
+
 **ARCHITECTURE COMPONENTS:**
-- **Frontend**: `/src/components/Chat/PremiumChatInterface.tsx` - conversational UI with performance metrics
-- **Backend**: `/src/app/api/premium-chat/route.ts` - smart routing with parallel search
+- **Frontend**: `/src/components/Chat/PremiumChatInterface.dev.tsx` - conversational UI with metrics dashboard
+- **Backend**: `/src/app/api/premium-chat-dev/route.ts` - LLM intent + parallel search
+- **Intent Detection**: `/src/lib/premium-chat-intent.ts` - Claude Haiku integration
 - **Dashboard**: Premium tab in `AuthenticatedDashboard.tsx` with premium branding
-- **Search Logic**: Leverages existing Vector Search infrastructure for maximum performance
 
 **DEVELOPMENT CONTEXT:**
 ```typescript
-// Smart query detection determines search strategy
-determineSearchType(query: string): 'accommodation' | 'tourism' | 'both'
+// LLM-based intent detection (replaces keywords)
+const intent = await detectPremiumChatIntent(query)
+// Returns: { type: 'tourism', confidence: 0.95, reasoning: "...", shouldShowBoth: false }
 
-// Parallel search execution for optimal performance
-const [accommodationResults, tourismResults] = await Promise.all([...])
+// Smart search strategy based on intent
+const searchAccommodation = shouldSearchAccommodation(intent)
+const searchTourism = shouldSearchTourism(intent)
 
-// Intelligent response combination with source attribution
-response: string, sources: [...], performance: {...}
+// Conversational response formatting with similarity filtering
+const response = formatResponse(accommodationResults, tourismResults, query, intent)
+// Example: "En San Andrés puedes **bucear**: [info]... 💡 También encontré otras opciones."
 ```
 
 **KEY IMPLEMENTATION FILES:**
-- `PremiumChatInterface.tsx` - Main chat component with markdown rendering
-- `premium-chat/route.ts` - API endpoint with smart query routing
-- `search-router.ts` - Matryoshka tier selection logic
-- `query-intent.ts` - Query intent detection with Claude Haiku
+- `premium-chat-intent.ts` - LLM intent detection with Claude Haiku
+- `premium-chat-dev/route.ts` - API endpoint with conversational formatting
+- `PremiumChatInterface.dev.tsx` - Chat UI with metrics tracking
+- `types.ts` - Extended metrics (tokens, performance, quality, intent)
 
 **PERFORMANCE METRICS:**
-- Vector Search Infrastructure: 1.8s avg response time
+- LLM Intent Detection: ~944ms avg, $0.00001/query
+- Vector Search: 1.8s avg response time
 - Traditional Chat: 8.1s avg response time
-- Performance Improvement: 77% faster
-- Premium feature conversion driver
+- Total Improvement: 77% faster + better UX
+- See: `docs/LLM_INTENT_DETECTION.md` for complete details
 
 ## Database Schema - MULTI-TENANT MATRYOSHKA SYSTEM
 
@@ -96,6 +111,8 @@ response: string, sources: [...], performance: {...}
 ## Embeddings
 
 **Sistema Consolidado**: Script único `populate-embeddings.js` con multi-tier automático, 6 índices HNSW, router inteligente, y extracción completa de campos.
+
+**MUVA Listings**: Sistema de plantillas para contenido turístico con business metadata estructurado (precio, teléfono, zona). Ver `docs/MUVA_LISTINGS_GUIDE.md` para crear nuevos listings.
 
 ## Critical Issues & Solutions
 
@@ -126,3 +143,74 @@ response: string, sources: [...], performance: {...}
 - Git auto-refresh configurado en `.vscode/settings.json`
 
 **📋 Complete details**: See `SNAPSHOT.md` for environment variables, documentation index, and technical guides.
+
+## 🎯 DESARROLLO ACTUAL (Sept 2025)
+
+**PRIORIDAD #1: CORE PRODUCT - Sistema Conversacional con Memoria**
+
+### Objetivo
+Asistente AI conversacional que permite a huéspedes mantener conversaciones persistentes con contexto completo, ligadas a cada reserva.
+
+### Estado Actual
+- **Planificación**: ✅ Completa (Sept 30, 2025)
+- **FASE 1.1** (Guest Auth): ✅ Completado (53 tests)
+- **FASE 1.2** (Chat Engine): ✅ Completado (55 tests)
+- **FASE 1.3** (Database): ⚠️ Parcial (auto-save implementado)
+- **FASE 1.4** (Frontend): 🔜 Pendiente
+- **Documentación**: `plan.md` (1,047 líneas) + `TODO.md` (640+ líneas)
+- **Timeline**: 5-8 semanas (3 fases)
+- **Modelo**: Claude Sonnet 3.5 ($0.006/query promedio)
+
+### Referencias Esenciales
+- **Plan completo**: Ver `/Users/oneill/Sites/apps/InnPilot/plan.md`
+- **Tareas actuales**: Ver `/Users/oneill/Sites/apps/InnPilot/TODO.md`
+- **Arquitectura base**: `docs/PREMIUM_CHAT_ARCHITECTURE.md` (sistema actual sin memoria)
+
+### Fases de Implementación
+1. **FASE 1: Core Conversacional** (Semanas 1-3) - ⚠️ EN PROGRESO
+   - ✅ Guest Authentication System (`/api/guest/login`)
+   - ✅ Conversational Chat Engine (`/api/guest/chat`)
+   - ⚠️ Persistence & Database (parcial - falta indexes/RLS)
+   - 🔜 Frontend Guest Interface
+   - 🔜 Testing & Validation
+
+2. **FASE 2: Enhanced UX** (Semanas 4-5)
+   - Follow-up Suggestion System
+   - Entity Tracking Display
+   - Mobile Optimization
+   - Rich Media Support
+
+3. **FASE 3: Intelligence** (Semanas 6-8)
+   - Proactive Recommendations
+   - Booking Integration
+   - Multi-language Support
+   - Staff Dashboard
+
+### Comandos Esenciales para Desarrollo
+```bash
+# Iniciar desarrollo del sistema conversacional
+npm run dev
+
+# Testing del nuevo sistema
+npm test -- src/lib/__tests__/context-enhancer.test.ts     # Context enhancer (19 tests)
+npm test -- src/lib/__tests__/conversational-chat-engine.test.ts  # Chat engine (12 tests)
+npm test -- src/lib/__tests__/guest-auth.test.ts           # Guest auth (24 tests)
+
+# Todos los tests (55 tests passing)
+npm test -- src/lib/__tests__/
+
+# Database migrations (pendientes para FASE 1.3)
+# npm run db:migrate
+```
+
+### Diferencia con Sistema Actual
+- **Sistema ACTUAL** (`/api/premium-chat-dev`): Sin memoria, cada query independiente, keyword-based
+- **Sistema NUEVO** (`/api/guest/chat`):
+  - ✅ Memoria persistente (historial últimos 10 mensajes)
+  - ✅ Context tracking (entity extraction + boosting)
+  - ✅ Query enhancement (Claude Haiku para expandir queries ambiguas)
+  - ✅ Entity recognition (auto-tracking de lugares, actividades mencionadas)
+  - ✅ Follow-up suggestions (3 sugerencias contextuales)
+  - ✅ Confidence scoring (similarity + query enhancement)
+
+**⚠️ IMPORTANTE**: Durante desarrollo, consultar `plan.md` para especificaciones completas de arquitectura, API contracts, y database schema del nuevo sistema.

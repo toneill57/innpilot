@@ -4,7 +4,7 @@ description: "Estado actual del proyecto InnPilot - Septiembre 2025. Sistema mul
 category: architecture-analysis
 status: PRODUCTION-READY-MATRYOSHKA-ARCHITECTURE
 version: "5.0-MATRYOSHKA-ARCHITECTURE"
-last_updated: "2025-09-23"
+last_updated: "2025-09-30"
 previous_snapshot: "4.0-MUVA-ACCESS-SYSTEM (Sistema multi-tenant operacional con acceso MUVA)"
 tags: [production_ready, matryoshka_embeddings, performance_breakthrough, tier_architecture, muva_access, multi_tenant_complete]
 keywords: ["matryoshka_embeddings", "performance_breakthrough", "tier_architecture", "production_ready", "muva_access", "vector_optimization", "10x_performance"]
@@ -609,9 +609,48 @@ El sistema ha alcanzado **estado enterprise production-ready** con las siguiente
 
 ---
 
+## 🎯 FASE ACTUAL: Sistema Conversacional con Memoria (Sept 30, 2025)
+
+**🚨 CORE PRODUCT EN DESARROLLO - PRIORIDAD #1**
+
+### **Objetivo Principal**
+Desarrollar asistente AI conversacional que permita a huéspedes mantener conversaciones persistentes con contexto completo, ligadas a su reserva.
+
+### **Estado Actual**
+- **Fase**: Planificación completa ✅
+- **Documentación**: `plan.md` (1,047 líneas) + `TODO.md` (605 líneas)
+- **Timeline**: 5-8 semanas (3 fases)
+- **Modelo LLM**: Claude Sonnet 3.5 ($0.006/query)
+
+### **Fases del Proyecto**
+1. **FASE 1: Core Conversacional** (2-3 semanas)
+   - Guest Authentication (check-in + phone)
+   - Conversational Engine (context tracking)
+   - Database Persistence (RLS + indexes)
+   - Frontend Interface (mobile-first)
+
+2. **FASE 2: Enhanced UX** (1-2 semanas)
+   - Follow-up suggestions
+   - Entity tracking display
+   - Mobile optimization (voice input, PWA)
+   - Rich media support
+
+3. **FASE 3: Intelligence** (2-3 semanas)
+   - Proactive recommendations
+   - Booking integration
+   - Multi-language support
+   - Staff dashboard
+
+### **Referencias**
+- **Plan completo**: `/plan.md`
+- **Tareas actuales**: `/TODO.md`
+- **Arquitectura base**: `docs/PREMIUM_CHAT_ARCHITECTURE.md`
+
+---
+
 ## 🚀 PRÓXIMOS PASOS INMEDIATOS (POST-MATRYOSHKA BREAKTHROUGH)
 
-### **✅ COMPLETADO HOY (Sept 23, 2025) - BREAKTHROUGH ACHIEVED**
+### **✅ COMPLETADO (Sept 23-30, 2025) - BREAKTHROUGH ACHIEVED**
 1. ✅ ~~🪆 Implementación completa Matryoshka embeddings~~ (REVOLUTIONARY SUCCESS)
 2. ✅ ~~10x performance improvement verificado~~ (5-15ms vs 50-200ms)
 3. ✅ ~~6 vector indexes HNSW creados y funcionando~~ (vs 0 anteriormente)

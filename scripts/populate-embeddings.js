@@ -27,7 +27,7 @@ const supabase = createClient(
 // MATRYOSHKA EMBEDDING SYSTEM - MULTI-TIER DIMENSIONS
 // Tier 1: 1024 dims (fast), Tier 2: 1536 dims (balanced), Tier 3: 3072 dims (full)
 
-const METADATA_VERSION = "1.0"
+const METADATA_VERSION = "2.0"
 
 // MATRYOSHKA DIMENSION STRATEGY - UPDATED FOR ACCOMMODATION SYSTEM
 const DIMENSION_STRATEGY = {
@@ -1554,6 +1554,7 @@ async function insertEmbedding(chunk, chunkIndex, totalChunks, metadata, filenam
     insertData.title = metadata.document?.title || metadata.title
     insertData.description = metadata.document?.description || metadata.description || null
     insertData.category = metadata.document?.category || metadata.category || destination.documentType
+    insertData.subcategory = metadata.document?.subcategory || metadata.subcategory || null
     insertData.status = metadata.accommodation?.status || metadata.status || 'active'
     insertData.version = metadata.document?.version || metadata.version || '1.0'
     insertData.tags = metadata.document?.tags || metadata.tags || null
@@ -1565,63 +1566,63 @@ async function insertEmbedding(chunk, chunkIndex, totalChunks, metadata, filenam
 
     // MUVA-specific metadata for muva_content table
     if (destination.table === 'muva_content') {
-      // Check if document has MUVA-specific fields
+      // Check if document has MUVA-specific fields (business metadata from YAML)
+      const businessMetadata = metadata.business || {}
       const muvaFields = ['zona', 'horario', 'precio', 'contacto', 'telefono', 'website', 'actividades_disponibles', 'caracteristicas_zona', 'landmarks_cercanos', 'tipos_negocio_zona', 'segmentacion']
-      const hasMuvaFields = muvaFields.some(field => metadata.hasOwnProperty(field))
+      const hasMuvaFields = muvaFields.some(field => metadata.hasOwnProperty(field) || businessMetadata.hasOwnProperty(field))
 
       if (hasMuvaFields) {
-        console.log(`   🏢 Adding MUVA-specific metadata for tourism content`)
+        console.log(`   🏢 Adding MUVA business metadata as structured JSONB`)
 
-        // Add MUVA metadata as JSON in a special field or extend existing fields
-        const muvaMetadata = {}
+        // Build business_info JSONB object from business section and root level
+        const businessInfo = {}
 
-        // Business operation details
-        if (metadata.zona) muvaMetadata.zona = metadata.zona
-        if (metadata.subzona) muvaMetadata.subzona = metadata.subzona
-        if (metadata.horario) muvaMetadata.horario = metadata.horario
-        if (metadata.precio) muvaMetadata.precio = metadata.precio
+        // Business operation details (prefer business.* over root level)
+        if (businessMetadata.zona || metadata.zona) businessInfo.zona = businessMetadata.zona || metadata.zona
+        if (businessMetadata.subzona || metadata.subzona) businessInfo.subzona = businessMetadata.subzona || metadata.subzona
+        if (businessMetadata.horario || metadata.horario) businessInfo.horario = businessMetadata.horario || metadata.horario
+        if (businessMetadata.precio || metadata.precio) businessInfo.precio = businessMetadata.precio || metadata.precio
+        if (businessMetadata.categoria || metadata.categoria) businessInfo.categoria = businessMetadata.categoria || metadata.categoria
 
         // Contact information
-        if (metadata.contacto) muvaMetadata.contacto = metadata.contacto
-        if (metadata.telefono) muvaMetadata.telefono = metadata.telefono
-        if (metadata.website) muvaMetadata.website = metadata.website
+        if (businessMetadata.contacto || metadata.contacto) businessInfo.contacto = businessMetadata.contacto || metadata.contacto
+        if (businessMetadata.telefono || metadata.telefono) businessInfo.telefono = businessMetadata.telefono || metadata.telefono
+        if (businessMetadata.website || metadata.website) businessInfo.website = businessMetadata.website || metadata.website
 
         // Location and zone details
-        if (metadata.proximidad_aeropuerto) muvaMetadata.proximidad_aeropuerto = metadata.proximidad_aeropuerto
-        if (metadata.zona_tipo) muvaMetadata.zona_tipo = metadata.zona_tipo
-        if (metadata.caracteristicas_zona) muvaMetadata.caracteristicas_zona = metadata.caracteristicas_zona
-        if (metadata.landmarks_cercanos) muvaMetadata.landmarks_cercanos = metadata.landmarks_cercanos
-        if (metadata.tipos_negocio_zona) muvaMetadata.tipos_negocio_zona = metadata.tipos_negocio_zona
+        if (metadata.proximidad_aeropuerto) businessInfo.proximidad_aeropuerto = metadata.proximidad_aeropuerto
+        if (metadata.zona_tipo) businessInfo.zona_tipo = metadata.zona_tipo
+        if (businessMetadata.caracteristicas_zona || metadata.caracteristicas_zona) {
+          businessInfo.caracteristicas_zona = businessMetadata.caracteristicas_zona || metadata.caracteristicas_zona
+        }
+        if (businessMetadata.landmarks_cercanos || metadata.landmarks_cercanos) {
+          businessInfo.landmarks_cercanos = businessMetadata.landmarks_cercanos || metadata.landmarks_cercanos
+        }
+        if (metadata.tipos_negocio_zona) businessInfo.tipos_negocio_zona = metadata.tipos_negocio_zona
 
         // Tourism-specific fields
-        if (metadata.actividades_disponibles) muvaMetadata.actividades_disponibles = metadata.actividades_disponibles
-        if (metadata.segmentacion) muvaMetadata.segmentacion = metadata.segmentacion
+        if (businessMetadata.actividades_disponibles || metadata.actividades_disponibles) {
+          businessInfo.actividades_disponibles = businessMetadata.actividades_disponibles || metadata.actividades_disponibles
+        }
+        if (businessMetadata.segmentacion || metadata.segmentacion) {
+          businessInfo.segmentacion = businessMetadata.segmentacion || metadata.segmentacion
+        }
 
-        // Store MUVA metadata in the description field (append) and tags for searchability
-        if (Object.keys(muvaMetadata).length > 0) {
-          // Extend keywords with MUVA-specific terms for better search
+        // Store as JSONB in business_info column
+        if (Object.keys(businessInfo).length > 0) {
+          insertData.business_info = businessInfo
+
+          // Also extend keywords for search optimization
           const muvaKeywords = []
-          if (metadata.zona) muvaKeywords.push(metadata.zona)
-          if (metadata.actividades_disponibles) muvaKeywords.push(...metadata.actividades_disponibles)
-          if (metadata.segmentacion) muvaKeywords.push(...metadata.segmentacion)
+          if (businessInfo.zona) muvaKeywords.push(businessInfo.zona)
+          if (businessInfo.actividades_disponibles) muvaKeywords.push(...businessInfo.actividades_disponibles)
+          if (businessInfo.segmentacion) muvaKeywords.push(...businessInfo.segmentacion)
 
           // Merge with existing keywords
           const existingKeywords = insertData.keywords || []
           insertData.keywords = [...existingKeywords, ...muvaKeywords].filter(Boolean)
 
-          // Add structured metadata to description for searchability
-          const metadataText = [
-            metadata.zona ? `Ubicación: ${metadata.zona}` : '',
-            metadata.horario ? `Horarios: ${metadata.horario}` : '',
-            metadata.precio ? `Precios: ${metadata.precio}` : '',
-            metadata.contacto ? `Contacto: ${metadata.contacto}` : '',
-            metadata.telefono ? `Teléfono: ${metadata.telefono}` : '',
-            metadata.actividades_disponibles ? `Actividades: ${metadata.actividades_disponibles.join(', ')}` : ''
-          ].filter(Boolean).join(' | ')
-
-          if (metadataText) {
-            insertData.description = `${insertData.description || ''}\n\nInformación adicional: ${metadataText}`.trim()
-          }
+          console.log(`   ✅ Business info structured: zona=${businessInfo.zona}, precio=${businessInfo.precio ? 'yes' : 'no'}, telefono=${businessInfo.telefono ? 'yes' : 'no'}`)
         }
       }
     }

@@ -21,23 +21,11 @@ import {
   Trash2,
   FlaskConical
 } from "lucide-react"
-
-interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  timestamp: Date
-  sources?: Array<{
-    type: 'accommodation' | 'tourism'
-    name: string
-    similarity: number
-  }>
-  performance?: {
-    responseTime: number
-    tier: string
-    resultsCount: number
-  }
-}
+import ReactMarkdown from 'react-markdown'
+import { useSessionMetrics } from '@/hooks/useSessionMetrics'
+import { MetricsDashboard } from './MetricsDashboard'
+import { MessageMetricsCard } from './MessageMetricsCard'
+import { ChatMessage } from './shared/types'
 
 interface PremiumChatInterfaceDevProps {
   clientId: string
@@ -97,17 +85,13 @@ export function PremiumChatInterfaceDev({ clientId, businessName }: PremiumChatI
     {
       id: '1',
       role: 'assistant',
-      content: `🧪 **VERSIÓN DE DESARROLLO** 🧪
+      content: `¡Hola! Soy tu asistente premium de **${businessName}**.
 
-¡Hola! Soy tu asistente premium de **${businessName}** (versión testing).
+**Acceso a contenido:**
+- 🏨 Información del hotel (habitaciones, amenidades, políticas)
+- 🌴 Datos turísticos (actividades, restaurantes, playas)
 
-Tengo acceso a:
-🏨 **Información completa del hotel** (habitaciones, amenidades, políticas)
-🌴 **Datos turísticos de San Andrés** (actividades, restaurantes, playas)
-
-⚠️ **NOTA**: Esta es una versión experimental para pruebas y desarrollo. Los cambios aquí no afectan la versión en producción.
-
-Puedo ayudarte con consultas combinadas como "habitación con vista al mar + restaurantes cercanos" o información específica sobre cualquier aspecto. ¿En qué puedo asistirte?`,
+¿En qué puedo ayudarte?`,
       timestamp: new Date()
     }
   ])
@@ -115,8 +99,12 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [showSuggestions, setShowSuggestions] = useState(true)
+  const [showMetricsDashboard, setShowMetricsDashboard] = useState(true)
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // NEW: Session metrics tracking
+  const { sessionMetrics, addQuery, resetSession, exportSession } = useSessionMetrics()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -147,21 +135,19 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
       {
         id: '1',
         role: 'assistant',
-        content: `🧪 **VERSIÓN DE DESARROLLO** 🧪
+        content: `¡Hola! Soy tu asistente premium de **${businessName}**.
 
-¡Hola! Soy tu asistente premium de **${businessName}** (versión testing).
+**Acceso a contenido:**
+- 🏨 Información del hotel (habitaciones, amenidades, políticas)
+- 🌴 Datos turísticos (actividades, restaurantes, playas)
 
-Tengo acceso a:
-🏨 **Información completa del hotel** (habitaciones, amenidades, políticas)
-🌴 **Datos turísticos de San Andrés** (actividades, restaurantes, playas)
-
-⚠️ **NOTA**: Esta es una versión experimental para pruebas y desarrollo. Los cambios aquí no afectan la versión en producción.
-
-Puedo ayudarte con consultas combinadas como "habitación con vista al mar + restaurantes cercanos" o información específica sobre cualquier aspecto. ¿En qué puedo asistirte?`,
+¿En qué puedo ayudarte?`,
         timestamp: new Date()
       }
     ])
     setShowSuggestions(true)
+    // Also reset session metrics
+    resetSession()
   }
 
   const shareConversation = async () => {
@@ -223,23 +209,30 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
       const assistantMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `🧪 **[DEV]** ${data.response || 'Lo siento, no pude generar una respuesta. Por favor, intenta de nuevo.'}`,
+        content: data.response || 'Lo siento, no pude generar una respuesta. Por favor, intenta de nuevo.',
         timestamp: new Date(),
         sources: data.sources || [],
         performance: {
           responseTime,
-          tier: `${data.tier_info?.name || 'N/A'} (Dev)`,
+          tier: data.tier_info?.name || 'N/A',
           resultsCount: data.results_count || 0
-        }
+        },
+        // NEW: Extended metrics from API
+        metrics: data.metrics
       }
 
       setMessages(prev => [...prev, assistantMessage])
+
+      // NEW: Track query in session metrics
+      if (data.metrics) {
+        addQuery(assistantMessage)
+      }
     } catch (error) {
       console.error('Error en chat premium dev:', error)
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: '🧪 **[DEV ERROR]** Lo siento, hubo un error al procesar tu consulta en la versión de desarrollo. Por favor, verifica tu conexión e intenta de nuevo.',
+        content: '❌ **Error de conexión**\n\nLo siento, hubo un error al procesar tu consulta. Por favor, verifica tu conexión e intenta de nuevo.',
         timestamp: new Date()
       }
       setMessages(prev => [...prev, errorMessage])
@@ -249,7 +242,7 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
   }
 
   return (
-    <div className="h-full max-w-6xl mx-auto">
+    <div className="h-full max-w-7xl mx-auto">
       {/* Header con indicadores de desarrollo */}
       <div className="flex justify-between items-center p-4 bg-gradient-to-r from-orange-50 to-yellow-50 border-b border-orange-200 rounded-t-lg">
         <div className="flex items-center">
@@ -291,6 +284,29 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
         </div>
       </div>
 
+      {/* NEW: Metrics Dashboard Toggle */}
+      <div className="flex justify-end p-2 bg-orange-50 border-b border-orange-200">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowMetricsDashboard(!showMetricsDashboard)}
+        >
+          {showMetricsDashboard ? 'Hide' : 'Show'} Metrics Dashboard
+        </Button>
+      </div>
+
+      {/* NEW: Metrics Dashboard */}
+      {showMetricsDashboard && (
+        <MetricsDashboard
+          sessionMetrics={sessionMetrics}
+          onExport={exportSession}
+          onReset={() => {
+            resetSession()
+            clearConversation()
+          }}
+        />
+      )}
+
       <div className="flex h-[600px]">
         {/* Chat Area */}
         <div className="flex-1 flex flex-col">
@@ -298,12 +314,12 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
           <ScrollArea className="flex-1 p-4">
             <div className="space-y-4">
               {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex items-start space-x-3 ${
-                    message.role === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
-                >
+                <div key={message.id}>
+                  <div
+                    className={`flex items-start space-x-3 ${
+                      message.role === 'user' ? 'justify-end' : 'justify-start'
+                    }`}
+                  >
                   {message.role === 'assistant' && (
                     <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full flex items-center justify-center">
                       <FlaskConical className="w-4 h-4 text-white" />
@@ -316,40 +332,82 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
                       : 'bg-white border-2 border-dashed border-orange-200'
                   } rounded-lg p-3 shadow-sm`}>
                     <div className="prose prose-sm max-w-none">
-                      <div className={`text-sm leading-relaxed ${
-                        message.role === 'user' ? 'text-white' : 'text-gray-800'
-                      }`}>
-                        {message.content.split('\n').map((line, index) => (
-                          <p key={index} className={`${index === 0 ? '' : 'mt-2'} ${line.startsWith('🏨') || line.startsWith('🌴') || line.startsWith('🧪') ? 'font-medium' : ''}`}>
-                            {line}
-                          </p>
-                        ))}
-                      </div>
+                      {message.role === 'user' ? (
+                        <div className="text-sm leading-relaxed text-white">
+                          {message.content}
+                        </div>
+                      ) : (
+                        <div className="text-sm leading-relaxed text-gray-800">
+                          <ReactMarkdown
+                            components={{
+                              p: ({node, ...props}) => <p className="mb-2" {...props} />,
+                              strong: ({node, ...props}) => <strong className="font-semibold text-gray-900" {...props} />,
+                              ul: ({node, ...props}) => <ul className="list-disc pl-4 mb-2" {...props} />,
+                              li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                              h1: ({node, ...props}) => <h1 className="text-lg font-bold mb-2 text-gray-900" {...props} />,
+                              h2: ({node, ...props}) => <h2 className="text-base font-semibold mb-2 text-gray-800" {...props} />,
+                              h3: ({node, ...props}) => <h3 className="text-sm font-medium mb-1 text-gray-700" {...props} />,
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
+                        </div>
+                      )}
                     </div>
+
+                    {/* Sources display - visually attractive badges */}
+                    {message.role === 'assistant' && message.sources && message.sources.length > 0 && (
+                      <div className="mt-3 pt-3 border-t border-gray-200">
+                        <div className="flex items-center mb-2">
+                          <span className="text-xs font-medium text-gray-600">📚 Fuentes consultadas</span>
+                          <span className="ml-2 text-xs text-gray-400">({message.sources.length})</span>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {message.sources.map((source, idx) => (
+                            <div
+                              key={idx}
+                              className={`inline-flex items-center px-2 py-1 rounded-md text-xs border ${
+                                source.type === 'accommodation'
+                                  ? 'bg-blue-50 border-blue-200 text-blue-800'
+                                  : 'bg-green-50 border-green-200 text-green-800'
+                              }`}
+                            >
+                              <span className="mr-1">{source.type === 'accommodation' ? '🏨' : '🌴'}</span>
+                              <span className="font-medium truncate max-w-[150px]">{source.name}</span>
+                              <span className="ml-2 px-1 py-0.5 bg-white rounded text-[10px] font-mono">
+                                {Math.round(source.similarity * 100)}%
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Performance indicators for assistant messages - versión dev */}
                     {message.role === 'assistant' && message.performance && (
-                      <div className="mt-3 pt-2 border-t border-orange-100">
-                        <div className="flex items-center justify-between text-xs text-gray-500">
-                          <div className="flex items-center space-x-3">
-                            <span className="flex items-center">
-                              <Clock className="w-3 h-3 mr-1" />
-                              {message.performance.responseTime}ms
-                            </span>
-                            <span className="flex items-center">
-                              <Zap className="w-3 h-3 mr-1" />
-                              {message.performance.tier}
-                            </span>
-                            {message.performance.resultsCount > 0 && (
-                              <span className="flex items-center">
-                                <CheckCircle className="w-3 h-3 mr-1" />
-                                {message.performance.resultsCount} resultados
-                              </span>
-                            )}
-                            <span className="flex items-center text-orange-600">
+                      <div className="mt-3 pt-3 border-t border-orange-200">
+                        <div className="bg-orange-50 rounded-md p-2 border border-orange-100">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-medium text-orange-800 flex items-center">
                               <FlaskConical className="w-3 h-3 mr-1" />
-                              DEV
+                              Dev Metrics
                             </span>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 text-xs">
+                            <div className="flex items-center text-gray-600">
+                              <Clock className="w-3 h-3 mr-1 text-blue-500" />
+                              <span className="font-mono">{message.performance.responseTime}ms</span>
+                            </div>
+                            <div className="flex items-center text-gray-600">
+                              <Zap className="w-3 h-3 mr-1 text-purple-500" />
+                              <span className="truncate">{message.performance.tier}</span>
+                            </div>
+                            {message.performance.resultsCount > 0 && (
+                              <div className="flex items-center text-gray-600">
+                                <CheckCircle className="w-3 h-3 mr-1 text-green-500" />
+                                <span>{message.performance.resultsCount} results</span>
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -387,6 +445,12 @@ Puedo ayudarte con consultas combinadas como "habitación con vista al mar + res
                     <div className="flex-shrink-0 w-8 h-8 bg-orange-400 rounded-full flex items-center justify-center">
                       <User className="w-4 h-4 text-white" />
                     </div>
+                  )}
+                  </div>
+
+                  {/* NEW: Per-message metrics card */}
+                  {message.role === 'assistant' && message.metrics && (
+                    <MessageMetricsCard message={message} />
                   )}
                 </div>
               ))}

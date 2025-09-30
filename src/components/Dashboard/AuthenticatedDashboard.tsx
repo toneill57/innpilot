@@ -9,11 +9,12 @@ import { ListingsChatAssistant } from "@/components/ChatAssistant/ListingsChatAs
 import { AccommodationSystemDashboard } from "@/components/Accommodation/AccommodationSystemDashboard"
 import { PremiumChatInterface } from "@/components/Chat/PremiumChatInterface"
 import { PremiumChatInterfaceDev } from "@/components/Chat/PremiumChatInterface.dev"
-import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users, LogOut, Building2, Home, Bot, FlaskConical, ToggleLeft, ToggleRight } from "lucide-react"
+import { PremiumChatInterfaceSemantic } from "@/components/Chat/PremiumChatInterface.semantic"
+import { FileCheck, MessageCircle, Upload, BarChart3, Shield, Users, LogOut, Building2, Home, Bot, FlaskConical, ToggleLeft, ToggleRight, Brain } from "lucide-react"
 
 export function AuthenticatedDashboard() {
   const { user, activeClient, signOut } = useAuth()
-  const [activeTab, setActiveTab] = useState<'chat' | 'upload' | 'sire' | 'accommodation' | 'reports' | 'premium-chat'>('chat')
+  const [activeTab, setActiveTab] = useState<'chat' | 'upload' | 'sire' | 'accommodation' | 'reports' | 'premium-chat' | 'semantic-chat'>('chat')
   const [isDevMode, setIsDevMode] = useState(false)
 
   if (!user || !activeClient) {
@@ -184,6 +185,26 @@ export function AuthenticatedDashboard() {
                     Premium
                   </span>
                 )}
+              </button>
+            )}
+
+            {/* Semantic Chat Tab - Only for Premium users */}
+            {activeClient.has_muva_access && (
+              <button
+                onClick={() => setActiveTab('semantic-chat')}
+                className={`py-3 px-4 font-medium text-sm whitespace-nowrap flex items-center rounded-lg transition-all duration-300 group enhanced-button relative ${
+                  activeTab === 'semantic-chat'
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30 scale-105'
+                    : 'text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 hover:shadow-md'
+                }`}
+              >
+                <Brain className={`h-4 w-4 mr-2 transition-transform duration-300 ${
+                  activeTab === 'semantic-chat' ? 'animate-pulse' : 'group-hover:scale-110'
+                }`} />
+                <span className="font-semibold">Semántico</span>
+                <span className="ml-2 px-1.5 py-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 text-indigo-900 text-xs rounded-full font-bold shadow-sm">
+                  LLM
+                </span>
               </button>
             )}
 
@@ -388,6 +409,31 @@ export function AuthenticatedDashboard() {
                   businessName={activeClient.business_name}
                 />
               )}
+            </div>
+          )}
+
+          {activeTab === 'semantic-chat' && activeClient.has_muva_access && (
+            <div className="p-6">
+              <div className="mb-4">
+                <h2 className="text-lg font-medium text-gray-900 flex items-center">
+                  <Brain className="mr-2 h-5 w-5 text-indigo-600" />
+                  Chat Semántico
+                  <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-indigo-400 to-purple-400 text-indigo-900 text-xs rounded-full font-bold">
+                    Experimental
+                  </span>
+                  <span className="ml-2 px-2 py-0.5 bg-gradient-to-r from-purple-400 to-pink-400 text-purple-900 text-xs rounded-full font-bold">
+                    LLM-Driven
+                  </span>
+                </h2>
+                <p className="text-sm text-gray-500">
+                  🔬 Sistema experimental de búsqueda con comprensión semántica profunda mediante LLMs.
+                  Pipeline de 5 pasos: Understanding → Multi-Query → Vector Search → Curation → Response
+                </p>
+              </div>
+              <PremiumChatInterfaceSemantic
+                clientId={activeClient.client_id}
+                businessName={activeClient.business_name}
+              />
             </div>
           )}
 
