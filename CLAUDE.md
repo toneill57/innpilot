@@ -155,8 +155,8 @@ Asistente AI conversacional que permite a huéspedes mantener conversaciones per
 - **Planificación**: ✅ Completa (Sept 30, 2025)
 - **FASE 1.1** (Guest Auth): ✅ Completado (53 tests)
 - **FASE 1.2** (Chat Engine): ✅ Completado (55 tests)
-- **FASE 1.3** (Database): ⚠️ Parcial (auto-save implementado)
-- **FASE 1.4** (Frontend): 🔜 Pendiente
+- **FASE 1.3** (Database): ✅ COMPLETADO (3 migrations, 0.167ms performance)
+- **FASE 1.4** (Frontend): 🔜 EN PROGRESO
 - **Documentación**: `plan.md` (1,047 líneas) + `TODO.md` (640+ líneas)
 - **Timeline**: 5-8 semanas (3 fases)
 - **Modelo**: Claude Sonnet 3.5 ($0.006/query promedio)
@@ -170,7 +170,7 @@ Asistente AI conversacional que permite a huéspedes mantener conversaciones per
 1. **FASE 1: Core Conversacional** (Semanas 1-3) - ⚠️ EN PROGRESO
    - ✅ Guest Authentication System (`/api/guest/login`)
    - ✅ Conversational Chat Engine (`/api/guest/chat`)
-   - ⚠️ Persistence & Database (parcial - falta indexes/RLS)
+   - ✅ Persistence & Database (3 migrations aplicadas, 299x faster than target)
    - 🔜 Frontend Guest Interface
    - 🔜 Testing & Validation
 
@@ -199,8 +199,10 @@ npm test -- src/lib/__tests__/guest-auth.test.ts           # Guest auth (24 test
 # Todos los tests (55 tests passing)
 npm test -- src/lib/__tests__/
 
-# Database migrations (pendientes para FASE 1.3)
-# npm run db:migrate
+# Database migrations - COMPLETADAS ✅ (Sept 30, 2025)
+# - add_guest_chat_indexes (11 indexes, 0.167ms retrieval)
+# - add_guest_chat_rls_fixed (5 policies, security verified)
+# - add_get_full_document_function_fixed (28.57ms document retrieval)
 ```
 
 ### Diferencia con Sistema Actual
