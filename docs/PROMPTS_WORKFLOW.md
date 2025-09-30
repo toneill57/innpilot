@@ -6,6 +6,28 @@
 
 ---
 
+## 📑 ÍNDICE DE PROMPTS
+
+### **FASE 1: Core Conversacional (Semanas 1-3)**
+1. **Backend Dev** - Guest Authentication System (4-6h)
+2. **Backend Dev** - Conversational Engine (12-16h)
+3. **Database Agent** - Migrations & Monitoring (6-8h)
+4. **UX Agent** - Guest Login & Chat UI (10-14h)
+5. **Full Team** - Testing & Validation (8-10h)
+
+### **FASE 2: Enhanced UX (Semanas 4-5)**
+6. **UX Agent** - Enhanced UX Features Completo (26-33h)
+
+### **MONITORING & MAINTENANCE**
+7. **Database Agent** - Proactive Monitoring (ongoing)
+9. **Database Agent** - Database Health / VACUUM FULL (2h) ⚠️ URGENTE
+
+### **QUICK START & SPECIALIZED**
+8. **Full Team** - Quick Start Sistema Completo (overview)
+10. **Specialized** - MUVA Listings Expansion (6-8h)
+
+---
+
 ## 🎯 CÓMO USAR ESTOS PROMPTS
 
 1. **Copia el prompt completo** de la sección relevante
