@@ -317,6 +317,284 @@ const MuvaTourismCard = ({ listing, featured }: MuvaTourismCardProps) => {
 
 ## Casos de Uso Específicos
 
+### 0. Guest Conversational Chat System (NUEVO - P0 PRIORITY) 💬
+**🎯 Sistema Core: Interfaz conversacional para huéspedes con memoria persistente**
+
+#### Responsabilidad del UX Agent
+Soy el **responsable completo** de toda la interfaz visual del sistema Guest Chat, incluyendo login, chat interface, animaciones y responsive design. El backend dev solo maneja lógica de negocio y APIs.
+
+#### Componentes a Crear (FASE 1.4)
+
+**1. GuestLogin.tsx** - Pantalla de autenticación
+```tsx
+interface GuestLoginProps {
+  tenantId: string
+  onLoginSuccess: (session: GuestSession) => void
+}
+
+// Features requeridas:
+- Date picker (check-in date) con calendario visual
+- Phone input (4 últimos dígitos) con mask "•••• XXXX"
+- Validaciones en tiempo real
+- Loading state elegante durante autenticación
+- Error messages claros ("Reserva no encontrada")
+- Soporte multi-idioma (ES/EN)
+- Mobile-first responsive (320-768px)
+```
+
+**2. GuestChatInterface.tsx** - Chat conversacional completo
+```tsx
+interface GuestChatInterfaceProps {
+  session: GuestSession
+  conversationId: string
+  onLogout: () => void
+}
+
+// Layout estructura:
+┌─────────────────────────────────────┐
+│ Header: [Guest name] [Logout]      │
+├─────────────────────────────────────┤
+│ Entity Badges: 🤿 Blue Life Dive   │
+├─────────────────────────────────────┤
+│ Messages Area (scroll auto-bottom) │
+│                                     │
+│ [User msg →]                        │
+│            [← Assistant msg]        │
+│                                     │
+├─────────────────────────────────────┤
+│ Follow-up chips: [¿Precio?] [Más?] │
+├─────────────────────────────────────┤
+│ Input: [Auto-expand textarea] [📤] │
+└─────────────────────────────────────┘
+
+// Features requeridas:
+- Message display: User (derecha, azul) vs Assistant (izquierda, gris)
+- Auto-scroll to bottom cuando llega nuevo mensaje
+- Typing indicator animado durante espera
+- Context display: Entity badges clickable
+- Follow-up suggestions: Chips clickable
+- Input area: Auto-expand textarea (max 5 líneas)
+- Keyboard handling: Enter = send, Shift+Enter = newline
+- Loading indicators: Skeleton screens
+- Error handling: Retry button visible
+- History loading: Load últimos 50 mensajes on mount
+```
+
+**3. EntityBadge.tsx** - Context display component
+```tsx
+interface EntityBadgeProps {
+  entity: string
+  type: 'activity' | 'place' | 'amenity'
+  onRemove?: () => void
+}
+
+// Visual design:
+- Pills con iconos según tipo
+- Animación de entrada cuando se detecta nueva entidad
+- Hover effect: Tooltip con más info
+- Removable: X button (opcional)
+```
+
+**4. FollowUpSuggestions.tsx** - Clickable suggestion chips
+```tsx
+interface FollowUpSuggestionsProps {
+  suggestions: string[]
+  onSuggestionClick: (suggestion: string) => void
+}
+
+// Visual design:
+- Horizontal scroll de chips
+- Animación de entrada staggered
+- Hover effect: Scale 1.05
+- Click feedback: Brief pulse animation
+```
+
+#### Targets de Diseño
+
+**Mobile-First (320-768px)**:
+- Input sticky al bottom (keyboard-aware)
+- Messages: 100% width bubbles
+- Follow-ups: Horizontal scroll
+- Header: Collapsed info (icon + name)
+
+**Tablet (768-1024px)**:
+- 2-column layout posible
+- Sidebar con context info
+- Larger message bubbles
+
+**Desktop (1024px+)**:
+- Centered chat (max-width: 900px)
+- Side panels para context/history
+- Keyboard shortcuts visibles
+
+#### Animaciones Requeridas
+
+**Message Animations**:
+```css
+/* Entrada de mensaje */
+@keyframes messageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Typing indicator */
+@keyframes typingDots {
+  0%, 60%, 100% { opacity: 0.3; }
+  30% { opacity: 1; }
+}
+
+/* Entity badge entrada */
+@keyframes badgeIn {
+  from { opacity: 0; scale: 0.8; }
+  to { opacity: 1; scale: 1; }
+}
+```
+
+**Loading States**:
+- Skeleton screens para history loading
+- Pulse animation para typing indicator
+- Shimmer effect para message loading
+
+#### Error States
+
+**Claros y Accionables**:
+```tsx
+// Reserva no encontrada
+<ErrorMessage>
+  No encontramos tu reserva. Verifica:
+  • Fecha de check-in correcta
+  • Últimos 4 dígitos del teléfono
+  [Reintentar]
+</ErrorMessage>
+
+// Error de red
+<ErrorMessage>
+  No pudimos enviar tu mensaje.
+  [Reintentar] [Ver offline]
+</ErrorMessage>
+
+// Session expirada
+<ErrorMessage>
+  Tu sesión ha expirado.
+  [Iniciar sesión nuevamente]
+</ErrorMessage>
+```
+
+#### Responsive Behavior
+
+**Keyboard Handling**:
+- Auto-scroll cuando keyboard abre (iOS/Android)
+- Input position: Fixed bottom con safe-area-inset
+- Messages area: Scroll preservado durante resize
+
+**Viewport Adaptations**:
+- `vh` units evitados (usar `dvh` para viewport dinámico)
+- Scroll behavior: smooth
+- Touch feedback: -webkit-tap-highlight-color optimizado
+
+#### Accessibility (A11Y)
+
+**ARIA Labels**:
+```tsx
+<div role="log" aria-live="polite" aria-label="Chat messages">
+  {messages.map(msg => (
+    <div role="article" aria-label={`Message from ${msg.sender}`}>
+      {msg.content}
+    </div>
+  ))}
+</div>
+```
+
+**Keyboard Navigation**:
+- Tab order: Input → Send → Suggestions → Messages
+- Escape: Clear input / Close modals
+- Ctrl+Enter: Send message (alternative)
+
+**Screen Reader Support**:
+- Announcements para nuevos mensajes
+- Context changes announced
+- Loading states verbalized
+
+#### Timeline de Desarrollo
+
+**FASE 1.4 (Semanas 2-3)**: 10-14 horas
+- [ ] GuestLogin.tsx (3 horas)
+- [ ] GuestChatInterface.tsx (5 horas)
+- [ ] EntityBadge + FollowUpSuggestions (2 horas)
+- [ ] Animaciones y polish (2 horas)
+- [ ] Responsive testing (2 horas)
+
+**FASE 2 (Semanas 4-5)**: UX Agent ownership completo
+- [ ] Follow-up suggestion enhancements
+- [ ] Entity tracking timeline UI
+- [ ] Voice input (Web Speech API)
+- [ ] Pull-to-refresh history
+- [ ] Offline mode UI
+- [ ] PWA setup
+
+**FASE 3.4 (Semanas 7-8)**: Staff Dashboard
+- [ ] Conversation list UI
+- [ ] Real-time monitor interface
+- [ ] Analytics dashboard
+- [ ] Human handoff UI
+
+#### Comandos Específicos Guest Chat
+
+```bash
+# Desarrollo del Guest Chat Interface
+npm run ux-agent --task="guest-chat-ui" --phase="1.4"
+
+# Testing responsive
+npm run ux-agent:responsive --component="GuestChatInterface"
+
+# Accessibility audit
+npm run ux-agent:a11y --component="GuestLogin"
+
+# Performance testing
+npm run ux-agent:performance --target="message-animations"
+```
+
+#### Integración con Backend
+
+**API Contracts**:
+```typescript
+// Login
+POST /api/guest/login
+Response: { token, conversation_id, guest_info }
+
+// Chat
+POST /api/guest/chat
+Headers: { Authorization: Bearer <token> }
+Body: { message }
+Response: { response, entities, followUpSuggestions, sources }
+
+// History
+GET /api/guest/chat/history?conversation_id=xxx
+Response: { messages: ChatMessage[] }
+```
+
+**Estados de UI basados en API**:
+- Loading: Skeleton + typing indicator
+- Success: Render message + animate in
+- Error: Retry button + error message
+- Empty: Welcome message + suggestions
+
+#### Quality Targets
+
+**Performance**:
+- First Contentful Paint: <1.5s
+- Message render: <50ms
+- Animation: 60fps consistente
+- Scroll performance: Buttery smooth
+
+**UX Metrics**:
+- Login flow: <20 segundos típico
+- Message send: Feedback instantáneo
+- Error recovery: 1 click retry
+- Mobile usability: Perfect touch targets (44x44px min)
+
+---
+
 ### 1. Premium Chat Dual Development (CRÍTICO) 🧪
 **⚠️ FLUJO ESPECIAL OBLIGATORIO PARA PREMIUM CHAT**
 

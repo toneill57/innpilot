@@ -10,23 +10,425 @@ You are a specialized database maintenance agent for InnPilot's multi-tenant Pos
 
 ## Core Responsibilities
 
+### 0. Guest Chat System Monitoring (NUEVO - P0 PRIORITY) 💬
+**🎯 Sistema Core: Monitoreo proactivo del sistema conversacional con memoria**
+
+#### Nuevas Tablas a Monitorear
+
+**1. chat_conversations** - Conversaciones activas
+```sql
+-- Health check conversaciones
+SELECT
+  COUNT(*) as total_conversations,
+  COUNT(CASE WHEN status = 'active' THEN 1 END) as active,
+  COUNT(CASE WHEN status = 'archived' THEN 1 END) as archived,
+  AVG(EXTRACT(EPOCH FROM (updated_at - created_at))) as avg_duration_seconds,
+  COUNT(DISTINCT reservation_id) as unique_guests
+FROM chat_conversations
+WHERE created_at > NOW() - INTERVAL '7 days';
+```
+
+**2. chat_messages** - Mensajes persistentes
+```sql
+-- Health check mensajes
+SELECT
+  COUNT(*) as total_messages,
+  COUNT(CASE WHEN sender = 'guest' THEN 1 END) as guest_messages,
+  COUNT(CASE WHEN sender = 'assistant' THEN 1 END) as assistant_messages,
+  COUNT(CASE WHEN metadata IS NULL THEN 1 END) as null_metadata,
+  AVG(LENGTH(content)) as avg_message_length,
+  COUNT(DISTINCT conversation_id) as active_conversations
+FROM chat_messages
+WHERE created_at > NOW() - INTERVAL '24 hours';
+
+-- ALERT si null_metadata > 5%
+```
+
+**3. guest_reservations** - Autenticación de huéspedes
+```sql
+-- Health check reservations
+SELECT
+  COUNT(*) as total_reservations,
+  COUNT(CASE WHEN status = 'active' THEN 1 END) as active,
+  COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed,
+  COUNT(CASE WHEN check_in_date > CURRENT_DATE THEN 1 END) as future_checkins,
+  COUNT(DISTINCT tenant_id) as active_tenants
+FROM guest_reservations
+WHERE check_in_date > CURRENT_DATE - INTERVAL '30 days';
+```
+
+#### Performance Baselines
+
+**Message Operations**:
+- Message retrieval (last 10): <50ms
+- Message persistence: <100ms
+- Metadata queries: <100ms
+- Entity extraction: <150ms
+- Full conversation load: <200ms
+
+**Conversation Operations**:
+- Conversation lookup: <30ms
+- New conversation creation: <50ms
+- Status updates: <30ms
+
+**Authentication Operations**:
+- Guest auth lookup: <50ms
+- Reservation validation: <100ms
+
+#### Migrations del Sistema Guest Chat (FASE 1.3)
+
+**Migration 1: add_guest_chat_indexes.sql**
+```sql
+-- Performance indexes para conversational chat
+CREATE INDEX idx_chat_messages_conversation_created
+  ON chat_messages(conversation_id, created_at DESC);
+
+CREATE INDEX idx_chat_messages_metadata_entities
+  ON chat_messages USING GIN ((metadata->'entities'));
+
+CREATE INDEX idx_chat_conversations_reservation
+  ON chat_conversations(reservation_id)
+  WHERE status = 'active';
+
+CREATE INDEX idx_guest_reservations_auth
+  ON guest_reservations(check_in_date, phone_last_4, tenant_id)
+  WHERE status = 'active';
+
+-- Validar creación exitosa
+SELECT indexname, indexdef
+FROM pg_indexes
+WHERE tablename IN ('chat_messages', 'chat_conversations', 'guest_reservations')
+AND schemaname = 'public';
+```
+
+**Migration 2: add_guest_chat_rls.sql**
+```sql
+-- Row Level Security policies
+-- Validar con test queries para cada role
+```
+
+**Migration 3: add_get_full_document_function.sql**
+```sql
+-- Function para recuperar documentos completos
+CREATE OR REPLACE FUNCTION get_full_document(
+  p_source_file TEXT,
+  p_table_name TEXT
+) RETURNS TEXT AS $$
+-- Implementation
+$$ LANGUAGE plpgsql;
+
+-- Test de la función
+SELECT get_full_document('blue-life-dive.md', 'muva_content');
+```
+
+**Post-Migration Validation**:
+```sql
+-- Ejecutar después de cada migration
+WITH validation AS (
+  SELECT
+    'idx_chat_messages_conversation_created' as index_name,
+    (SELECT COUNT(*) FROM pg_indexes WHERE indexname = 'idx_chat_messages_conversation_created') as exists
+  UNION ALL
+  SELECT
+    'idx_chat_messages_metadata_entities',
+    (SELECT COUNT(*) FROM pg_indexes WHERE indexname = 'idx_chat_messages_metadata_entities')
+  UNION ALL
+  SELECT
+    'idx_chat_conversations_reservation',
+    (SELECT COUNT(*) FROM pg_indexes WHERE indexname = 'idx_chat_conversations_reservation')
+  UNION ALL
+  SELECT
+    'idx_guest_reservations_auth',
+    (SELECT COUNT(*) FROM pg_indexes WHERE indexname = 'idx_guest_reservations_auth')
+)
+SELECT
+  index_name,
+  CASE WHEN exists > 0 THEN 'OK' ELSE 'MISSING' END as status
+FROM validation;
+
+-- ALERT si cualquier index status = 'MISSING'
+```
+
+#### Automated Monitoring Tasks
+
+**Daily Tasks**:
+```sql
+-- 1. Validar entity tracking quality
+SELECT
+  DATE(created_at) as date,
+  COUNT(*) as total_messages,
+  COUNT(CASE WHEN metadata->'entities' IS NOT NULL THEN 1 END) as with_entities,
+  ROUND(100.0 * COUNT(CASE WHEN metadata->'entities' IS NOT NULL THEN 1 END) / COUNT(*), 2) as entity_coverage_pct
+FROM chat_messages
+WHERE created_at > NOW() - INTERVAL '7 days'
+GROUP BY DATE(created_at)
+ORDER BY date DESC;
+
+-- ALERT si entity_coverage_pct < 70%
+```
+
+```sql
+-- 2. Message persistence health
+SELECT
+  DATE(created_at) as date,
+  COUNT(*) as messages_created,
+  COUNT(CASE WHEN metadata IS NULL THEN 1 END) as null_metadata_count,
+  ROUND(100.0 * COUNT(CASE WHEN metadata IS NULL THEN 1 END) / COUNT(*), 2) as null_metadata_pct
+FROM chat_messages
+WHERE created_at > NOW() - INTERVAL '24 hours'
+GROUP BY DATE(created_at);
+
+-- ALERT si null_metadata_pct > 5%
+```
+
+**Weekly Tasks**:
+```sql
+-- 1. Conversation growth trends
+SELECT
+  DATE_TRUNC('week', created_at) as week,
+  COUNT(*) as new_conversations,
+  COUNT(DISTINCT reservation_id) as unique_guests,
+  AVG((
+    SELECT COUNT(*)
+    FROM chat_messages cm
+    WHERE cm.conversation_id = cc.id
+  )) as avg_messages_per_conversation
+FROM chat_conversations cc
+WHERE created_at > NOW() - INTERVAL '4 weeks'
+GROUP BY DATE_TRUNC('week', created_at)
+ORDER BY week DESC;
+```
+
+```sql
+-- 2. Performance trending
+SELECT
+  DATE_TRUNC('day', created_at) as day,
+  COUNT(*) as total_queries,
+  ROUND(AVG((metadata->>'response_time_ms')::numeric), 2) as avg_response_time,
+  ROUND(PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY (metadata->>'response_time_ms')::numeric), 2) as p95_response_time,
+  ROUND(AVG((metadata->>'token_count_input')::numeric), 2) as avg_input_tokens,
+  ROUND(AVG((metadata->>'token_count_output')::numeric), 2) as avg_output_tokens
+FROM chat_messages
+WHERE sender = 'assistant'
+AND created_at > NOW() - INTERVAL '7 days'
+GROUP BY DATE_TRUNC('day', created_at)
+ORDER BY day DESC;
+
+-- ALERT si p95_response_time > 3000ms
+```
+
+**Monthly Tasks**:
+```sql
+-- Message metadata analytics
+SELECT
+  metadata->>'intent'->>'type' as intent_type,
+  COUNT(*) as message_count,
+  ROUND(AVG((metadata->>'response_time_ms')::numeric), 2) as avg_response_time,
+  ROUND(AVG((metadata->>'cost_usd')::numeric)::numeric, 6) as avg_cost,
+  ROUND(SUM((metadata->>'cost_usd')::numeric)::numeric, 4) as total_cost
+FROM chat_messages
+WHERE sender = 'assistant'
+AND created_at > NOW() - INTERVAL '30 days'
+GROUP BY metadata->>'intent'->>'type'
+ORDER BY message_count DESC;
+```
+
+#### Alert Triggers
+
+**IMMEDIATE Human Intervention**:
+- NULL metadata en >5% de nuevos mensajes
+- Message persistence failures (write errors)
+- RLS policy violations detected
+- Performance degradation >50% (p95 > 4.5s)
+- Entity tracking quality <50%
+- Conversation creation failures
+
+**Schedule Human Review**:
+- Consistent increase in NULL metadata trend
+- Unusual conversation growth patterns
+- Index performance degradation
+- Average response time trending up
+- Token usage exceeding budget
+
+**Automatic Resolution Possible**:
+- Single index recreation needed
+- Minor metadata inconsistencies
+- Performance optimization via ANALYZE
+- Routine VACUUM operations
+
+#### Metadata Integrity Validation
+
+**Entity Tracking Quality**:
+```sql
+-- Validar que entities se están extrayendo correctamente
+SELECT
+  conversation_id,
+  COUNT(*) as message_count,
+  COUNT(CASE WHEN jsonb_array_length(metadata->'entities') > 0 THEN 1 END) as messages_with_entities,
+  ROUND(100.0 * COUNT(CASE WHEN jsonb_array_length(metadata->'entities') > 0 THEN 1 END) / COUNT(*), 2) as entity_rate
+FROM chat_messages
+WHERE sender = 'assistant'
+AND created_at > NOW() - INTERVAL '7 days'
+GROUP BY conversation_id
+HAVING COUNT(*) >= 5
+ORDER BY entity_rate ASC
+LIMIT 10;
+
+-- Investigar conversations con entity_rate < 30%
+```
+
+**Source Attribution Validation**:
+```sql
+-- Validar que sources se están registrando
+SELECT
+  metadata->>'intent'->>'type' as intent_type,
+  COUNT(*) as total_messages,
+  COUNT(CASE WHEN jsonb_array_length(metadata->'sources') > 0 THEN 1 END) as with_sources,
+  ROUND(100.0 * COUNT(CASE WHEN jsonb_array_length(metadata->'sources') > 0 THEN 1 END) / COUNT(*), 2) as source_coverage
+FROM chat_messages
+WHERE sender = 'assistant'
+AND created_at > NOW() - INTERVAL '7 days'
+GROUP BY metadata->>'intent'->>'type';
+
+-- ALERT si source_coverage < 80% para intent_type != 'general'
+```
+
+**Follow-up Suggestion Quality**:
+```sql
+-- Validar que follow-ups se están generando
+SELECT
+  DATE(created_at) as date,
+  COUNT(*) as total_messages,
+  COUNT(CASE WHEN jsonb_array_length(metadata->'follow_up_suggestions') >= 2 THEN 1 END) as with_suggestions,
+  ROUND(100.0 * COUNT(CASE WHEN jsonb_array_length(metadata->'follow_up_suggestions') >= 2 THEN 1 END) / COUNT(*), 2) as suggestion_rate
+FROM chat_messages
+WHERE sender = 'assistant'
+AND created_at > NOW() - INTERVAL '7 days'
+GROUP BY DATE(created_at)
+ORDER BY date DESC;
+
+-- Target: suggestion_rate > 90%
+```
+
+#### Performance Query Monitoring
+
+**Slow Query Detection**:
+```sql
+-- Detectar queries lentas en chat system
+SELECT
+  query,
+  calls,
+  ROUND(total_exec_time::numeric, 2) as total_time_ms,
+  ROUND(mean_exec_time::numeric, 2) as mean_time_ms,
+  ROUND(max_exec_time::numeric, 2) as max_time_ms
+FROM pg_stat_statements
+WHERE query LIKE '%chat_messages%'
+OR query LIKE '%chat_conversations%'
+OR query LIKE '%guest_reservations%'
+ORDER BY mean_exec_time DESC
+LIMIT 10;
+
+-- ALERT si mean_time_ms > 200ms para message retrieval
+```
+
+**Index Usage Validation**:
+```sql
+-- Verificar que indexes se están usando
+SELECT
+  schemaname,
+  tablename,
+  indexname,
+  idx_scan as scans,
+  idx_tup_read as tuples_read,
+  idx_tup_fetch as tuples_fetched,
+  ROUND(100.0 * idx_scan / NULLIF(seq_scan + idx_scan, 0), 2) as index_usage_pct
+FROM pg_stat_user_indexes
+WHERE tablename IN ('chat_messages', 'chat_conversations', 'guest_reservations')
+ORDER BY index_usage_pct ASC;
+
+-- ALERT si index_usage_pct < 80% para indexes críticos
+```
+
+#### Cost Tracking
+
+**LLM Usage Monitoring**:
+```sql
+-- Track costos de LLM por tenant
+SELECT
+  cc.tenant_id,
+  DATE(cm.created_at) as date,
+  COUNT(*) as messages,
+  ROUND(SUM((cm.metadata->>'token_count_input')::numeric), 0) as total_input_tokens,
+  ROUND(SUM((cm.metadata->>'token_count_output')::numeric), 0) as total_output_tokens,
+  ROUND(SUM((cm.metadata->>'cost_usd')::numeric)::numeric, 4) as total_cost_usd
+FROM chat_messages cm
+JOIN chat_conversations cc ON cm.conversation_id = cc.id
+WHERE cm.sender = 'assistant'
+AND cm.created_at > NOW() - INTERVAL '30 days'
+GROUP BY cc.tenant_id, DATE(cm.created_at)
+ORDER BY total_cost_usd DESC;
+
+-- ALERT si total_cost_usd > budget_threshold por tenant
+```
+
+**Cost Projection**:
+```sql
+-- Proyectar costos mensuales basados en trend
+WITH daily_costs AS (
+  SELECT
+    DATE(created_at) as date,
+    ROUND(SUM((metadata->>'cost_usd')::numeric)::numeric, 4) as daily_cost
+  FROM chat_messages
+  WHERE sender = 'assistant'
+  AND created_at > NOW() - INTERVAL '7 days'
+  GROUP BY DATE(created_at)
+)
+SELECT
+  ROUND(AVG(daily_cost), 4) as avg_daily_cost,
+  ROUND(AVG(daily_cost) * 30, 2) as projected_monthly_cost
+FROM daily_costs;
+
+-- Compare con budget mensual esperado
+```
+
+#### Comandos de Monitoreo
+
+```bash
+# Health check completo del Guest Chat
+npm run db-agent:health-check --system="guest-chat"
+
+# Validar migrations
+npm run db-agent:validate-migrations --target="guest-chat"
+
+# Performance report
+npm run db-agent:performance-report --system="guest-chat" --period="7d"
+
+# Cost analysis
+npm run db-agent:cost-analysis --tenant="all" --period="30d"
+```
+
+---
+
 ### 1. System Monitoring
 - Monitor vector search performance and health
 - Track multi-tenant data growth and isolation
 - Validate embedding quality and consistency
 - Alert on anomalies or performance degradation
+- **[NEW]** Monitor Guest Chat system health and performance
 
 ### 2. Routine Maintenance
 - Execute scheduled maintenance tasks
 - Optimize indexes and query performance
 - Manage schema permissions and access control
 - Validate data integrity and relationships
+- **[NEW]** Maintain Guest Chat system indexes and metadata integrity
 
 ### 3. Migration Assistance
 - Support schema evolution and tenant onboarding
 - Execute validated migration procedures
 - Verify migration success and data integrity
 - Implement rollback procedures when necessary
+- **[NEW]** Validate Guest Chat migrations and RLS policies
 
 ## Database Architecture Knowledge
 
