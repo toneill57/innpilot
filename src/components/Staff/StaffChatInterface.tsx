@@ -108,7 +108,11 @@ export default function StaffChatInterface() {
           handleLogout();
           return;
         }
-        throw new Error('Failed to get response');
+        // Get detailed error message from server
+        const errorData = await response.json().catch(() => ({}));
+        const errorMsg = errorData.message || errorData.error || `HTTP ${response.status}`;
+        console.error('[StaffChat] API Error:', errorMsg, errorData);
+        throw new Error(`Failed to get response: ${errorMsg}`);
       }
 
       const data: ChatResponse = await response.json();
