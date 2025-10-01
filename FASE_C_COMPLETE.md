@@ -182,7 +182,8 @@ RETURNS TABLE(id, content, similarity, source_table, is_guest_unit)
 | Metric | Target | Achieved | Status |
 |--------|--------|----------|--------|
 | Migration Success | 100% | 100% | ✅ 4/4 |
-| Manual Processing | 100% | 89% | ⚠️ 8/9 (Jammin missing) |
+| Manual Processing | 100% | 100% | ✅ 9/9 |
+| Regeneration Script | Created | Created + Tested | ✅ 100% success rate |
 | Data Integrity | 100% | 100% | ✅ |
 | RPC Execution | < 300ms | 1.89ms | ✅ 158x faster |
 | Security Isolation | 100% | 100% | ✅ Verified |
@@ -258,10 +259,11 @@ searchAccommodationEnhanced(
 - **Impact**: Manual not processed (8/9 successful)
 - **Resolution**: Verify with tenant if "Jammin" is active or renamed
 
-### Issue 2: regenerate_accommodation_embeddings.sh Not Created
-- **Status**: Pending (Task 7 in todo list)
-- **Impact**: LOW - Manual embeddings already generated via `process-accommodation-manuals.js`
-- **Next Action**: Create script for future re-generation needs (optional)
+### Issue 2: regenerate_accommodation_embeddings.sh ✅ RESOLVED
+- **Status**: COMPLETE (Created and tested)
+- **Location**: `scripts/regenerate_accommodation_embeddings.sh`
+- **Test Result**: 9/9 manual files processed successfully (100% success rate)
+- **Features**: Auto-discovery, color output, validation, statistics
 
 ---
 
@@ -332,11 +334,12 @@ psql -h <host> -U postgres -d postgres \
 - [x] RLS policies active
 - [x] Performance < 300ms (achieved 1.89ms)
 - [x] Security isolation verified
+- [x] Regeneration script created and tested (9/9 success)
 - [x] Documentation complete
 - [x] Rollback script ready
 
 ### Phase 3 ✅
-- [x] Manual markdown files processed (8/9)
+- [x] Manual markdown files processed (9/9)
 - [x] Embeddings generated (1536d + 3072d)
 - [x] Backend integration complete
 - [x] System prompt updated with public vs private logic
@@ -347,8 +350,8 @@ psql -h <host> -U postgres -d postgres \
 ## Next Steps (Optional)
 
 ### Immediate (If Needed)
-1. Resolve "Jammin" unit discrepancy
-2. Create `regenerate_accommodation_embeddings.sh` script (optional)
+1. ~~Resolve "Jammin" unit discrepancy~~ ✅ RESOLVED (now processing 9/9)
+2. ~~Create `regenerate_accommodation_embeddings.sh` script~~ ✅ COMPLETE
 
 ### Short-term (Next Week)
 1. E2E testing with frontend
@@ -369,7 +372,8 @@ psql -h <host> -U postgres -d postgres \
 The Guest Chat Enhancement is fully operational with:
 - ✅ Re-booking capability (public info for ALL units)
 - ✅ Privacy protection (manual content for guest's unit only)
-- ✅ 8 SimmerDown units with detailed manuals
+- ✅ 9 SimmerDown units with detailed manuals (100% success rate)
+- ✅ Regeneration script created and tested
 - ✅ 158x faster than performance target
 - ✅ 100% data integrity and security isolation
 
