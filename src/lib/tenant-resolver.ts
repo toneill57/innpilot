@@ -69,11 +69,11 @@ export async function resolveTenantSchemaName(tenantUuid: string | null | undefi
       data = result.data
       error = result.error
     } else {
-      // Query by schema_name (string) - legacy support
+      // Query by slug (string) - for user-friendly URLs like "simmerdown"
       const result = await supabase
         .from('tenant_registry')
         .select('tenant_id, tenant_type, is_active')
-        .eq('schema_name', tenantUuid)
+        .eq('slug', tenantUuid)
         .eq('is_active', true)
         .single()
       data = result.data
