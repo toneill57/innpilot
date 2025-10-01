@@ -99,7 +99,7 @@ export default function StaffChatInterface() {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversation_id: activeConversationId,
+          ...(activeConversationId && { conversation_id: activeConversationId }),
         }),
       });
 
