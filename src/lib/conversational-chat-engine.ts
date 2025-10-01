@@ -88,6 +88,13 @@ export interface VectorSearchResult {
   table: string
   business_info?: any
   view_type?: string
+  metadata?: {
+    is_guest_unit?: boolean
+    is_public_info?: boolean
+    is_private_info?: boolean
+    filtered_by_permission?: boolean
+    [key: string]: any
+  }
 }
 
 export interface SourceMetadata {
@@ -115,6 +122,11 @@ export async function generateConversationalResponse(
   const startTime = Date.now()
 
   console.log(`[Chat Engine] Processing query: "${context.query.substring(0, 80)}..."`)
+  console.log('[Chat Engine] Guest permissions:', {
+    tenant: context.guestInfo.tenant_id,
+    features: context.guestInfo.tenant_features,
+    accommodation: context.guestInfo.accommodation_unit?.name,
+  })
 
   try {
     // STEP 1: Extract entities from conversation history
@@ -125,10 +137,11 @@ export async function generateConversationalResponse(
     const enhancedQuery = await enhanceQuery(context.query, context.history)
     console.log(`[Chat Engine] Enhanced query: "${enhancedQuery.enhanced}" (isFollowUp: ${enhancedQuery.isFollowUp})`)
 
-    // STEP 3: Perform context-aware vector search
+    // STEP 3: Perform context-aware vector search with permissions
     const vectorResults = await performContextAwareSearch(
       enhancedQuery.enhanced,
-      [...historicalEntities, ...enhancedQuery.entities]
+      [...historicalEntities, ...enhancedQuery.entities],
+      context.guestInfo  // 🆕 NUEVO: Pass full session with permissions
     )
     console.log(`[Chat Engine] Found ${vectorResults.length} vector results`)
 
@@ -153,8 +166,8 @@ export async function generateConversationalResponse(
     const followUpSuggestions = generateFollowUpSuggestions(response, uniqueEntities, vectorResults)
 
     // STEP 8: Prepare sources metadata
-    const sources = vectorResults.slice(0, 5).map((result) => ({
-      type: (result.table === 'accommodation_units' ? 'accommodation' : 'tourism') as const,
+    const sources: SourceMetadata[] = vectorResults.slice(0, 5).map((result) => ({
+      type: (result.table === 'accommodation_units' ? 'accommodation' : 'tourism'),
       name: result.name || result.title || result.source_file || 'Unknown',
       similarity: result.similarity,
       file: result.source_file,
@@ -217,33 +230,69 @@ export function extractEntities(history: ChatMessage[]): string[] {
 // ============================================================================
 
 /**
- * Perform vector search with entity boosting
+ * Perform vector search with entity boosting and permission filtering
  */
 async function performContextAwareSearch(
   query: string,
-  entities: string[]
+  entities: string[],
+  guestInfo: GuestSession  // 🆕 NUEVO: Full session with permissions
 ): Promise<VectorSearchResult[]> {
   const startTime = Date.now()
 
   try {
     // Generate embeddings for enhanced query
-    const [queryEmbeddingFast, queryEmbeddingFull] = await Promise.all([
-      generateEmbedding(query, 1024), // Tier 1 for accommodation
+    const [queryEmbeddingFast, queryEmbeddingBalanced, queryEmbeddingFull] = await Promise.all([
+      generateEmbedding(query, 1024), // Tier 1 for accommodation (public info)
+      generateEmbedding(query, 1536), // Tier 2 for guest information + manual
       generateEmbedding(query, 3072), // Tier 3 for tourism
     ])
 
     console.log(`[Chat Engine] Generated embeddings in ${Date.now() - startTime}ms`)
 
-    // Perform parallel searches
-    const [accommodationResults, tourismResults] = await Promise.all([
-      searchAccommodation(queryEmbeddingFast),
-      searchTourism(queryEmbeddingFull),
-    ])
+    // 🆕 Permission-aware search strategy (NUEVO)
+    const hasMuvaAccess = guestInfo.tenant_features?.muva_access === true
 
-    console.log(`[Chat Engine] Vector search completed in ${Date.now() - startTime}ms`)
+    console.log('[Chat Engine] Search strategy:', {
+      accommodation_public: true,  // ALL units (for re-booking)
+      accommodation_manual: true,  // ONLY guest's unit manual
+      guest_info: true,            // Always search operational manuals
+      muva: hasMuvaAccess,
+      tenant: guestInfo.tenant_id,
+      features: guestInfo.tenant_features,
+    })
+
+    // Build search array based on permissions
+    const searches: Promise<VectorSearchResult[]>[] = []
+
+    // 1. Accommodation search (ENHANCED) - public (ALL) + manual (guest's only)
+    searches.push(searchAccommodationEnhanced(queryEmbeddingFast, queryEmbeddingBalanced, guestInfo))
+
+    // 2. Guest Information search (ALWAYS) - operational manuals, FAQs, policies
+    searches.push(searchGuestInformation(queryEmbeddingBalanced, guestInfo))
+
+    // 3. MUVA search (CONDITIONAL) - only if permission granted
+    if (hasMuvaAccess) {
+      console.log('[Chat Engine] ✅ MUVA access granted')
+      searches.push(searchTourism(queryEmbeddingFull))
+    } else {
+      console.log('[Chat Engine] ⛔ MUVA access denied')
+    }
+
+    // Execute searches in parallel
+    const results = await Promise.all(searches)
+    const accommodationResults = results[0] || []
+    const guestInfoResults = results[1] || []
+    const tourismResults = hasMuvaAccess ? (results[2] || []) : []
+
+    console.log(`[Chat Engine] Vector search completed in ${Date.now() - startTime}ms`, {
+      total: accommodationResults.length + guestInfoResults.length + tourismResults.length,
+      accommodation: accommodationResults.length,
+      guest_info: guestInfoResults.length,
+      muva: tourismResults.length,
+    })
 
     // Combine and boost results that match entities
-    const allResults = [...accommodationResults, ...tourismResults]
+    const allResults = [...accommodationResults, ...guestInfoResults, ...tourismResults]
 
     // Boost similarity scores for results matching conversation entities
     if (entities.length > 0) {
@@ -292,24 +341,57 @@ async function generateEmbedding(text: string, dimensions: number): Promise<numb
 }
 
 /**
- * Search accommodation units
+ * Enhanced accommodation search (public + manual) - FASE C
+ *
+ * Searches:
+ * - accommodation_units_public: ALL units (for re-booking/comparison)
+ * - accommodation_units_manual: ONLY guest's unit (private info)
  */
-async function searchAccommodation(embedding: number[]): Promise<VectorSearchResult[]> {
+async function searchAccommodationEnhanced(
+  queryEmbeddingFast: number[],
+  queryEmbeddingBalanced: number[],
+  guestInfo: GuestSession
+): Promise<VectorSearchResult[]> {
   const client = getSupabaseClient()
-  const { data, error } = await client.rpc('match_accommodation_units_fast', {
-    query_embedding: embedding,
-    similarity_threshold: 0.15,
-    match_count: 5,
-  })
+  const guestUnitId = guestInfo.accommodation_unit?.id
 
-  if (error) {
-    console.error('[Chat Engine] Accommodation search error:', error)
+  if (!guestUnitId) {
+    console.warn('[Chat Engine] No accommodation assigned to guest')
     return []
   }
 
+  const { data, error } = await client.rpc('match_guest_accommodations', {
+    query_embedding_fast: queryEmbeddingFast,
+    query_embedding_balanced: queryEmbeddingBalanced,
+    p_guest_unit_id: guestUnitId,
+    p_tenant_id: guestInfo.tenant_id,
+    match_threshold: 0.15,
+    match_count: 10,
+  })
+
+  if (error) {
+    console.error('[Chat Engine] Enhanced accommodation search error:', error)
+    return []
+  }
+
+  console.log('[Chat Engine] Enhanced accommodation results:', {
+    total: data?.length || 0,
+    public_units: data?.filter((r: any) => r.source_table === 'accommodation_units_public').length || 0,
+    manual_content: data?.filter((r: any) => r.source_table === 'accommodation_units_manual').length || 0,
+    guest_unit_results: data?.filter((r: any) => r.is_guest_unit).length || 0,
+  })
+
   return (data || []).map((item: any) => ({
-    ...item,
-    table: 'accommodation_units',
+    id: item.id,
+    content: item.content,
+    similarity: item.similarity,
+    source_file: '', // Not applicable for DB content
+    table: item.source_table,
+    metadata: {
+      is_guest_unit: item.is_guest_unit,
+      is_public_info: item.source_table === 'accommodation_units_public',
+      is_private_info: item.source_table === 'accommodation_units_manual',
+    },
   }))
 }
 
@@ -332,6 +414,40 @@ async function searchTourism(embedding: number[]): Promise<VectorSearchResult[]>
   return (data || []).map((item: any) => ({
     ...item,
     table: 'muva_content',
+  }))
+}
+
+/**
+ * Search guest information (operational manuals, FAQs, policies)
+ */
+async function searchGuestInformation(
+  embedding: number[],
+  guestInfo: GuestSession
+): Promise<VectorSearchResult[]> {
+  const client = getSupabaseClient()
+  const { data, error } = await client.rpc('match_guest_information_balanced', {
+    query_embedding: embedding,
+    p_tenant_id: guestInfo.tenant_id,
+    similarity_threshold: 0.3,
+    match_count: 5,
+  })
+
+  if (error) {
+    console.error('[Chat Engine] Guest information search error:', error)
+    return []
+  }
+
+  console.log('[Chat Engine] Guest information results:', {
+    total_found: data?.length || 0,
+    tenant: guestInfo.tenant_id,
+  })
+
+  return (data || []).map((item: any) => ({
+    ...item,
+    table: 'guest_information',
+    content: item.info_content,
+    title: item.info_title,
+    name: item.info_title,
   }))
 }
 
@@ -375,24 +491,45 @@ async function enrichResultsWithFullDocuments(
 async function retrieveFullDocument(sourceFile: string, table: string): Promise<DocumentContent | null> {
   try {
     const client = getSupabaseClient()
+
+    // Determine columns based on table (muva_content has business_info and subcategory, sire_content doesn't)
+    // Include chunk_index for ordering chunks correctly
+    const selectFields = table === 'muva_content'
+      ? 'content, title, description, business_info, category, subcategory, tags, keywords, schema_type, schema_version, chunk_index'
+      : 'content, title, description, category, tags, keywords, schema_type, schema_version, chunk_index'
+
+    // Get ALL chunks for this document (not .single())
     const { data, error } = await client
       .from(table)
-      .select('content, title, description, business_info, metadata')
+      .select(selectFields)
       .eq('source_file', sourceFile)
-      .single()
+      .order('chunk_index')  // Order by chunk_index to maintain document structure
 
-    if (error) {
+    if (error || !data || data.length === 0) {
       console.error('[Chat Engine] Error retrieving full document:', error)
       return null
     }
 
+    // Concatenate content from all chunks
+    const fullContent = data.map((chunk: any) => chunk.content).join('\n\n')
+    console.log(`[Chat Engine] Retrieved ${data.length} chunks, concatenated to ${fullContent.length} chars`)
+
+    // Metadata is identical across all chunks, use first chunk
+    const firstChunk = data[0]
+
+    // Build metadata from structured columns
     return {
-      content: data.content || '',
+      content: fullContent,  // Full concatenated content
       metadata: {
-        title: data.title,
-        description: data.description,
-        business_info: data.business_info,
-        ...data.metadata,
+        title: firstChunk.title,
+        description: firstChunk.description,
+        business_info: firstChunk.business_info || null,  // Only muva_content
+        category: firstChunk.category,
+        subcategory: firstChunk.subcategory || null,  // Only muva_content
+        tags: firstChunk.tags || [],
+        keywords: firstChunk.keywords || [],
+        schema_type: firstChunk.schema_type,
+        schema_version: firstChunk.schema_version,
       },
     }
   } catch (error) {
@@ -423,7 +560,7 @@ async function generateResponseWithClaude(
         content: msg.content,
       }))
 
-    // Prepare search results context
+    // Prepare search results context with public/private labels
     const searchContext = context.vectorResults
       .slice(0, 5) // Top 5 results
       .map((result, index) => {
@@ -433,39 +570,104 @@ async function generateResponseWithClaude(
           ? `\nContacto: ${result.business_info.telefono || 'N/A'}, Precio: ${result.business_info.precio || 'N/A'}`
           : ''
 
-        return `[${index + 1}] ${name} (similaridad: ${result.similarity.toFixed(2)})${businessInfo}\n${preview}...`
+        // Add public/private label
+        let accessLabel = ''
+        if (result.metadata?.is_public_info) {
+          accessLabel = ' [PÚBLICO - Todas las unidades]'
+        } else if (result.metadata?.is_private_info) {
+          accessLabel = result.metadata.is_guest_unit
+            ? ` [PRIVADO - Tu unidad: ${accommodationName}]`
+            : ' [PRIVADO - Otra unidad]'
+        }
+
+        return `[${index + 1}] ${name}${accessLabel} (similaridad: ${result.similarity.toFixed(2)})${businessInfo}\n${preview}...`
       })
       .join('\n\n---\n\n')
 
-    // System prompt
+    // 🆕 Build dynamic security restrictions (NUEVO)
+    const hasMuvaAccess = context.guestInfo.tenant_features?.muva_access || false
+    const accommodationName = context.guestInfo.accommodation_unit?.name || 'sin asignar'
+    const accommodationNumber = context.guestInfo.accommodation_unit?.unit_number || ''
+
+    // Build guest accommodation context
+    const accommodationContext = context.guestInfo.accommodation_unit
+      ? `- Alojamiento: ${accommodationName} #${accommodationNumber} (${context.guestInfo.accommodation_unit.unit_type})${context.guestInfo.accommodation_unit.view_type ? `, ${context.guestInfo.accommodation_unit.view_type}` : ''}`
+      : ''
+
+    // System prompt with dynamic security restrictions
     const systemPrompt = `Eres un asistente virtual para huéspedes de hoteles en San Andrés, Colombia.
 
 CONTEXTO DEL HUÉSPED:
 - Nombre: ${context.guestInfo.guest_name}
-- Check-in: ${context.guestInfo.check_in.toLocaleDateString('es-CO')}
-- Check-out: ${context.guestInfo.check_out.toLocaleDateString('es-CO')}
+- Check-in: ${new Date(context.guestInfo.check_in).toLocaleDateString('es-CO')}
+- Check-out: ${new Date(context.guestInfo.check_out).toLocaleDateString('es-CO')}
+${accommodationContext}
 
-INSTRUCCIONES:
-1. Responde en español de manera conversacional y amigable
-2. Usa SOLO la información proporcionada en los resultados de búsqueda
-3. Si los resultados no contienen información relevante, indícalo claramente
-4. Incluye detalles concretos (precios, ubicaciones, contactos) cuando estén disponibles
-5. Personaliza la respuesta usando el nombre del huésped cuando sea apropiado
-6. Si es una pregunta de seguimiento, conecta con el contexto previo de la conversación
-7. Sé conciso pero informativo (máximo 300 palabras)
-8. Usa emojis ocasionalmente para hacer la respuesta más amigable 🏝️
+🔒 RESTRICCIONES DE SEGURIDAD CRÍTICAS:
+
+1. INFORMACIÓN DE ALOJAMIENTO (Dos niveles):
+
+   A) INFORMACIÓN PÚBLICA (Todas las unidades ✅):
+      ✅ Puedes mencionar y comparar TODAS las unidades del hotel
+      ✅ Descripciones generales, amenidades, fotos, precios
+      ✅ Útil para re-booking o consultas de upgrade
+      ✅ Ejemplo: "Tenemos 3 apartamentos disponibles: Sunshine, Summertime, One Love..."
+
+   B) INFORMACIÓN PRIVADA/MANUAL (Solo ${accommodationName} ⛔):
+      ⚠️ Instrucciones detalladas, contraseñas WiFi, códigos de caja fuerte
+      ⚠️ SOLO para tu unidad: "${accommodationName} #${accommodationNumber}"
+      ⛔ NUNCA menciones información privada de otras unidades
+      ⛔ Si preguntan por manual de otra unidad: "Solo puedo darte información operativa de tu alojamiento: ${accommodationName}."
+
+${hasMuvaAccess ? `
+2. TURISMO Y ACTIVIDADES (Premium ✅):
+   ✅ Tienes acceso COMPLETO a información turística MUVA
+   ✅ Puedes recomendar restaurantes, actividades, playas, tours
+   ✅ Proporciona detalles: precios, teléfonos, ubicaciones, horarios
+` : `
+2. TURISMO Y ACTIVIDADES (No disponible ⛔):
+   ⛔ NO tienes acceso a base de datos turística MUVA
+   ⛔ Si preguntan sobre turismo/actividades, responde:
+      "Para información sobre actividades y lugares turísticos, por favor contacta directamente a recepción. Estarán encantados de ayudarte con recomendaciones personalizadas."
+`}
+
+3. POLÍTICAS DEL HOTEL:
+   ✅ Puedes responder preguntas sobre políticas generales del hotel
+   ✅ Check-in/check-out times, reglas de la casa, servicios incluidos
+
+EJEMPLOS DE USO CORRECTO:
+
+📌 Pregunta: "¿Qué apartamentos tienen 3 habitaciones?"
+✅ Respuesta correcta: "Tenemos 2 opciones con 3 habitaciones: Summertime (vista jardín, terraza) y One Love (vista mar, cocina completa). Tu unidad actual es ${accommodationName}. ¿Te interesa info sobre upgrade?"
+
+📌 Pregunta: "¿Cuál es la contraseña del WiFi?"
+✅ Respuesta correcta: [Solo si source_table = 'accommodation_units_manual' y is_guest_unit = true] "La contraseña del WiFi de tu ${accommodationName} es: SimmerDown-Wifi2024"
+❌ Respuesta INCORRECTA: "No tengo acceso a contraseñas WiFi de otras unidades"
+
+📌 Pregunta: "¿Cuál es la contraseña WiFi del apartamento Sunshine?"
+❌ Respuesta INCORRECTA: "La contraseña del Sunshine es..."
+✅ Respuesta correcta: "Solo puedo darte información operativa de tu alojamiento: ${accommodationName}. Para consultas sobre otras unidades, contacta recepción."
+
+ESTILO DE RESPUESTA:
+- Amigable, profesional, conciso
+- Máximo 3-4 oraciones por respuesta
+- Si no tienes información, admítelo honestamente
+- Siempre respetar restricciones de seguridad arriba
+
+IMPORTANTE: Las restricciones de seguridad son ABSOLUTAS. Nunca las violes bajo ninguna circunstancia.
 
 RESULTADOS DE BÚSQUEDA:
 ${searchContext || 'No se encontraron resultados relevantes.'}
 
 Responde a la pregunta del huésped de manera natural y útil.`
 
-    // Call Claude Sonnet 3.5
+    // Call Claude Haiku 3.5 (cost-effective, fast, deterministic)
     const client = getAnthropicClient()
     const response = await client.messages.create({
-      model: 'claude-3-5-sonnet-20241022', // Claude Sonnet 3.5 (latest)
+      model: 'claude-3-5-haiku-latest', // Claude Haiku 3.5 (5x cheaper, faster)
       max_tokens: 800,
-      temperature: 0.7,
+      temperature: 0.1, // Low temperature for data-driven, consistent responses
+      top_k: 6, // Balanced precision and variety
       system: systemPrompt,
       messages: [
         ...conversationHistory,
