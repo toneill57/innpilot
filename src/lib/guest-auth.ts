@@ -253,17 +253,31 @@ export async function verifyGuestToken(token: string): Promise<GuestSession | nu
       return null
     }
 
-    // Reconstruct session (dates need to be fetched from DB if needed)
+    // Fetch fresh reservation data from database
+    const supabase = createServerClient()
+    const { data: reservation, error } = await supabase
+      .from('guest_reservations')
+      .select('*')
+      .eq('id', payload.reservation_id as string)
+      .single()
+
+    if (error || !reservation) {
+      console.error('[guest-auth] Failed to fetch reservation data:', error)
+      return null
+    }
+
+    // Reconstruct session with real data from database
     const session: GuestSession = {
       reservation_id: payload.reservation_id as string,
       conversation_id: payload.conversation_id as string,
       tenant_id: payload.tenant_id as string,
       guest_name: payload.guest_name as string,
-      check_in: new Date(), // Placeholder - would fetch from DB if needed
-      check_out: new Date(), // Placeholder - would fetch from DB if needed
-      reservation_code: '',  // Placeholder - would fetch from DB if needed
+      check_in: new Date(reservation.check_in_date),
+      check_out: new Date(reservation.check_out_date),
+      reservation_code: reservation.reservation_code || '',
     }
 
+    console.log(`[guest-auth] ✅ Token verified for ${session.guest_name} (${reservation.check_in_date} - ${reservation.check_out_date})`)
     return session
   } catch (error) {
     console.error('[guest-auth] Token verification error:', error)
