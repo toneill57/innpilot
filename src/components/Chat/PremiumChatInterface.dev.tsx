@@ -200,7 +200,14 @@ export function PremiumChatInterfaceDev({ clientId, businessName }: PremiumChatI
       })
 
       if (!response.ok) {
-        throw new Error('Error en la respuesta del servidor (dev)')
+        const errorData = await response.json().catch(() => ({}))
+        const errorMsg = errorData.error || errorData.details || response.statusText
+        console.error('[Premium Chat DEV] API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          errorData
+        })
+        throw new Error(`Error ${response.status}: ${errorMsg}`)
       }
 
       const data = await response.json()
@@ -229,10 +236,11 @@ export function PremiumChatInterfaceDev({ clientId, businessName }: PremiumChatI
       }
     } catch (error) {
       console.error('Error en chat premium dev:', error)
+      const errorMsg = error instanceof Error ? error.message : 'Error desconocido'
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: '❌ **Error de conexión**\n\nLo siento, hubo un error al procesar tu consulta. Por favor, verifica tu conexión e intenta de nuevo.',
+        content: `❌ **Error**\n\n${errorMsg}\n\n🧪 **Dev Info**: Revisa la consola del navegador y los logs del servidor para más detalles.`,
         timestamp: new Date()
       }
       setMessages(prev => [...prev, errorMessage])

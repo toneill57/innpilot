@@ -134,8 +134,9 @@ export default function StaffChatInterface() {
       // TODO: Update conversations list with new/updated conversation
 
     } catch (err) {
-      console.error('Chat error:', err);
-      setError('Failed to send message. Please try again.');
+      console.error('[StaffChat] Chat error:', err);
+      const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+      setError(`Error: ${errorMsg}`);
     } finally {
       setIsLoading(false);
       inputRef.current?.focus();

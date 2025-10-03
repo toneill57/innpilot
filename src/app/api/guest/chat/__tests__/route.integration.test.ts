@@ -293,9 +293,9 @@ describe('POST /api/guest/chat - Integration Tests', () => {
       // Check that entities are properly handled (null converted to empty array by route)
       expect(Array.isArray(callArgs.history[0].entities)).toBe(true)
       expect(Array.isArray(callArgs.history[1].entities)).toBe(true)
-      // History should contain both messages with proper entity extraction
-      expect(callArgs.history[0].content).toBe('I want to try surfing')
-      expect(callArgs.history[1].content).toBe('Surfing lessons available at Rocky Cay beach.')
+      // History should contain both messages with proper entity extraction (newest first)
+      expect(callArgs.history[0].content).toBe('Surfing lessons available at Rocky Cay beach.')
+      expect(callArgs.history[1].content).toBe('I want to try surfing')
     })
   })
 

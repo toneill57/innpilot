@@ -1,8 +1,21 @@
 import Anthropic from '@anthropic-ai/sdk'
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-})
+function getAnthropicClient(): Anthropic {
+  const apiKey = process.env.ANTHROPIC_API_KEY
+  if (!apiKey) {
+    throw new Error(
+      'ANTHROPIC_API_KEY is not set. Please configure it in .env.local'
+    )
+  }
+  if (!apiKey.startsWith('sk-')) {
+    throw new Error(
+      'ANTHROPIC_API_KEY has invalid format. Expected format: sk-...'
+    )
+  }
+  return new Anthropic({
+    apiKey: apiKey,
+  })
+}
 
 export interface PremiumChatIntent {
   type: 'accommodation' | 'tourism' | 'general'
@@ -61,6 +74,7 @@ Responde ÚNICAMENTE con JSON válido:
 
   try {
     const startTime = Date.now()
+    const anthropic = getAnthropicClient()
 
     const response = await anthropic.messages.create({
       model: "claude-3-haiku-20240307", // Fast & cost-effective

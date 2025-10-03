@@ -29,11 +29,20 @@ interface LoginSuccessResponse {
   success: true
   token: string
   conversation_id: string
+  reservation_id: string
   guest_info: {
     name: string
     check_in: string
     check_out: string
     reservation_code: string
+    accommodation_unit?: {
+      id: string
+      name: string
+      unit_number?: string
+    }
+    tenant_features?: {
+      muva_access: boolean
+    }
   }
 }
 
@@ -133,11 +142,14 @@ export async function POST(request: NextRequest): Promise<NextResponse<LoginResp
         success: true,
         token,
         conversation_id: session.conversation_id,
+        reservation_id: session.reservation_id,
         guest_info: {
           name: session.guest_name,
-          check_in: session.check_in.toISOString().split('T')[0], // YYYY-MM-DD
-          check_out: session.check_out.toISOString().split('T')[0], // YYYY-MM-DD
+          check_in: session.check_in,   // Already YYYY-MM-DD string
+          check_out: session.check_out, // Already YYYY-MM-DD string
           reservation_code: session.reservation_code,
+          accommodation_unit: session.accommodation_unit,
+          tenant_features: session.tenant_features,
         },
       },
       { status: 200 }

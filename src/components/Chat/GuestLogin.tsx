@@ -36,16 +36,18 @@ export function GuestLogin({ tenantId, onLoginSuccess, onError }: GuestLoginProp
       const today = new Date()
       today.setHours(0, 0, 0, 0)
 
-      // Allow dates from 30 days ago to 30 days in the future
+      // Allow dates from 30 days ago to any future date
       const minDate = new Date(today)
       minDate.setDate(minDate.getDate() - 30)
-      const maxDate = new Date(today)
-      maxDate.setDate(maxDate.getDate() + 30)
 
-      if (selectedDate < minDate || selectedDate > maxDate) {
+      // ⚠️ TEMPORAL: Validación de fecha futura deshabilitada para testing
+      // const maxDate = new Date(today)
+      // maxDate.setDate(maxDate.getDate() + 30)
+
+      if (selectedDate < minDate) {
         errors.push({
           field: 'check_in_date',
-          message: 'La fecha debe estar entre 30 días atrás y 30 días adelante',
+          message: 'La fecha no puede ser anterior a 30 días atrás',
         })
       }
     } else if (touched.check_in_date && !formState.check_in_date) {
@@ -133,14 +135,17 @@ export function GuestLogin({ tenantId, onLoginSuccess, onError }: GuestLoginProp
       }
 
       // Reconstruct GuestSession from response
+      // Keep check_in/check_out as YYYY-MM-DD strings to match GuestSession interface
       const session: GuestSession = {
         reservation_id: data.reservation_id || '',
         conversation_id: data.conversation_id,
         tenant_id: tenantId,
         guest_name: data.guest_info.name,
-        check_in: new Date(data.guest_info.check_in),
-        check_out: new Date(data.guest_info.check_out),
+        check_in: data.guest_info.check_in,    // Keep as YYYY-MM-DD string
+        check_out: data.guest_info.check_out,  // Keep as YYYY-MM-DD string
         reservation_code: data.guest_info.reservation_code,
+        accommodation_unit: data.guest_info.accommodation_unit,  // 🆕 NUEVO
+        tenant_features: data.guest_info.tenant_features,         // 🆕 NUEVO
       }
 
       onLoginSuccess(session, data.token)

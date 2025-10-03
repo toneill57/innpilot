@@ -31,6 +31,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // TODO(production): Validate token dates against current reservation in DB
+    // For now, tokens are considered valid if JWT signature is valid
+    // In future, check if check_in/check_out dates match active reservation
+
     // Return session data
     return NextResponse.json({ session }, { status: 200 })
 

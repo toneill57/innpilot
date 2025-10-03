@@ -30,7 +30,8 @@
     "benchmark-detailed": "node scripts/detailed-benchmark.js",
     "setup-pgvector": "node scripts/setup-vector-function.js",
     "monitor": "node scripts/system-monitor.js",
-    "ensure-server": "node scripts/ensure-server.js"
+    "ensure-server": "node scripts/ensure-server.js",
+    "sync:motopress:bookings": "tsx scripts/sync-motopress-bookings.ts"
   },
   "type": "module",
   "dependencies": {

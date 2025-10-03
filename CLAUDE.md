@@ -12,6 +12,24 @@ InnPilot is a modern web platform for managing SIRE compliance for Colombian hot
 2. **fetch() (SECONDARY)** - For API endpoint testing
 3. **curl (EMERGENCY ONLY)** - Only when other methods fail
 
+## 🚀 DEVELOPMENT SERVER - MANDATORY SCRIPT
+**ALWAYS use the robust dev script** - handles cleanup, API keys, and graceful shutdown:
+
+```bash
+./scripts/dev-with-keys.sh
+```
+
+**Why use this script:**
+- ✅ **Auto-cleanup**: Kills orphaned processes and frees port 3000 automatically
+- ✅ **API Keys**: Exports OPENAI_API_KEY and ANTHROPIC_API_KEY automatically
+- ✅ **Graceful shutdown**: Ctrl+C properly cleans up all processes
+- ✅ **Error handling**: Verifies port is free before starting
+- ✅ **Zero manual cleanup**: No more "port already in use" errors
+
+**DO NOT use `npm run dev` directly** unless you have `.env.local` fully configured and want to manually handle process cleanup.
+
+**Complete documentation**: See `scripts/README.md` for full details
+
 ## 🚨 CRITICAL SCHEMA ROUTING WARNINGS
 **SECURITY BOUNDARY**: Schema routing prevents cross-tenant data breaches
 1. **Business data → Business schema**: hotels → `hotels`, restaurants → `restaurants`
@@ -124,8 +142,9 @@ const response = formatResponse(accommodationResults, tourismResults, query, int
 - ✅ **Campos faltantes loop**: SOLVED completamente - Sistema de extracción con 25+ campos al 100%
 
 ### **Common Solutions:**
-- **buildManifest.js errors** → Restart: `npm run dev`
-- **Development server issues** → Kill process and restart fresh
+- **buildManifest.js errors** → Restart: `./scripts/dev-with-keys.sh` (auto-cleanup)
+- **Development server issues** → Use `./scripts/dev-with-keys.sh` (handles cleanup automatically)
+- **Port 3000 occupied** → Script handles this automatically, or manual: `lsof -ti:3000 | xargs kill -9`
 
 ## Agentes Especializados
 
@@ -188,7 +207,10 @@ Asistente AI conversacional que permite a huéspedes mantener conversaciones per
 
 ### Comandos Esenciales para Desarrollo
 ```bash
-# Iniciar desarrollo del sistema conversacional
+# 🚀 Iniciar desarrollo (RECOMENDADO - con limpieza automática y API keys)
+./scripts/dev-with-keys.sh
+
+# Alternativamente, si ya tienes .env.local configurado:
 npm run dev
 
 # Testing del nuevo sistema

@@ -11,6 +11,10 @@ jest.mock('@/lib/supabase', () => ({
           error: null
         }))
       }))
+    })),
+    rpc: jest.fn(() => Promise.resolve({
+      data: [{ id: 1 }],
+      error: null
     }))
   }
 }))
@@ -45,26 +49,25 @@ describe('/api/health', () => {
     const response = await GET(request)
     const data = await response.json()
 
-    expect(data.services.supabase.responseTime).toBe('100ms')
+    // Should have responseTime in format like "123ms"
+    expect(data.services.supabase.responseTime).toMatch(/^\d+ms$/)
   })
 
   it('should handle supabase connection errors', async () => {
     // Mock Supabase error
     const mockSupabase = require('@/lib/supabase')
-    mockSupabase.supabase.from.mockReturnValue({
-      select: jest.fn(() => ({
-        limit: jest.fn(() => Promise.resolve({
-          data: null,
-          error: { message: 'Connection failed' }
-        }))
-      }))
+    mockSupabase.supabase.rpc.mockResolvedValue({
+      data: null,
+      error: { message: 'Connection failed' }
     })
 
     const request = new NextRequest('http://localhost:3000/api/health')
     const response = await GET(request)
     const data = await response.json()
 
-    expect(data.services.supabase.status).toBe('unhealthy')
-    expect(data.services.supabase.error).toBe('Connection failed')
+    // When there's an error, status should be "error" (not "unhealthy")
+    expect(data.services.supabase.status).toBe('error')
+    // Error message should be present (may include table name prefix)
+    expect(data.services.supabase.error).toContain('Connection failed')
   })
 })

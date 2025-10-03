@@ -334,7 +334,63 @@ export function calculateEnhancementConfidence(
 }
 
 // ============================================================================
+// Technical Terms Expansion (Opción C)
+// ============================================================================
+
+/**
+ * Expand technical terms with synonyms to improve embedding quality
+ * This helps queries like "clave wifi" match chunks that say "contraseña WiFi"
+ */
+export function expandTechnicalTerms(query: string): string {
+  let expanded = query
+
+  // Technical synonyms dictionary
+  const synonyms: Record<string, string[]> = {
+    // Authentication & Security
+    clave: ['clave', 'contraseña', 'password', 'código'],
+    contraseña: ['contraseña', 'clave', 'password'],
+    código: ['código', 'clave', 'pin'],
+    pin: ['pin', 'código', 'clave'],
+
+    // Connectivity
+    wifi: ['wifi', 'wireless', 'internet', 'conexión', 'red'],
+    internet: ['internet', 'wifi', 'conexión', 'red'],
+    red: ['red', 'wifi', 'conexión'],
+
+    // Appliances & Utilities
+    estufa: ['estufa', 'cocina', 'hornilla'],
+    nevera: ['nevera', 'refrigerador', 'frigorífico'],
+    aire: ['aire acondicionado', 'AC', 'climatización'],
+  }
+
+  // Expand each technical term found in query
+  const lowerQuery = query.toLowerCase()
+  Object.keys(synonyms).forEach((term) => {
+    // Check if term appears as whole word
+    const regex = new RegExp(`\\b${term}\\b`, 'i')
+    if (regex.test(lowerQuery)) {
+      // Add synonyms to improve semantic match
+      const termSynonyms = synonyms[term].slice(0, 2) // Limit to 2 synonyms to avoid query bloat
+      expanded += ` ${termSynonyms.join(' ')}`
+    }
+  })
+
+  // Log expansion for debugging
+  if (expanded !== query) {
+    console.log(`[Technical Terms] Expanded: "${query}" → "${expanded}"`)
+  }
+
+  return expanded
+}
+
+// ============================================================================
 // Export Utilities
 // ============================================================================
 
-export { detectFollowUp, extractSimpleEntities, extractEntitiesFromHistory, buildContextSummary }
+export {
+  detectFollowUp,
+  extractSimpleEntities,
+  extractEntitiesFromHistory,
+  buildContextSummary,
+  expandTechnicalTerms,
+}

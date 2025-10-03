@@ -8,7 +8,7 @@
 import { createClient } from '@supabase/supabase-js'
 import OpenAI from 'openai'
 import Anthropic from '@anthropic-ai/sdk'
-import { enhanceQuery, type EnhancedQuery } from '@/lib/context-enhancer'
+import { enhanceQuery, expandTechnicalTerms, type EnhancedQuery } from '@/lib/context-enhancer'
 import type { GuestSession } from '@/lib/guest-auth'
 
 // ============================================================================
@@ -165,13 +165,38 @@ export async function generateConversationalResponse(
     // STEP 7: Generate follow-up suggestions
     const followUpSuggestions = generateFollowUpSuggestions(response, uniqueEntities, vectorResults)
 
-    // STEP 8: Prepare sources metadata
-    const sources: SourceMetadata[] = vectorResults.slice(0, 5).map((result) => ({
-      type: (result.table === 'accommodation_units' ? 'accommodation' : 'tourism'),
-      name: result.name || result.title || result.source_file || 'Unknown',
-      similarity: result.similarity,
-      file: result.source_file,
-    }))
+    // STEP 8: Prepare sources metadata with domain emojis
+    const sources: SourceMetadata[] = vectorResults.slice(0, 10).map((result) => {
+      let domainLabel = ''
+      let type: 'accommodation' | 'tourism' | 'document' = 'document'
+
+      // Determine domain based on table
+      if (result.table === 'muva_content') {
+        domainLabel = '[TURISMO SAN ANDRÉS ✈️]'
+        type = 'tourism'
+      } else if (result.table === 'guest_information') {
+        domainLabel = '[HOTEL SIMMERDOWN 🏨]'
+        type = 'document'
+      } else if (result.table.includes('accommodation_units_manual')) {
+        // Supports both: accommodation_units_manual (old) and accommodation_units_manual_chunks (new)
+        domainLabel = `[TU ALOJAMIENTO: ${context.guestInfo.accommodation_unit?.name || 'N/A'} 🏠]`
+        type = 'accommodation'
+      } else if (result.table === 'accommodation_units_public' || result.table === 'accommodation_units') {
+        domainLabel = '[HOTEL SIMMERDOWN 🏨]'
+        type = 'accommodation'
+      } else {
+        domainLabel = '[INFO GENERAL]'
+      }
+
+      const sourceName = result.name || result.title || result.source_file || 'Unknown'
+
+      return {
+        type,
+        name: `${domainLabel} ${sourceName}`,
+        similarity: result.similarity,
+        file: result.source_file,
+      }
+    })
 
     // STEP 9: Calculate confidence score
     const confidence = calculateConfidence(vectorResults, enhancedQuery)
@@ -240,11 +265,14 @@ async function performContextAwareSearch(
   const startTime = Date.now()
 
   try {
-    // Generate embeddings for enhanced query
+    // 🆕 OPCIÓN C: Expand technical terms with synonyms (clave → contraseña, wifi → wireless, etc.)
+    const queryWithSynonyms = expandTechnicalTerms(query)
+
+    // Generate embeddings for enhanced query (with technical synonyms)
     const [queryEmbeddingFast, queryEmbeddingBalanced, queryEmbeddingFull] = await Promise.all([
-      generateEmbedding(query, 1024), // Tier 1 for accommodation (public info)
-      generateEmbedding(query, 1536), // Tier 2 for guest information + manual
-      generateEmbedding(query, 3072), // Tier 3 for tourism
+      generateEmbedding(queryWithSynonyms, 1024), // Tier 1 for accommodation (public info)
+      generateEmbedding(queryWithSynonyms, 1536), // Tier 2 for guest information + manual
+      generateEmbedding(queryWithSynonyms, 3072), // Tier 3 for tourism
     ])
 
     console.log(`[Chat Engine] Generated embeddings in ${Date.now() - startTime}ms`)
@@ -252,13 +280,13 @@ async function performContextAwareSearch(
     // 🆕 Permission-aware search strategy (NUEVO)
     const hasMuvaAccess = guestInfo.tenant_features?.muva_access === true
 
-    console.log('[Chat Engine] Search strategy:', {
-      accommodation_public: true,  // ALL units (for re-booking)
-      accommodation_manual: true,  // ONLY guest's unit manual
-      guest_info: true,            // Always search operational manuals
-      muva: hasMuvaAccess,
+    console.log('[Chat Engine] Search strategy (3 Domains):', {
+      domain_1_muva: hasMuvaAccess,                              // Tourism (conditional)
+      domain_2_hotel_general: true,                              // FAQ, Arrival (always)
+      domain_3_unit_manual: !!guestInfo.accommodation_unit?.id,   // Private unit info (if assigned)
+      accommodation_public: true,                                // ALL units (for re-booking)
       tenant: guestInfo.tenant_id,
-      features: guestInfo.tenant_features,
+      unit_id: guestInfo.accommodation_unit?.id || 'not_assigned',
     })
 
     // Build search array based on permissions
@@ -267,34 +295,73 @@ async function performContextAwareSearch(
     // 1. Accommodation search (ENHANCED) - public (ALL) + manual (guest's only)
     searches.push(searchAccommodationEnhanced(queryEmbeddingFast, queryEmbeddingBalanced, guestInfo))
 
-    // 2. Guest Information search (ALWAYS) - operational manuals, FAQs, policies
-    searches.push(searchGuestInformation(queryEmbeddingBalanced, guestInfo))
+    // 2. Hotel General Info search (ALWAYS) - FAQ, Arrival instructions (Domain 2)
+    searches.push(searchHotelGeneralInfo(queryEmbeddingBalanced, guestInfo.tenant_id))
 
-    // 3. MUVA search (CONDITIONAL) - only if permission granted
+    // 3. Unit Manual search (ALWAYS) - Guest's private unit manual (Domain 3)
+    if (guestInfo.accommodation_unit?.id) {
+      searches.push(searchUnitManual(queryEmbeddingBalanced, guestInfo.accommodation_unit.id))
+    } else {
+      searches.push(Promise.resolve([]))
+      console.log('[Chat Engine] ⚠️ No accommodation_unit - skipping unit manual search')
+    }
+
+    // 4. MUVA search (CONDITIONAL) - only if permission granted
     if (hasMuvaAccess) {
       console.log('[Chat Engine] ✅ MUVA access granted')
       searches.push(searchTourism(queryEmbeddingFull))
     } else {
       console.log('[Chat Engine] ⛔ MUVA access denied')
+      searches.push(Promise.resolve([]))
     }
 
     // Execute searches in parallel
     const results = await Promise.all(searches)
     const accommodationResults = results[0] || []
-    const guestInfoResults = results[1] || []
-    const tourismResults = hasMuvaAccess ? (results[2] || []) : []
+    const hotelGeneralResults = results[1] || []
+    const unitManualResults = results[2] || []
+    const tourismResults = results[3] || []
 
     console.log(`[Chat Engine] Vector search completed in ${Date.now() - startTime}ms`, {
-      total: accommodationResults.length + guestInfoResults.length + tourismResults.length,
+      total: accommodationResults.length + hotelGeneralResults.length + unitManualResults.length + tourismResults.length,
       accommodation: accommodationResults.length,
-      guest_info: guestInfoResults.length,
+      hotel_general: hotelGeneralResults.length,
+      unit_manual: unitManualResults.length,
       muva: tourismResults.length,
     })
 
-    // Combine and boost results that match entities
-    const allResults = [...accommodationResults, ...guestInfoResults, ...tourismResults]
+    // BOOST 1: Tourism/MUVA (Tier 1 priority - main value proposition)
+    if (tourismResults.length > 0) {
+      tourismResults.forEach((result) => {
+        const originalSimilarity = result.similarity
+        const boost = 0.10  // Tourism is primary use case (80% of queries)
+        result.similarity += boost
+        console.log(`[Chat Engine] 🌴 Boosted tourism: "${result.name || result.source_file}" (${originalSimilarity.toFixed(3)} → ${result.similarity.toFixed(3)}, +${boost})`)
+      })
+    }
 
-    // Boost similarity scores for results matching conversation entities
+    // BOOST 2: Room-specific manual chunks (Tier 2 - conditional boost for relevant content)
+    if (guestInfo.accommodation_unit?.id && unitManualResults.length > 0) {
+      unitManualResults.forEach((result) => {
+        // Boost manual chunks above RPC match threshold (0.25) to compete with tourism
+        const originalSimilarity = result.similarity
+        const boost = originalSimilarity >= 0.25 ? 0.08 : 0  // Match RPC filter threshold (>= not >)
+        if (boost > 0) {
+          result.similarity += boost
+          console.log(`[Chat Engine] 🏠 Boosted unit manual chunk: "${result.name || result.source_file || 'Manual'}" (${originalSimilarity.toFixed(3)} → ${result.similarity.toFixed(3)}, +${boost})`)
+        }
+      })
+    }
+
+    // Combine results with prioritized order (tourism first for real-world usage)
+    const allResults = [
+      ...tourismResults,         // 🥇 PRIORITY 1: MUVA tourism (boost: +0.10) - 80% of queries
+      ...unitManualResults,      // 🥈 PRIORITY 2: Room-specific manual (boost: +0.08 if >0.5) - 15% of queries
+      ...hotelGeneralResults,    // 🥉 PRIORITY 3: Hotel FAQ/General info - 5% of queries
+      ...accommodationResults,   // 🏅 PRIORITY 4: Other accommodations (public)
+    ]
+
+    // BOOST 3: Entity boosting for conversation continuity
     if (entities.length > 0) {
       allResults.forEach((result) => {
         const resultText = [
@@ -310,7 +377,7 @@ async function performContextAwareSearch(
         entities.forEach((entity) => {
           if (resultText.includes(entity.toLowerCase())) {
             result.similarity += 0.1 // Boost score by 10%
-            console.log(`[Chat Engine] Boosted result "${result.name || result.source_file}" (entity: ${entity})`)
+            console.log(`[Chat Engine] 💬 Boosted result "${result.name || result.source_file}" (entity: ${entity})`)
           }
         })
       })
@@ -377,12 +444,13 @@ async function searchAccommodationEnhanced(
   console.log('[Chat Engine] Enhanced accommodation results:', {
     total: data?.length || 0,
     public_units: data?.filter((r: any) => r.source_table === 'accommodation_units_public').length || 0,
-    manual_content: data?.filter((r: any) => r.source_table === 'accommodation_units_manual').length || 0,
+    manual_old_deprecated: data?.filter((r: any) => r.source_table === 'accommodation_units_manual').length || 0, // Should be 0 after migration
     guest_unit_results: data?.filter((r: any) => r.is_guest_unit).length || 0,
   })
 
   return (data || []).map((item: any) => ({
     id: item.id,
+    name: item.name || 'Alojamiento',  // 🆕 FIX: Include name to avoid "Unknown" display
     content: item.content,
     similarity: item.similarity,
     source_file: '', // Not applicable for DB content
@@ -390,7 +458,7 @@ async function searchAccommodationEnhanced(
     metadata: {
       is_guest_unit: item.is_guest_unit,
       is_public_info: item.source_table === 'accommodation_units_public',
-      is_private_info: item.source_table === 'accommodation_units_manual',
+      is_private_info: item.source_table.includes('accommodation_units_manual'), // Supports old and new chunks table
     },
   }))
 }
@@ -419,6 +487,7 @@ async function searchTourism(embedding: number[]): Promise<VectorSearchResult[]>
 
 /**
  * Search guest information (operational manuals, FAQs, policies)
+ * @deprecated Use searchHotelGeneralInfo() and searchUnitManual() instead for proper domain separation
  */
 async function searchGuestInformation(
   embedding: number[],
@@ -448,6 +517,87 @@ async function searchGuestInformation(
     content: item.info_content,
     title: item.info_title,
     name: item.info_title,
+  }))
+}
+
+/**
+ * Search HOTEL GENERAL information (FAQ, Arrival instructions)
+ * Domain 2: Information that applies to ALL guests of the hotel
+ */
+async function searchHotelGeneralInfo(
+  embedding: number[],
+  tenantId: string
+): Promise<VectorSearchResult[]> {
+  const client = getSupabaseClient()
+  const { data, error } = await client.rpc('match_hotel_general_info', {
+    query_embedding: embedding,
+    p_tenant_id: tenantId,
+    similarity_threshold: 0.3,
+    match_count: 5,
+  })
+
+  if (error) {
+    console.error('[Chat Engine] Hotel general info search error:', error)
+    return []
+  }
+
+  console.log('[Chat Engine] Hotel general info results:', {
+    total_found: data?.length || 0,
+    tenant: tenantId,
+  })
+
+  return (data || []).map((item: any) => ({
+    ...item,
+    table: 'guest_information',
+    content: item.info_content,
+    title: item.info_title,
+    name: item.info_title,
+  }))
+}
+
+/**
+ * Search UNIT MANUAL CHUNKS (WiFi, safe code, appliances)
+ * Domain 3: Private information ONLY for the guest's assigned unit
+ * Uses chunked content for improved vector search precision (0.85+ similarity vs 0.24 with full docs)
+ */
+async function searchUnitManual(
+  embedding: number[],
+  unitId: string
+): Promise<VectorSearchResult[]> {
+  const client = getSupabaseClient()
+  const { data, error } = await client.rpc('match_unit_manual_chunks', {
+    query_embedding: embedding,
+    p_accommodation_unit_id: unitId,
+    match_threshold: 0.25,
+    match_count: 5,
+  })
+
+  if (error) {
+    console.error('[Chat Engine] Unit manual chunks search error:', error)
+    return []
+  }
+
+  console.log('[Chat Engine] Unit manual chunks results:', {
+    total_found: data?.length || 0,
+    unit_id: unitId,
+    chunks: data?.map((item: any) => ({
+      chunk_index: item.chunk_index,
+      similarity: item.similarity?.toFixed(3),
+      section: item.section_title?.substring(0, 50),
+    })),
+  })
+
+  return (data || []).map((item: any) => ({
+    ...item,
+    table: 'accommodation_units_manual_chunks',
+    content: item.chunk_content || '',
+    title: item.section_title || `Manual - Chunk ${item.chunk_index}`,
+    name: `Manual ${item.section_title || ''}`,
+    metadata: {
+      ...item.metadata,
+      chunk_index: item.chunk_index,
+      section_title: item.section_title,
+    },
   }))
 }
 
@@ -560,12 +710,25 @@ async function generateResponseWithClaude(
         content: msg.content,
       }))
 
+    // 🆕 Build dynamic security restrictions (MUST BE BEFORE searchContext!)
+    const hasMuvaAccess = context.guestInfo.tenant_features?.muva_access || false
+    const accommodationName = context.guestInfo.accommodation_unit?.name || 'sin asignar'
+    const accommodationNumber = context.guestInfo.accommodation_unit?.unit_number || ''
+    const accommodationDisplay = accommodationNumber ? `${accommodationName} #${accommodationNumber}` : accommodationName
+
     // Prepare search results context with public/private labels
     const searchContext = context.vectorResults
-      .slice(0, 5) // Top 5 results
+      .slice(0, 10) // Top 10 results (increased from 5 to ensure manual chunks always included)
       .map((result, index) => {
         const name = result.name || result.title || result.source_file || 'Unknown'
-        const preview = result.content.substring(0, 500)
+
+        // 🆕 CRITICAL FIX: Send FULL content for manual chunks (they contain room-specific info)
+        // For other results, send preview only (500 chars) to avoid token inflation
+        const isManualChunk = result.table === 'accommodation_units_manual_chunks'
+        const contentLimit = isManualChunk ? 2000 : 500  // Manual chunks: 2000 chars, others: 500 chars
+        const preview = result.content.substring(0, contentLimit)
+        const truncationIndicator = result.content.length > contentLimit ? '...' : ''
+
         const businessInfo = result.business_info
           ? `\nContacto: ${result.business_info.telefono || 'N/A'}, Precio: ${result.business_info.precio || 'N/A'}`
           : ''
@@ -580,18 +743,13 @@ async function generateResponseWithClaude(
             : ' [PRIVADO - Otra unidad]'
         }
 
-        return `[${index + 1}] ${name}${accessLabel} (similaridad: ${result.similarity.toFixed(2)})${businessInfo}\n${preview}...`
+        return `[${index + 1}] ${name}${accessLabel} (similaridad: ${result.similarity.toFixed(2)})${businessInfo}\n${preview}${truncationIndicator}`
       })
       .join('\n\n---\n\n')
 
-    // 🆕 Build dynamic security restrictions (NUEVO)
-    const hasMuvaAccess = context.guestInfo.tenant_features?.muva_access || false
-    const accommodationName = context.guestInfo.accommodation_unit?.name || 'sin asignar'
-    const accommodationNumber = context.guestInfo.accommodation_unit?.unit_number || ''
-
     // Build guest accommodation context
     const accommodationContext = context.guestInfo.accommodation_unit
-      ? `- Alojamiento: ${accommodationName} #${accommodationNumber} (${context.guestInfo.accommodation_unit.unit_type})${context.guestInfo.accommodation_unit.view_type ? `, ${context.guestInfo.accommodation_unit.view_type}` : ''}`
+      ? `- Alojamiento: ${accommodationDisplay}${context.guestInfo.accommodation_unit.view_type ? `, ${context.guestInfo.accommodation_unit.view_type}` : ''}`
       : ''
 
     // System prompt with dynamic security restrictions
@@ -599,54 +757,93 @@ async function generateResponseWithClaude(
 
 CONTEXTO DEL HUÉSPED:
 - Nombre: ${context.guestInfo.guest_name}
-- Check-in: ${new Date(context.guestInfo.check_in).toLocaleDateString('es-CO')}
-- Check-out: ${new Date(context.guestInfo.check_out).toLocaleDateString('es-CO')}
+- Check-in: ${context.guestInfo.check_in.split('-').reverse().join('/')}
+- Check-out: ${context.guestInfo.check_out.split('-').reverse().join('/')}
 ${accommodationContext}
 
-🔒 RESTRICCIONES DE SEGURIDAD CRÍTICAS:
+⚠️ REGLA FUNDAMENTAL DE RESPUESTA:
+Responde ÚNICAMENTE basándote en la información contenida en los RESULTADOS DE BÚSQUEDA proporcionados al final de este prompt.
+Los ejemplos incluidos en este prompt son ILUSTRATIVOS para mostrar el formato correcto - NO los uses como datos reales.
 
-1. INFORMACIÓN DE ALOJAMIENTO (Dos niveles):
+✅ CÓMO LEER LOS RESULTADOS:
+1. Lee CUIDADOSAMENTE todo el contenido de cada resultado
+2. Busca información ESPECÍFICA mencionada, incluso si está en listas o viñetas
+3. COPIA TEXTUALMENTE ubicaciones, contenidos, características exactas del texto
+4. NO INVENTES ni ELABORES detalles que no están escritos
+5. NO INFIERAS ubicaciones alternativas (si dice "baño", no digas "closet")
 
-   A) INFORMACIÓN PÚBLICA (Todas las unidades ✅):
-      ✅ Puedes mencionar y comparar TODAS las unidades del hotel
-      ✅ Descripciones generales, amenidades, fotos, precios
-      ✅ Útil para re-booking o consultas de upgrade
-      ✅ Ejemplo: "Tenemos 3 apartamentos disponibles: Sunshine, Summertime, One Love..."
+⚠️ REGLA CRÍTICA: USA SOLO LAS PALABRAS EXACTAS DEL TEXTO
+- Si dice "Baño principal, gabinete alto" → Usa EXACTAMENTE eso
+- Si dice "Vendas, curitas, antiséptico" → NO agregues "alcohol, tijeras, guantes"
+- Si dice "8 minutos caminando" → Di "8 minutos caminando" (NO "5-10 minutos")
 
-   B) INFORMACIÓN PRIVADA/MANUAL (Solo ${accommodationName} ⛔):
-      ⚠️ Instrucciones detalladas, contraseñas WiFi, códigos de caja fuerte
-      ⚠️ SOLO para tu unidad: "${accommodationName} #${accommodationNumber}"
-      ⛔ NUNCA menciones información privada de otras unidades
-      ⛔ Si preguntan por manual de otra unidad: "Solo puedo darte información operativa de tu alojamiento: ${accommodationName}."
+Ejemplo correcto:
+- Pregunta: "¿tienen botiquín?"
+- Texto: "Botiquín completo: Baño principal, gabinete alto. Contiene: Termómetro digital, Vendas, curitas, antiséptico"
+- ✅ Respuesta: "Sí, hay un botiquín completo en el baño principal, gabinete alto. Incluye: termómetro digital, vendas, curitas, antiséptico y medicamentos básicos"
+- ❌ INCORRECTO: "Está en el closet de la habitación principal" (NUNCA inventes ubicaciones)
+- ❌ INCORRECTO: Agregar "alcohol, tijeras, guantes" si NO están en el texto
 
-${hasMuvaAccess ? `
-2. TURISMO Y ACTIVIDADES (Premium ✅):
-   ✅ Tienes acceso COMPLETO a información turística MUVA
-   ✅ Puedes recomendar restaurantes, actividades, playas, tours
-   ✅ Proporciona detalles: precios, teléfonos, ubicaciones, horarios
-` : `
-2. TURISMO Y ACTIVIDADES (No disponible ⛔):
-   ⛔ NO tienes acceso a base de datos turística MUVA
-   ⛔ Si preguntan sobre turismo/actividades, responde:
-      "Para información sobre actividades y lugares turísticos, por favor contacta directamente a recepción. Estarán encantados de ayudarte con recomendaciones personalizadas."
-`}
+Si después de leer TODO el contenido NO encuentras la información, admite honestamente que no la tienes.
 
-3. POLÍTICAS DEL HOTEL:
-   ✅ Puedes responder preguntas sobre políticas generales del hotel
-   ✅ Check-in/check-out times, reglas de la casa, servicios incluidos
+📚 ARQUITECTURA DE 3 DOMINIOS DE INFORMACIÓN:
 
-EJEMPLOS DE USO CORRECTO:
+Tienes acceso a 3 dominios claramente separados:
+
+1. **[TURISMO SAN ANDRÉS 🌴]** - Información turística general
+   - Restaurantes, playas, actividades, transporte
+   - Contenido de MUVA (base turística de San Andrés)
+   - Disponible para todos los huéspedes
+   ${hasMuvaAccess ? '✅ Acceso COMPLETO - Proporciona detalles: precios, teléfonos, ubicaciones, horarios' : '⛔ NO DISPONIBLE - Dirigir a recepción para recomendaciones turísticas'}
+
+2. **[HOTEL SIMMERDOWN 🏨]** - Políticas generales del hotel
+   - Políticas generales del hotel
+   - Horarios de check-in/out
+   - Amenidades compartidas (piscina, WiFi, áreas comunes)
+   - Reglas de la propiedad
+   - Información de TODAS las unidades (descripciones, precios, comparaciones)
+   ✅ Puedes mencionar y comparar TODAS las unidades del hotel para consultas de upgrade o re-booking
+
+3. **[TU ALOJAMIENTO: ${accommodationDisplay} 🏠]** - Manual operativo PRIVADO
+   - Manual operativo específico de tu unidad
+   - Instrucciones de electrodomésticos
+   - Contraseñas WiFi, códigos de caja fuerte
+   - Características únicas de tu espacio
+   ⚠️ Información PRIVADA (solo para ti)
+   ⛔ NUNCA proporcionar información operativa de otras unidades
+
+🔒 INSTRUCCIONES DE USO DE CONTEXTO:
+
+**IMPORTANTE - Identificación de dominios en resultados:**
+- Si el huésped pregunta sobre "mi habitación", "mi alojamiento", "dónde estoy hospedado":
+  🏠 Usa SOLO información marcada con [TU ALOJAMIENTO: ...] o source_table que contenga 'accommodation_units_manual'
+
+- Si pregunta sobre el hotel en general, amenidades compartidas, otras unidades:
+  🏨 Usa información marcada con [HOTEL SIMMERDOWN 🏨] o source_table = 'guest_information'
+
+- Si pregunta sobre actividades, restaurantes, playas, transporte:
+  🌴 Usa información marcada con [TURISMO SAN ANDRÉS 🌴] o source_table = 'muva_content'
+
+**REGLAS DE SEGURIDAD ABSOLUTAS:**
+- ⛔ NUNCA compartas información operativa (WiFi, códigos, manuales) de unidades que NO sean ${accommodationName}
+- ✅ SÍ puedes mencionar TODAS las unidades para descripciones generales, precios, upgrades
+- ⚠️ Si piden info operativa de otra unidad: "Solo puedo darte información operativa de tu alojamiento: ${accommodationName}. Para otras unidades, contacta recepción."
+
+EJEMPLOS DE USO CORRECTO (⚠️ ILUSTRATIVOS - Usa solo datos de RESULTADOS DE BÚSQUEDA):
 
 📌 Pregunta: "¿Qué apartamentos tienen 3 habitaciones?"
-✅ Respuesta correcta: "Tenemos 2 opciones con 3 habitaciones: Summertime (vista jardín, terraza) y One Love (vista mar, cocina completa). Tu unidad actual es ${accommodationName}. ¿Te interesa info sobre upgrade?"
+✅ Respuesta correcta (usando 🏨 HOTEL SIMMERDOWN): "Tenemos 2 opciones con 3 habitaciones: Summertime (vista jardín, terraza) y One Love (vista mar, cocina completa). Tu unidad actual es ${accommodationName}. ¿Te interesa info sobre upgrade?"
 
 📌 Pregunta: "¿Cuál es la contraseña del WiFi?"
-✅ Respuesta correcta: [Solo si source_table = 'accommodation_units_manual' y is_guest_unit = true] "La contraseña del WiFi de tu ${accommodationName} es: SimmerDown-Wifi2024"
-❌ Respuesta INCORRECTA: "No tengo acceso a contraseñas WiFi de otras unidades"
+✅ Respuesta correcta (usando 🏠 TU ALOJAMIENTO): "La contraseña del WiFi de tu ${accommodationName} es: [usar la contraseña exacta encontrada en el manual privado de RESULTADOS DE BÚSQUEDA]"
+❌ Respuesta INCORRECTA: "No tengo acceso a contraseñas WiFi"
 
 📌 Pregunta: "¿Cuál es la contraseña WiFi del apartamento Sunshine?"
 ❌ Respuesta INCORRECTA: "La contraseña del Sunshine es..."
 ✅ Respuesta correcta: "Solo puedo darte información operativa de tu alojamiento: ${accommodationName}. Para consultas sobre otras unidades, contacta recepción."
+
+📌 Pregunta: "¿Dónde puedo comer pescado fresco?"
+✅ Respuesta correcta (usando 🌴 TURISMO SAN ANDRÉS): "[Menciona 2-3 restaurantes de mariscos encontrados en RESULTADOS con precios, teléfonos y ubicación exacta]"
 
 ESTILO DE RESPUESTA:
 - Amigable, profesional, conciso
@@ -667,7 +864,7 @@ Responde a la pregunta del huésped de manera natural y útil.`
       model: 'claude-3-5-haiku-latest', // Claude Haiku 3.5 (5x cheaper, faster)
       max_tokens: 800,
       temperature: 0.1, // Low temperature for data-driven, consistent responses
-      top_k: 6, // Balanced precision and variety
+      top_p: 0.9, // Balanced precision and variety (Claude API uses top_p, not top_k)
       system: systemPrompt,
       messages: [
         ...conversationHistory,
@@ -679,7 +876,7 @@ Responde a la pregunta del huésped de manera natural y útil.`
     })
 
     const duration = Date.now() - startTime
-    console.log(`[Chat Engine] Claude Sonnet response generated in ${duration}ms`)
+    console.log(`[Chat Engine] Claude Haiku response generated in ${duration}ms`)
 
     const content = response.content[0]
     if (content.type !== 'text') {

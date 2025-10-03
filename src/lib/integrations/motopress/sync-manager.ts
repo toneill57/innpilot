@@ -206,13 +206,15 @@ export class MotoPresSyncManager {
               console.log(`Updated accommodation: ${unit.name}`)
             }
           } else {
-            // Create new using SQL (hotels schema)
+            // Create new using SQL (hotels schema) with deterministic UUID
             const insertSql = `
               INSERT INTO hotels.accommodation_units (
+                id,
                 hotel_id, tenant_id, motopress_unit_id, name, description, short_description,
                 capacity, bed_configuration, view_type, tourism_features, unique_features,
                 images, accommodation_mphb_type, status, is_featured, display_order, created_at, updated_at
               ) VALUES (
+                hotels.generate_deterministic_uuid('${unit.tenant_id}', ${unit.motopress_unit_id}),
                 '${unit.hotel_id}',
                 '${unit.tenant_id}',
                 ${unit.motopress_unit_id},
@@ -559,13 +561,15 @@ export class MotoPresSyncManager {
               console.log(`Updated accommodation: ${unit.name}`)
             }
           } else {
-            // Create new using SQL (hotels schema)
+            // Create new using SQL (hotels schema) with deterministic UUID
             const insertSql = `
               INSERT INTO hotels.accommodation_units (
+                id,
                 hotel_id, tenant_id, motopress_unit_id, name, description, short_description,
                 capacity, bed_configuration, view_type, tourism_features, unique_features,
                 images, accommodation_mphb_type, status, is_featured, display_order, created_at, updated_at
               ) VALUES (
+                hotels.generate_deterministic_uuid('${unit.tenant_id}', ${unit.motopress_unit_id}),
                 '${unit.hotel_id}',
                 '${unit.tenant_id}',
                 ${unit.motopress_unit_id},

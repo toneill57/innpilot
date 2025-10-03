@@ -169,6 +169,23 @@ handle_critical_incident() {
 
 ## Comandos Especializados
 
+### Development Server (MANDATORY)
+```bash
+# 🚀 ALWAYS use this script to start development server
+./scripts/dev-with-keys.sh
+
+# Features:
+# - Auto-cleanup of orphaned processes
+# - Port 3000 verification before start
+# - API keys (OPENAI_API_KEY, ANTHROPIC_API_KEY) auto-loaded
+# - Graceful shutdown with Ctrl+C
+# - Zero manual cleanup needed
+
+# ❌ DO NOT use npm run dev directly unless:
+# - You have .env.local fully configured
+# - You're willing to manually handle process cleanup
+```
+
 ### Health Monitoring
 ```bash
 # Ejecutar monitoreo completo

@@ -19,8 +19,20 @@ let openaiClient: OpenAI | null = null
 
 function getAnthropicClient(): Anthropic {
   if (!anthropicClient) {
+    const apiKey = process.env.ANTHROPIC_API_KEY
+    if (!apiKey) {
+      throw new Error(
+        'ANTHROPIC_API_KEY is not set. Please configure it in .env.local'
+      )
+    }
+    if (!apiKey.startsWith('sk-')) {
+      throw new Error(
+        'ANTHROPIC_API_KEY has invalid format. Expected format: sk-...'
+      )
+    }
+    console.log('[staff-chat-engine] Initializing Anthropic client')
     anthropicClient = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!,
+      apiKey: apiKey,
     })
   }
   return anthropicClient
@@ -28,8 +40,20 @@ function getAnthropicClient(): Anthropic {
 
 function getOpenAIClient(): OpenAI {
   if (!openaiClient) {
+    const apiKey = process.env.OPENAI_API_KEY
+    if (!apiKey) {
+      throw new Error(
+        'OPENAI_API_KEY is not set. Please configure it in .env.local'
+      )
+    }
+    if (!apiKey.startsWith('sk-')) {
+      throw new Error(
+        'OPENAI_API_KEY has invalid format. Expected format: sk-...'
+      )
+    }
+    console.log('[staff-chat-engine] Initializing OpenAI client')
     openaiClient = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY!,
+      apiKey: apiKey,
     })
   }
   return openaiClient

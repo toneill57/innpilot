@@ -103,7 +103,7 @@ export function GuestChatInterface({ session, token, onLogout }: GuestChatInterf
       // Add welcome message if no history
       if (historyMessages.length === 0) {
         const accommodationInfo = session.accommodation_unit
-          ? `\n\nEstás alojado en **${session.accommodation_unit.name} #${session.accommodation_unit.unit_number}**${session.accommodation_unit.view_type ? ` con ${session.accommodation_unit.view_type}` : ''}.`
+          ? `\n\nEstás alojado en **${session.accommodation_unit.name}${session.accommodation_unit.unit_number ? ` #${session.accommodation_unit.unit_number}` : ''}**${session.accommodation_unit.view_type ? ` con ${session.accommodation_unit.view_type}` : ''}.`
           : ''
 
         const welcomeMessage: GuestChatMessage = {
@@ -265,8 +265,29 @@ Bienvenido a tu asistente personal. Puedo ayudarte con:
     }
   }
 
-  const formatDate = (date: Date | string): string => {
-    const dateObj = typeof date === 'string' ? new Date(date) : date
+  const formatDate = (date: string | undefined): string => {
+    if (!date || typeof date !== 'string') {
+      return 'N/A'
+    }
+
+    // Parse YYYY-MM-DD string to local date (not UTC) to avoid timezone issues
+    const parts = date.split('-')
+    if (parts.length !== 3) {
+      return date // Return original string if not in expected format
+    }
+
+    const [year, month, day] = parts.map(Number)
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+      return date // Return original string if parsing failed
+    }
+
+    const dateObj = new Date(year, month - 1, day)  // month is 0-indexed
+
+    // Validate the date object
+    if (isNaN(dateObj.getTime())) {
+      return 'N/A'
+    }
+
     return new Intl.DateTimeFormat('es-ES', {
       month: 'short',
       day: 'numeric',
@@ -286,7 +307,7 @@ Bienvenido a tu asistente personal. Puedo ayudarte con:
               <h1 className="font-semibold text-gray-900">{session.guest_name}</h1>
               {session.accommodation_unit && (
                 <p className="text-xs font-medium text-blue-600">
-                  {session.accommodation_unit.name} #{session.accommodation_unit.unit_number}
+                  {session.accommodation_unit.name}{session.accommodation_unit.unit_number ? ` #${session.accommodation_unit.unit_number}` : ''}
                   {session.accommodation_unit.view_type && ` • ${session.accommodation_unit.view_type}`}
                 </p>
               )}
@@ -395,6 +416,20 @@ Bienvenido a tu asistente personal. Puedo ayudarte con:
                           </ReactMarkdown>
                         </div>
                       </div>
+
+                      {/* Sources (only for assistant messages) */}
+                      {message.role === 'assistant' && message.sources && message.sources.length > 0 && (
+                        <div className="mt-2 px-2">
+                          <p className="text-xs font-medium text-gray-500 mb-1">Fuentes:</p>
+                          <div className="space-y-1">
+                            {message.sources.slice(0, 3).map((source, idx) => (
+                              <div key={idx} className="text-xs text-gray-600 bg-gray-50 px-2 py-1 rounded">
+                                {source.name}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
                       <p className="text-xs text-gray-400 mt-1 px-2">
                         {message.timestamp.toLocaleTimeString('es-ES', {

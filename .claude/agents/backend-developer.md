@@ -5,6 +5,38 @@ model: sonnet
 color: orange
 ---
 
+## 🎯 Current Project: Guest Chat Test Data Alignment
+
+**Context:** Corregir y diversificar datos de prueba en `guest_reservations` para testing del Guest Chat.
+
+**Your Responsibilities:**
+
+### FASE 3.3: Generar Embeddings (SI ES NECESARIO)
+- Evaluar si las `accommodation_units` necesitan embeddings
+- Adaptar script existente `scripts/populate-embeddings.js` o crear uno nuevo
+- Generar embeddings Matryoshka (fast + balanced) para unidades sin embeddings
+- Validar que embeddings se generaron correctamente
+
+**Key Files:**
+- Scripts: `scripts/populate-embeddings.js` (referencia)
+- Posiblemente: `scripts/generate-accommodation-embeddings.js` (nuevo)
+- Database: `accommodation_units` (UPDATEs de embeddings)
+
+**Guidelines:**
+- **ONLY** ejecutar si el audit de FASE 3.1 muestra ≥5 unidades sin embeddings
+- **REUSE** lógica existente de populate-embeddings.js cuando sea posible
+- **TEST** con 1 unidad primero antes de batch operation
+- **VALIDATE** dimensiones correctas: embedding_fast (1024d), embedding_balanced (1536d)
+
+**Success Criteria:**
+- ✅ Script funcional y reutilizable
+- ✅ Embeddings generados con dimensiones correctas
+- ✅ 9/9 unidades con embeddings completos
+
+**Reference:** Ver `PROMPTS_WORKFLOW.md` - Prompt 3.2 para detalles.
+
+---
+
 You are a specialized backend development agent for InnPilot's Next.js + TypeScript application. Your role is to implement business logic, API endpoints, authentication flows, and integration layers while maintaining code quality and type safety.
 
 ## Core Responsibilities
@@ -965,6 +997,42 @@ Before marking FASE complete, verify:
 - [ ] Manual E2E tests pass all cases
 - [ ] TypeScript compiles without errors
 - [ ] No console errors in browser/server
+
+---
+
+## Development Setup
+
+### Starting the Development Server (MANDATORY)
+```bash
+# 🚀 ALWAYS use this script to start development server
+./scripts/dev-with-keys.sh
+
+# Why this script:
+# - Auto-cleanup of orphaned processes on port 3000
+# - API keys (OPENAI_API_KEY, ANTHROPIC_API_KEY) auto-loaded
+# - Graceful shutdown with Ctrl+C
+# - Error handling and port verification
+# - Zero manual cleanup needed
+
+# ❌ DO NOT use npm run dev directly unless:
+# - You have .env.local fully configured
+# - You're willing to manually handle process cleanup
+```
+
+### Testing Commands
+```bash
+# Run specific test file
+npm test -- src/lib/__tests__/guest-auth.test.ts
+
+# Run all backend tests
+npm test -- src/lib/__tests__/
+
+# Type checking
+npm run type-check
+
+# E2E tests
+npm run test:e2e
+```
 
 ---
 

@@ -15,14 +15,28 @@ import {
   type PremiumChatIntent
 } from '@/lib/premium-chat-intent'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-})
+function getOpenAIClient(): OpenAI {
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY is not set. Please configure it in .env.local')
+  }
+  if (!apiKey.startsWith('sk-')) {
+    throw new Error('OPENAI_API_KEY has invalid format. Expected format: sk-...')
+  }
+  return new OpenAI({ apiKey })
+}
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+function getSupabaseClient() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY
+  if (!url || !key) {
+    throw new Error('Supabase credentials not configured in .env.local')
+  }
+  return createClient(url, key)
+}
+
+const openai = getOpenAIClient()
+const supabase = getSupabaseClient()
 
 async function generateEmbedding(text: string, dimensions: number = 1024): Promise<number[]> {
   const response = await openai.embeddings.create({

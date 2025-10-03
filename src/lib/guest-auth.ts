@@ -17,9 +17,19 @@ export interface GuestSession {
   conversation_id: string
   tenant_id: string
   guest_name: string
-  check_in: Date
-  check_out: Date
+  check_in: string  // YYYY-MM-DD format (no timezone issues)
+  check_out: string // YYYY-MM-DD format (no timezone issues)
   reservation_code: string
+  // 🆕 NUEVO: Permissions and accommodation info (FASE 1.3)
+  tenant_features?: {
+    muva_access: boolean
+  }
+  accommodation_unit?: {
+    id: string
+    name: string
+    unit_number?: string
+    view_type?: string
+  }
 }
 
 export interface GuestCredentials {
@@ -37,6 +47,7 @@ interface GuestReservation {
   check_out_date: string
   reservation_code: string
   status: string
+  accommodation_unit_id?: string  // 🆕 NUEVO
 }
 
 interface ChatConversation {
@@ -126,15 +137,46 @@ export async function authenticateGuest(
       return null
     }
 
+    // 🆕 NUEVO: Load accommodation unit data if assigned (FASE 1.3)
+    let accommodationUnit: { id: string; name: string; unit_number?: string; view_type?: string } | undefined
+
+    if (reservation.accommodation_unit_id) {
+      const { data: units, error: unitError } = await supabase
+        .rpc('get_accommodation_unit_by_id', {
+          p_unit_id: reservation.accommodation_unit_id,
+          p_tenant_id: tenant_id
+        })
+
+      if (unitError) {
+        console.error('[guest-auth] Failed to load accommodation unit:', unitError)
+      }
+
+      const unit = units && units.length > 0 ? units[0] : null
+      if (unit) {
+        accommodationUnit = {
+          id: unit.id,
+          name: unit.name,
+          unit_number: unit.unit_number || undefined,
+          view_type: unit.view_type || undefined,
+        }
+        console.log(`[guest-auth] Loaded accommodation: ${unit.name} ${unit.unit_number || ''}`)
+      }
+    }
+
     // Build session object
     const session: GuestSession = {
       reservation_id: reservation.id,
       conversation_id: conversationId,
       tenant_id: reservation.tenant_id,
       guest_name: reservation.guest_name,
-      check_in: new Date(reservation.check_in_date),
-      check_out: new Date(reservation.check_out_date),
+      check_in: reservation.check_in_date,   // Keep as YYYY-MM-DD string
+      check_out: reservation.check_out_date, // Keep as YYYY-MM-DD string
       reservation_code: reservation.reservation_code || '',
+      // 🆕 NUEVO: Add permissions and accommodation (FASE 1.3)
+      tenant_features: {
+        muva_access: true,  // Default: ALL guests have MUVA access (tourism info)
+      },
+      accommodation_unit: accommodationUnit,
     }
 
     console.log(`[guest-auth] ✅ Authentication successful for ${reservation.guest_name}`)
@@ -216,6 +258,11 @@ export async function generateGuestToken(session: GuestSession): Promise<string>
       conversation_id: session.conversation_id,
       tenant_id: session.tenant_id,
       guest_name: session.guest_name,
+      check_in: session.check_in,                        // Already YYYY-MM-DD string
+      check_out: session.check_out,                      // Already YYYY-MM-DD string
+      reservation_code: session.reservation_code,        // Código de reserva
+      accommodation_unit: session.accommodation_unit,    // Info de alojamiento
+      tenant_features: session.tenant_features,          // Permisos (MUVA access)
       type: 'guest',
     })
       .setProtectedHeader({ alg: 'HS256' })
@@ -253,6 +300,31 @@ export async function verifyGuestToken(token: string): Promise<GuestSession | nu
       return null
     }
 
+    // 🆕 OPTIMIZACIÓN: Try to read session data from JWT first (new tokens)
+    // This avoids DB queries on every request, improving performance
+    const hasFullPayload = payload.check_in && payload.check_out && payload.accommodation_unit !== undefined
+
+    if (hasFullPayload) {
+      // New JWT format (includes all session data)
+      const session: GuestSession = {
+        reservation_id: payload.reservation_id as string,
+        conversation_id: payload.conversation_id as string,
+        tenant_id: payload.tenant_id as string,
+        guest_name: payload.guest_name as string,
+        check_in: payload.check_in as string,    // Keep as YYYY-MM-DD string
+        check_out: payload.check_out as string,  // Keep as YYYY-MM-DD string
+        reservation_code: (payload.reservation_code as string) || '',
+        tenant_features: (payload.tenant_features as any) || { muva_access: true },
+        accommodation_unit: payload.accommodation_unit as any,
+      }
+
+      console.log(`[guest-auth] ✅ Token verified (from JWT payload) for ${session.guest_name}`)
+      return session
+    }
+
+    // 🔄 FALLBACK: Old JWT format (needs DB query to reconstruct session)
+    console.log('[guest-auth] ⚠️ Old JWT format detected, fetching data from DB...')
+
     // Fetch fresh reservation data from database
     const supabase = createServerClient()
     const { data: reservation, error } = await supabase
@@ -266,18 +338,47 @@ export async function verifyGuestToken(token: string): Promise<GuestSession | nu
       return null
     }
 
+    // Load accommodation unit data if assigned
+    let accommodationUnit: { id: string; name: string; unit_number?: string; view_type?: string } | undefined
+
+    if (reservation.accommodation_unit_id) {
+      const { data: units, error: unitError } = await supabase
+        .rpc('get_accommodation_unit_by_id', {
+          p_unit_id: reservation.accommodation_unit_id,
+          p_tenant_id: reservation.tenant_id
+        })
+
+      if (unitError) {
+        console.error('[guest-auth] Failed to load accommodation unit:', unitError)
+      }
+
+      const unit = units && units.length > 0 ? units[0] : null
+      if (unit) {
+        accommodationUnit = {
+          id: unit.id,
+          name: unit.name,
+          unit_number: unit.unit_number || undefined,
+          view_type: unit.view_type || undefined,
+        }
+      }
+    }
+
     // Reconstruct session with real data from database
     const session: GuestSession = {
       reservation_id: payload.reservation_id as string,
       conversation_id: payload.conversation_id as string,
       tenant_id: payload.tenant_id as string,
       guest_name: payload.guest_name as string,
-      check_in: new Date(reservation.check_in_date),
-      check_out: new Date(reservation.check_out_date),
+      check_in: reservation.check_in_date,   // Keep as YYYY-MM-DD string
+      check_out: reservation.check_out_date, // Keep as YYYY-MM-DD string
       reservation_code: reservation.reservation_code || '',
+      tenant_features: {
+        muva_access: true,  // Default: ALL guests have MUVA access
+      },
+      accommodation_unit: accommodationUnit,
     }
 
-    console.log(`[guest-auth] ✅ Token verified for ${session.guest_name} (${reservation.check_in_date} - ${reservation.check_out_date})`)
+    console.log(`[guest-auth] ✅ Token verified (from DB) for ${session.guest_name} (${reservation.check_in_date} - ${reservation.check_out_date})`)
     return session
   } catch (error) {
     console.error('[guest-auth] Token verification error:', error)
@@ -288,12 +389,15 @@ export async function verifyGuestToken(token: string): Promise<GuestSession | nu
 /**
  * Check if token is expired
  *
- * @param session - Guest session (with dates)
+ * @param session - Guest session (with dates as YYYY-MM-DD strings)
  * @returns true if session is expired (past check-out date)
  */
 export function isTokenExpired(session: GuestSession): boolean {
   const now = new Date()
-  const checkOutDate = new Date(session.check_out)
+
+  // Parse YYYY-MM-DD string to Date for comparison
+  const [year, month, day] = session.check_out.split('-').map(Number)
+  const checkOutDate = new Date(year, month - 1, day)
 
   // Consider expired 7 days after check-out
   const expiryDate = new Date(checkOutDate)

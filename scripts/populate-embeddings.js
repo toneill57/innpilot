@@ -1229,12 +1229,22 @@ function loadMetadata(mdFilePath) {
 
 // SIMPLIFIED CHUNKING (keeping the good chunking logic)
 function chunkDocument(content) {
-  const CHUNK_SIZE = 1000
+  // NORMALIZE: Remove incorrect indentation from markdown headers
+  // Fix headers like "  ## Title" → "## Title" to ensure chunking works correctly
+  content = content.split('\n').map(line => {
+    // If line starts with spaces followed by markdown header, trim the spaces
+    if (/^\s+(#{1,6})\s/.test(line)) {
+      return line.trim()
+    }
+    return line
+  }).join('\n')
+
+  const CHUNK_SIZE = 600  // Reduced from 1000 to ensure semantic sections stay separate
   const OVERLAP = 100
 
   const separators = [
     '\n\n',
-    '\n### ', '\n## ', '\n# ',
+    '\n# ', '\n## ', '\n### ',  // Fixed: Split at major sections (##) before subsections (###)
     '\n**Q:**', '\n**A:**',
     '\n**', '\n- ', '\n\d+\. ',
     '\n', '. ', '? ', '! ', '; ', ': ', ', ', ' '
@@ -1292,7 +1302,11 @@ function chunkDocument(content) {
       for (let i = 0; i < parts.length; i++) {
         const part = parts[i] + (i < parts.length - 1 ? separator : '')
 
-        if (currentChunk.length + part.length > CHUNK_SIZE && currentChunk.length > 0) {
+        // SPECIAL HANDLING: Force split at major section headers (##) to keep semantic sections separate
+        const isMajorSectionSeparator = separator === '\n## ' && currentChunk.length > 0
+        const wouldExceedSize = currentChunk.length + part.length > CHUNK_SIZE
+
+        if ((wouldExceedSize || isMajorSectionSeparator) && currentChunk.length > 0) {
           chunks.push(currentChunk.trim())
           const overlapStart = Math.max(0, currentChunk.length - OVERLAP)
           const overlapStartSafe = findWordBoundary(currentChunk, overlapStart, false)
@@ -1500,7 +1514,7 @@ async function insertEmbedding(chunk, chunkIndex, totalChunks, metadata, filenam
       info_content: chunk,
       embedding: `[${primaryEmbedding.join(',')}]`,
       embedding_balanced: `[${embeddings.balanced.join(',')}]`,
-      property_id: await getHotelIdByTenantId(metadata.tenant_id), // Dynamic lookup
+      property_id: null, // Legacy column - system uses tenant_id for filtering
       is_active: true,
       tenant_id: metadata.tenant_id
     }
@@ -1517,7 +1531,7 @@ async function insertEmbedding(chunk, chunkIndex, totalChunks, metadata, filenam
       policy_content: chunk,
       embedding: `[${primaryEmbedding.join(',')}]`,
       embedding_fast: `[${embeddings.fast.join(',')}]`,
-      property_id: await getHotelIdByTenantId(metadata.tenant_id), // Dynamic lookup
+      property_id: null, // Legacy column - system uses tenant_id for filtering
       is_active: true,
       tenant_id: metadata.tenant_id
     }

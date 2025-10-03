@@ -79,20 +79,19 @@ function extractSection(markdown, startPattern, endPattern = null) {
 
 // Find unit_id by unit name
 async function findUnitIdByName(unitName, tenantId) {
-  const { data, error } = await supabase
-    .from('accommodation_units_public')
-    .select('unit_id, name')
-    .eq('tenant_id', tenantId)
-    .ilike('name', unitName)
-    .single()
+  // Use RPC function to access hotels.accommodation_units
+  const { data: unitId, error } = await supabase.rpc('get_accommodation_unit_by_name', {
+    p_unit_name: unitName,
+    p_tenant_id: tenantId
+  })
 
-  if (error || !data) {
+  if (error || !unitId) {
     console.warn(`⚠️  Unit not found in database: "${unitName}"`)
     return null
   }
 
-  console.log(`   ✓ Matched: "${unitName}" → unit_id: ${data.unit_id}`)
-  return data.unit_id
+  console.log(`   ✓ Matched: "${unitName}" → unit_id: ${unitId}`)
+  return unitId
 }
 
 // Process a single manual file
@@ -134,10 +133,11 @@ async function processManualFile(filePath) {
       mini_kitchen: manual.sections.appliances,
     }
 
-    // Update accommodation_units_manual
-    const { error: updateError } = await supabase
+    // Upsert accommodation_units_manual (INSERT or UPDATE)
+    const { error: upsertError } = await supabase
       .from('accommodation_units_manual')
-      .update({
+      .upsert({
+        unit_id: unitId,
         manual_content: manual.content,
         detailed_instructions: manual.sections.appliances || null,
         house_rules_specific: null, // Not in current manual structure
@@ -149,14 +149,13 @@ async function processManualFile(filePath) {
         embedding: embedding3072,
         updated_at: new Date().toISOString(),
       })
-      .eq('unit_id', unitId)
 
-    if (updateError) {
-      console.error(`   ❌ Database update failed:`, updateError.message)
-      return { success: false, error: updateError.message }
+    if (upsertError) {
+      console.error(`   ❌ Database upsert failed:`, upsertError.message)
+      return { success: false, error: upsertError.message }
     }
 
-    console.log(`   ✅ Updated accommodation_units_manual`)
+    console.log(`   ✅ Upserted accommodation_units_manual`)
 
     return {
       success: true,
